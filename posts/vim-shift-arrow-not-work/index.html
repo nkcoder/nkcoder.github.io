@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="正常情况下，Intellij Idea 中使用Shift&#43;方向键是可以选中内容的，但是如果启用VIM 插件，无论在哪种模式下，Shift&#43;方向键无法选中内容，而是在单词之间移动。
+查看 Intellij Idea 的 Perference -&gt; KeyMap，通过快捷键搜索，发现该快捷键组合只赋给了Selection，并没有冲突。
+这是 VIM 插件的一个 bug，ticket 在这里，正式版本还未修复，EAP 版本已经修复了。
+在正式版本下，也可以通过添加配置文件~/.ideavimrc启用 Shift&#43;方向键的选中功能，内容如下：
+nnoremap &lt;S-Left&gt; :action EditorLeftWithSelection&lt;CR&gt; nnoremap &lt;S-Right&gt; :action EditorRightWithSelection&lt;CR&gt; nnoremap &lt;S-Up&gt; :action EditorUpWithSelection&lt;CR&gt; nnoremap &lt;S-Down&gt; :action EditorDownWithSelection&lt;CR&gt; inoremap &lt;S-Left&gt; &lt;C-O&gt;:action EditorLeftWithSelection&lt;CR&gt; inoremap &lt;S-Right&gt; &lt;C-O&gt;:action EditorRightWithSelection&lt;CR&gt; inoremap &lt;S-Up&gt; &lt;C-O&gt;:action EditorUpWithSelection&lt;CR&gt; inoremap &lt;S-Down&gt; &lt;C-O&gt;:action EditorDownWithSelection&lt;CR&gt; 参考:
+ Using PhpStorm IdeaVim, I can&rsquo;t use shift&#43;arrow keys to select words Possible to enable shift&#43;arrows selection mode?  ">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Intellij Idea在VIM模式下，Shift&#43;方向键无法选中"/>
+<meta name="twitter:description" content="正常情况下，Intellij Idea 中使用Shift&#43;方向键是可以选中内容的，但是如果启用VIM 插件，无论在哪种模式下，Shift&#43;方向键无法选中内容，而是在单词之间移动。
+查看 Intellij Idea 的 Perference -&gt; KeyMap，通过快捷键搜索，发现该快捷键组合只赋给了Selection，并没有冲突。
+这是 VIM 插件的一个 bug，ticket 在这里，正式版本还未修复，EAP 版本已经修复了。
+在正式版本下，也可以通过添加配置文件~/.ideavimrc启用 Shift&#43;方向键的选中功能，内容如下：
+nnoremap &lt;S-Left&gt; :action EditorLeftWithSelection&lt;CR&gt; nnoremap &lt;S-Right&gt; :action EditorRightWithSelection&lt;CR&gt; nnoremap &lt;S-Up&gt; :action EditorUpWithSelection&lt;CR&gt; nnoremap &lt;S-Down&gt; :action EditorDownWithSelection&lt;CR&gt; inoremap &lt;S-Left&gt; &lt;C-O&gt;:action EditorLeftWithSelection&lt;CR&gt; inoremap &lt;S-Right&gt; &lt;C-O&gt;:action EditorRightWithSelection&lt;CR&gt; inoremap &lt;S-Up&gt; &lt;C-O&gt;:action EditorUpWithSelection&lt;CR&gt; inoremap &lt;S-Down&gt; &lt;C-O&gt;:action EditorDownWithSelection&lt;CR&gt; 参考:
+ Using PhpStorm IdeaVim, I can&rsquo;t use shift&#43;arrow keys to select words Possible to enable shift&#43;arrows selection mode?  "/>
+
+    <meta property="og:title" content="Intellij Idea在VIM模式下，Shift&#43;方向键无法选中" />
+<meta property="og:description" content="正常情况下，Intellij Idea 中使用Shift&#43;方向键是可以选中内容的，但是如果启用VIM 插件，无论在哪种模式下，Shift&#43;方向键无法选中内容，而是在单词之间移动。
+查看 Intellij Idea 的 Perference -&gt; KeyMap，通过快捷键搜索，发现该快捷键组合只赋给了Selection，并没有冲突。
+这是 VIM 插件的一个 bug，ticket 在这里，正式版本还未修复，EAP 版本已经修复了。
+在正式版本下，也可以通过添加配置文件~/.ideavimrc启用 Shift&#43;方向键的选中功能，内容如下：
+nnoremap &lt;S-Left&gt; :action EditorLeftWithSelection&lt;CR&gt; nnoremap &lt;S-Right&gt; :action EditorRightWithSelection&lt;CR&gt; nnoremap &lt;S-Up&gt; :action EditorUpWithSelection&lt;CR&gt; nnoremap &lt;S-Down&gt; :action EditorDownWithSelection&lt;CR&gt; inoremap &lt;S-Left&gt; &lt;C-O&gt;:action EditorLeftWithSelection&lt;CR&gt; inoremap &lt;S-Right&gt; &lt;C-O&gt;:action EditorRightWithSelection&lt;CR&gt; inoremap &lt;S-Up&gt; &lt;C-O&gt;:action EditorUpWithSelection&lt;CR&gt; inoremap &lt;S-Down&gt; &lt;C-O&gt;:action EditorDownWithSelection&lt;CR&gt; 参考:
+ Using PhpStorm IdeaVim, I can&rsquo;t use shift&#43;arrow keys to select words Possible to enable shift&#43;arrows selection mode?  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/vim-shift-arrow-not-work/" />
+<meta property="article:published_time" content="2020-02-19T23:20:51+08:00" />
+<meta property="article:modified_time" content="2020-02-19T23:20:51+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/vim-shift-arrow-not-work/">
+    
+    <title>
+  Intellij Idea在VIM模式下，Shift&#43;方向键无法选中 · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/vim-shift-arrow-not-work/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Intellij Idea在VIM模式下，Shift&#43;方向键无法选中</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-02-19T23:20:51&#43;08:00'>
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              1-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://nkcoder.github.io/tags/vim/">vim</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p>正常情况下，Intellij Idea 中使用<code>Shift+方向键</code>是可以选中内容的，但是如果启用<a href="https://plugins.jetbrains.com/plugin/164-ideavim">VIM 插件</a>，无论在哪种模式下，<code>Shift+方向键</code>无法选中内容，而是在单词之间移动。</p>
+<p>查看 Intellij Idea 的 <code>Perference -&gt; KeyMap</code>，通过快捷键搜索，发现该快捷键组合只赋给了<code>Selection</code>，并没有冲突。</p>
+<p>这是 VIM 插件的一个 bug，ticket 在<a href="https://youtrack.jetbrains.com/issue/VIM-437">这里</a>，正式版本还未修复，<a href="https://github.com/JetBrains/ideavim#get-an-early-access">EAP 版本</a>已经修复了。</p>
+<p>在正式版本下，也可以通过添加配置文件<code>~/.ideavimrc</code>启用 Shift+方向键的选中功能，内容如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-text" data-lang="text">nnoremap &lt;S-Left&gt; :action EditorLeftWithSelection&lt;CR&gt;
+nnoremap &lt;S-Right&gt; :action EditorRightWithSelection&lt;CR&gt;
+nnoremap &lt;S-Up&gt; :action EditorUpWithSelection&lt;CR&gt;
+nnoremap &lt;S-Down&gt; :action EditorDownWithSelection&lt;CR&gt;
+
+inoremap &lt;S-Left&gt; &lt;C-O&gt;:action EditorLeftWithSelection&lt;CR&gt;
+inoremap &lt;S-Right&gt; &lt;C-O&gt;:action EditorRightWithSelection&lt;CR&gt;
+inoremap &lt;S-Up&gt; &lt;C-O&gt;:action EditorUpWithSelection&lt;CR&gt;
+inoremap &lt;S-Down&gt; &lt;C-O&gt;:action EditorDownWithSelection&lt;CR&gt;
+</code></pre></div><p><strong>参考:</strong></p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/21711551/using-phpstorm-ideavim-i-cant-use-shiftarrow-keys-to-select-words">Using PhpStorm IdeaVim, I can&rsquo;t use shift+arrow keys to select words</a></li>
+<li><a href="https://youtrack.jetbrains.com/issue/VIM-437">Possible to enable shift+arrows selection mode?</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

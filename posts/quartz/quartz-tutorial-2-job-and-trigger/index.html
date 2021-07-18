@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="Quartz系列文章的第二篇：介绍基础的API、Job类和Trigger类">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Quartz系列二：API, Job和Trigger"/>
+<meta name="twitter:description" content="Quartz系列文章的第二篇：介绍基础的API、Job类和Trigger类"/>
+
+    <meta property="og:title" content="Quartz系列二：API, Job和Trigger" />
+<meta property="og:description" content="Quartz系列文章的第二篇：介绍基础的API、Job类和Trigger类" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/" />
+<meta property="article:published_time" content="2020-02-19T21:07:06+08:00" />
+<meta property="article:modified_time" content="2020-02-19T21:07:06+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/">
+    
+    <title>
+  Quartz系列二：API, Job和Trigger · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Quartz系列二：API, Job和Trigger</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-02-19T21:07:06&#43;08:00'>
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              1-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://nkcoder.github.io/categories/quartz/">quartz</a></div>
+
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <h2 id="quartz-api">Quartz API</h2>
+<p>Quartz API核心接口有：</p>
+<ul>
+<li>Scheduler – 与scheduler交互的主要API；</li>
+<li>Job – 你通过scheduler执行任务，你的任务类需要实现的接口；</li>
+<li>JobDetail – 定义Job的实例；</li>
+<li>Trigger – 触发Job的执行；</li>
+<li>JobBuilder – 定义和创建JobDetail实例的接口;</li>
+<li>TriggerBuilder – 定义和创建Trigger实例的接口；</li>
+</ul>
+<p>Scheduler的生命期，从SchedulerFactory创建它时开始，到Scheduler调用shutdown()方法时结束；Scheduler被创建后，可以增加、删除和列举Job和Trigger，以及执行其它与调度相关的操作（如暂停Trigger）。但是，Scheduler只有在调用start()方法后，才会真正地触发trigger（即执行job），见教程一。</p>
+<p>Quartz提供的“builder”类，可以认为是一种领域特定语言（DSL，Domain Specific Language)。教程一中有相关示例，这里是其中的代码片段：（校对注：这种级联的API非常方便用户使用，大家以后写对外接口时也可以使用这种方式）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java"><span style="color:#6272a4">// define the job and tie it to our HelloJob class
+</span><span style="color:#6272a4"></span>JobDetail job <span style="color:#ff79c6">=</span> newJob<span style="color:#ff79c6">(</span>HelloJob<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myJob&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#6272a4">// name &#34;myJob&#34;, group &#34;group1&#34;
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+
+<span style="color:#6272a4">// Trigger the job to run now, and then every 40 seconds
+</span><span style="color:#6272a4"></span>Trigger trigger <span style="color:#ff79c6">=</span> newTrigger<span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myTrigger&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">startNow</span><span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withSchedule</span><span style="color:#ff79c6">(</span>simpleSchedule<span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIntervalInSeconds</span><span style="color:#ff79c6">(</span>40<span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">repeatForever</span><span style="color:#ff79c6">())</span>            
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+
+<span style="color:#6272a4">// Tell quartz to schedule the job using our trigger
+</span><span style="color:#6272a4"></span>sched<span style="color:#ff79c6">.</span><span style="color:#50fa7b">scheduleJob</span><span style="color:#ff79c6">(</span>job<span style="color:#ff79c6">,</span> trigger<span style="color:#ff79c6">);</span>
+</code></pre></div><p>定义job的代码使用的是从JobBuilder静态导入的方法。同样，定义trigger的代码使用的是从TriggerBuilder静态导入的方法 。 另外，也导入了SimpleSchedulerBuilder类的静态方法；</p>
+<p>从DSL里静态导入的语句如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java"><span style="color:#ff79c6">import static</span> org.quartz.JobBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.SimpleScheduleBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.CronScheduleBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.CalendarIntervalScheduleBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.TriggerBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.DateBuilder.*<span style="color:#ff79c6">;</span>
+</code></pre></div><p>SchedulerBuilder接口的各种实现类，可以定义不同类型的调度计划（schedule）；</p>
+<p>DateBuilder类包含很多方法，可以很方便地构造表示不同时间点的java.util.Date实例（如定义下一个小时为偶数的时间点，如果当前时间为9:43:27，则定义的时间为10:00:00）。</p>
+<h2 id="job和trigger">Job和Trigger</h2>
+<p>一个job就是一个实现了Job接口的类，该接口只有一个方法：</p>
+<p>Job接口：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java"><span style="color:#ff79c6">package</span> org.quartz<span style="color:#ff79c6">;</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Job</span> <span style="color:#ff79c6">{</span>
+
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">execute</span><span style="color:#ff79c6">(</span>JobExecutionContext context<span style="color:#ff79c6">)</span>
+    <span style="color:#8be9fd;font-style:italic">throws</span> JobExecutionException<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>当job的一个trigger被触发后（稍后会讲到），execute()方法会被scheduler的一个工作线程调用；传递给execute()方法的JobExecutionContext对象中保存着该job运行时的一些信息 ，执行job的scheduler的引用，触发job的trigger的引用，JobDetail对象引用，以及一些其它信息。</p>
+<p>JobDetail对象是在将job加入scheduler时，由客户端程序（你的程序）创建的。它包含job的各种属性设置，以及用于存储job实例状态信息的JobDataMap。本节是对job实例的简单介绍，更多的细节将在下一节讲到。</p>
+<p>Trigger用于触发Job的执行。当你准备调度一个job时，你创建一个Trigger的实例，然后设置调度相关的属性。Trigger也有一个相关联的JobDataMap，用于给Job传递一些触发相关的参数。Quartz自带了各种不同类型的Trigger，最常用的主要是SimpleTrigger和CronTrigger。</p>
+<p>SimpleTrigger主要用于一次性执行的Job（只在某个特定的时间点执行一次），或者Job在特定的时间点执行，重复执行N次，每次执行间隔T个时间单位。CronTrigger在基于日历的调度上非常有用，如“每个星期五的正午”，或者“每月的第十天的上午10:15”等。</p>
+<p>为什么既有Job，又有Trigger呢？很多任务调度器并不区分Job和Trigger。有些调度器只是简单地通过一个执行时间和一些job标识符来定义一个Job；其它的一些调度器将Quartz的Job和Trigger对象合二为一。在开发Quartz的时候，我们认为将调度和要调度的任务分离是合理的。在我们看来，这可以带来很多好处。</p>
+<p>例如，Job被创建后，可以保存在Scheduler中，与Trigger是独立的，同一个Job可以有多个Trigger；这种松耦合的另一个好处是，当与Scheduler中的Job关联的trigger都过期时，可以配置Job稍后被重新调度，而不用重新定义Job；还有，可以修改或者替换Trigger，而不用重新定义与之关联的Job。</p>
+<h2 id="identities">Identities</h2>
+<p>将Job和Trigger注册到Scheduler时，可以为它们设置key，配置其身份属性。Job和Trigger的key（JobKey和TriggerKey）可以用于将Job和Trigger放到不同的分组（group）里，然后基于分组进行操作。同一个分组下的Job或Trigger的名称必须唯一，即一个Job或Trigger的key由名称（name）和分组（group）组成。</p>
+<p>对于Job和Trigger，你现在有一个大概的了解了，更详细的介绍参见教程三(Jobs和JobDetails)和教程四(Triggers)。</p>
+<ul>
+<li>原文链接：<a href="http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/tutorials/tutorial-lesson-02.html">Lesson 2: The Quartz API, Jobs And Triggers</a></li>
+<li>有兴趣的朋友可以参考我在github上的项目：<a href="https://github.com/nkcoder/quartz-explained">quartz源码注释</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

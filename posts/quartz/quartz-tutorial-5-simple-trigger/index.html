@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="Quartz系列文章的第五篇：介绍SimpleTrigger类">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Quartz系列五：SimpleTrigger"/>
+<meta name="twitter:description" content="Quartz系列文章的第五篇：介绍SimpleTrigger类"/>
+
+    <meta property="og:title" content="Quartz系列五：SimpleTrigger" />
+<meta property="og:description" content="Quartz系列文章的第五篇：介绍SimpleTrigger类" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/" />
+<meta property="article:published_time" content="2020-02-19T21:09:37+08:00" />
+<meta property="article:modified_time" content="2020-02-19T21:09:37+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/">
+    
+    <title>
+  Quartz系列五：SimpleTrigger · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Quartz系列五：SimpleTrigger</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-02-19T21:09:37&#43;08:00'>
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              2-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://nkcoder.github.io/categories/quartz/">quartz</a></div>
+
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p><code>SimpleTrigger</code>可以满足的调度需求是：在具体的时间点执行一次，或者在具体的时间点执行，并且以指定的间隔重复执行若干次。比如，你有一个trigger，你可以设置它在2015年1月13日的上午11:23:54准时触发，或者在这个时间点触发，并且每隔2秒触发一次，一共重复5次。</p>
+<p>根据描述，你可能已经发现了，SimpleTrigger的属性包括：开始时间、结束时间、重复次数以及重复的间隔。这些属性的含义与你所期望的是一致的，只是关于结束时间有一些地方需要注意。</p>
+<p>重复次数，可以是0、正整数，以及常量SimpleTrigger.REPEAT_INDEFINITELY。重复的间隔，必须是0，或者long型的正数，表示毫秒。注意，如果重复间隔为0，trigger将会以重复次数并发执行(或者以scheduler可以处理的近似并发数)。</p>
+<p>如果你还不熟悉DateBuilder，了解后你会发现使用它可以非常方便地构造基于开始时间(或终止时间)的调度策略。</p>
+<p>endTime属性的值会覆盖设置重复次数的属性值；比如，你可以创建一个trigger，在终止时间之前每隔10秒执行一次，你不需要去计算在开始时间和终止时间之间的重复次数，只需要设置终止时间并将重复次数设置为REPEAT_INDEFINITELY(当然，你也可以将重复次数设置为一个很大的值，并保证该值比trigger在终止时间之前实际触发的次数要大即可)。</p>
+<p>SimpleTrigger实例通过TriggerBuilder设置主要的属性，通过SimpleScheduleBuilder设置与SimpleTrigger相关的属性。要使用这些builder的静态方法，需要静态导入：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java"><span style="color:#ff79c6">import static</span> org.quartz.TriggerBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.SimpleScheduleBuilder.*<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">import static</span> org.quartz.DateBuilder.*<span style="color:#ff79c6">:</span>
+</code></pre></div><p>下面的例子，是基于简单调度(simple schedule)创建的trigger。建议都看一下，因为每个例子都包含一个不同的实现点：</p>
+<p><strong>指定时间开始触发，不重复：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">SimpleTrigger trigger <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>SimpleTrigger<span style="color:#ff79c6">)</span> newTrigger<span style="color:#ff79c6">()</span> 
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger1&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">startAt</span><span style="color:#ff79c6">(</span>myStartTime<span style="color:#ff79c6">)</span>                     <span style="color:#6272a4">// some Date 
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">forJob</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;job1&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>                 <span style="color:#6272a4">// identify job with name, group strings
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+</code></pre></div><p><strong>指定时间触发，每隔10秒执行一次，重复10次：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">trigger <span style="color:#ff79c6">=</span> newTrigger<span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger3&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">startAt</span><span style="color:#ff79c6">(</span>myTimeToStartFiring<span style="color:#ff79c6">)</span>  <span style="color:#6272a4">// if a start time is not given (if this line were omitted), &#34;now&#34; is implied
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withSchedule</span><span style="color:#ff79c6">(</span>simpleSchedule<span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIntervalInSeconds</span><span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withRepeatCount</span><span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">))</span> <span style="color:#6272a4">// note that 10 repeats will give a total of 11 firings
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">forJob</span><span style="color:#ff79c6">(</span>myJob<span style="color:#ff79c6">)</span> <span style="color:#6272a4">// identify job with handle to its JobDetail itself                   
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+</code></pre></div><p><strong>5分钟以后开始触发，仅执行一次：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">trigger <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>SimpleTrigger<span style="color:#ff79c6">)</span> newTrigger<span style="color:#ff79c6">()</span> 
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger5&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">startAt</span><span style="color:#ff79c6">(</span>futureDate<span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">,</span> IntervalUnit<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MINUTE</span><span style="color:#ff79c6">))</span> <span style="color:#6272a4">// use DateBuilder to create a date in the future
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">forJob</span><span style="color:#ff79c6">(</span>myJobKey<span style="color:#ff79c6">)</span> <span style="color:#6272a4">// identify job with its JobKey
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+</code></pre></div><p><strong>立即触发，每个5分钟执行一次，直到22:00：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">trigger <span style="color:#ff79c6">=</span> newTrigger<span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger7&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withSchedule</span><span style="color:#ff79c6">(</span>simpleSchedule<span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIntervalInMinutes</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">repeatForever</span><span style="color:#ff79c6">())</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">endAt</span><span style="color:#ff79c6">(</span>dateOf<span style="color:#ff79c6">(</span>22<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">))</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+</code></pre></div><p><strong>在下一小时整点触发，每个2小时执行一次，一直重复：</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">trigger <span style="color:#ff79c6">=</span> newTrigger<span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger8&#34;</span><span style="color:#ff79c6">)</span> <span style="color:#6272a4">// because group is not specified, &#34;trigger8&#34; will be in the default group
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">startAt</span><span style="color:#ff79c6">(</span>evenHourDate<span style="color:#ff79c6">(</span><span style="color:#ff79c6">null</span><span style="color:#ff79c6">))</span> <span style="color:#6272a4">// get the next even-hour (minutes and seconds zero (&#34;00:00&#34;))
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withSchedule</span><span style="color:#ff79c6">(</span>simpleSchedule<span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIntervalInHours</span><span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">repeatForever</span><span style="color:#ff79c6">())</span>
+    <span style="color:#6272a4">// note that in this example, &#39;forJob(..)&#39; is not called which is valid 
+</span><span style="color:#6272a4"></span>    <span style="color:#6272a4">// if the trigger is passed to the scheduler along with the job  
+</span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+
+scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">scheduleJob</span><span style="color:#ff79c6">(</span>trigger<span style="color:#ff79c6">,</span> job<span style="color:#ff79c6">);</span>
+</code></pre></div><p>请查阅TriggerBuilder和SimpleScheduleBuilder提供的方法，以便对上述示例中未提到的选项有所了解。</p>
+<pre><code>TriggerBuilder(以及Quartz的其它builder)会为那些没有被显式设置的属性选择合理的默认值。比如：如果你没有调用withIdentity(..)方法，TriggerBuilder会为trigger生成一个随机的名称；如果没有调用startAt(..)方法，则默认使用当前时间，即trigger立即生效。
+</code></pre>
+<h2 id="simpletrigger-misfire策略">SimpleTrigger Misfire策略</h2>
+<p>SimpleTrigger有几个misfire相关的策略，告诉quartz当misfire发生的时候应该如何处理。(Misfire策略参考教程四：Trigger介绍)。这些策略以常量的形式在SimpleTrigger中定义(JavaDoc中介绍了它们的功能)。这些策略包括：</p>
+<p><strong>SimpleTrigger的Misfire策略常量：</strong></p>
+<pre><code>MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY
+MISFIRE_INSTRUCTION_FIRE_NOW
+MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_EXISTING_REPEAT_COUNT
+MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_REMAINING_REPEAT_COUNT
+MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT
+MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_EXISTING_COUNT
+</code></pre>
+<p>回顾一下，所有的trigger都有一个Trigger.MISFIRE_INSTRUCTION_SMART_POLICY策略可以使用，该策略也是所有trigger的默认策略。</p>
+<p>如果使用smart policy，SimpleTrigger会根据实例的配置及状态，在所有MISFIRE策略中动态选择一种Misfire策略。SimpleTrigger.updateAfterMisfire()的JavaDoc中解释了该动态行为的具体细节。</p>
+<p>在使用SimpleTrigger构造trigger时，misfire策略作为基本调度(simple schedule)的一部分进行配置(通过SimpleSchedulerBuilder设置)：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">trigger <span style="color:#ff79c6">=</span> newTrigger<span style="color:#ff79c6">()</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIdentity</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;trigger7&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;group1&#34;</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withSchedule</span><span style="color:#ff79c6">(</span>simpleSchedule<span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withIntervalInMinutes</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">)</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">repeatForever</span><span style="color:#ff79c6">()</span>
+        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">withMisfireHandlingInstructionNextWithExistingCount</span><span style="color:#ff79c6">())</span>
+    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">();</span>
+</code></pre></div><ul>
+<li>原文链接：<a href="http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/tutorials/tutorial-lesson-05.html">Lesson 5: SimpleTrigger</a></li>
+<li>有兴趣的朋友可以参考我在github上的项目：<a href="https://github.com/nkcoder/quartz-explained">quartz源码注释</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

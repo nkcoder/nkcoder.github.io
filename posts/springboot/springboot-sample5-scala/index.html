@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。
+SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。
+本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。
+添加Scala依赖 implementation &#39;org.scala-lang:scala-library:2.13.1&#39; implementation &#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&#39; implementation &#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&#39; testImplementation &#39;org.scalatest:scalatest_2.13:3.1.0&#39; 定义实体类 首先定义JPA需要的实体类：
+import java.lang.Long import java.time.LocalDateTime import javax.persistence._ import org.nkcoder.scala.api.Article import scala.annotation.meta.field import scala.beans.BeanProperty @Entity @Table(name = &#34;article&#34;) class ArticleEntity(@BeanProperty var subject: String, @BeanProperty var content: String, @BeanProperty var updatedAt: LocalDateTime, @BeanProperty var createdBy: Long) { @(Id @field) @BeanProperty @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _ // for jpa  private def this() = this(null, null, null, null) } 其中，">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SpringBoot系列五：用scala开发"/>
+<meta name="twitter:description" content="Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。
+SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。
+本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。
+添加Scala依赖 implementation &#39;org.scala-lang:scala-library:2.13.1&#39; implementation &#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&#39; implementation &#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&#39; testImplementation &#39;org.scalatest:scalatest_2.13:3.1.0&#39; 定义实体类 首先定义JPA需要的实体类：
+import java.lang.Long import java.time.LocalDateTime import javax.persistence._ import org.nkcoder.scala.api.Article import scala.annotation.meta.field import scala.beans.BeanProperty @Entity @Table(name = &#34;article&#34;) class ArticleEntity(@BeanProperty var subject: String, @BeanProperty var content: String, @BeanProperty var updatedAt: LocalDateTime, @BeanProperty var createdBy: Long) { @(Id @field) @BeanProperty @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _ // for jpa  private def this() = this(null, null, null, null) } 其中，"/>
+
+    <meta property="og:title" content="SpringBoot系列五：用scala开发" />
+<meta property="og:description" content="Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。
+SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。
+本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。
+添加Scala依赖 implementation &#39;org.scala-lang:scala-library:2.13.1&#39; implementation &#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&#39; implementation &#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&#39; testImplementation &#39;org.scalatest:scalatest_2.13:3.1.0&#39; 定义实体类 首先定义JPA需要的实体类：
+import java.lang.Long import java.time.LocalDateTime import javax.persistence._ import org.nkcoder.scala.api.Article import scala.annotation.meta.field import scala.beans.BeanProperty @Entity @Table(name = &#34;article&#34;) class ArticleEntity(@BeanProperty var subject: String, @BeanProperty var content: String, @BeanProperty var updatedAt: LocalDateTime, @BeanProperty var createdBy: Long) { @(Id @field) @BeanProperty @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _ // for jpa  private def this() = this(null, null, null, null) } 其中，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/" />
+<meta property="article:published_time" content="2020-03-15T14:33:17+08:00" />
+<meta property="article:modified_time" content="2020-03-15T14:33:17+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/">
+    
+    <title>
+  SpringBoot系列五：用scala开发 · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">SpringBoot系列五：用scala开发</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-03-15T14:33:17&#43;08:00'>
+                March 15, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              1-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://nkcoder.github.io/categories/springboot/">SpringBoot</a></div>
+
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p>Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。</p>
+<p>SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。</p>
+<p>本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。</p>
+<h2 id="添加scala依赖">添加Scala依赖</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-gradle" data-lang="gradle">implementation <span style="color:#f1fa8c">&#39;org.scala-lang:scala-library:2.13.1&#39;</span>
+implementation <span style="color:#f1fa8c">&#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&#39;</span>
+implementation <span style="color:#f1fa8c">&#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&#39;</span>
+
+testImplementation <span style="color:#f1fa8c">&#39;org.scalatest:scalatest_2.13:3.1.0&#39;</span>
+</code></pre></div><h2 id="定义实体类">定义实体类</h2>
+<p>首先定义JPA需要的实体类：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#ff79c6">import</span> java.lang.Long
+<span style="color:#ff79c6">import</span> java.time.LocalDateTime
+
+<span style="color:#ff79c6">import</span> javax.persistence._
+<span style="color:#ff79c6">import</span> org.nkcoder.scala.api.Article
+
+<span style="color:#ff79c6">import</span> scala.annotation.meta.field
+<span style="color:#ff79c6">import</span> scala.beans.BeanProperty
+
+@Entity
+@Table<span style="color:#ff79c6">(</span>name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;article&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ArticleEntity</span><span style="color:#ff79c6">(</span>@BeanProperty <span style="color:#ff79c6">var</span> subject<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">String</span><span style="color:#ff79c6">,</span>
+                    @BeanProperty <span style="color:#ff79c6">var</span> content<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">String</span><span style="color:#ff79c6">,</span>
+                    @BeanProperty <span style="color:#ff79c6">var</span> updatedAt<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">LocalDateTime</span><span style="color:#ff79c6">,</span>
+                    @BeanProperty <span style="color:#ff79c6">var</span> createdBy<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+
+  <span style="color:#ff79c6">@(</span><span style="color:#50fa7b">Id</span> @field<span style="color:#ff79c6">)</span>
+  @BeanProperty
+  @GeneratedValue<span style="color:#ff79c6">(</span>strategy <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">GenerationType</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">IDENTITY</span><span style="color:#ff79c6">)</span>
+  <span style="color:#ff79c6">var</span> id<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">_</span>
+
+  <span style="color:#6272a4">// for jpa
+</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">def</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">null</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">null</span><span style="color:#ff79c6">)</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>其中，</p>
+<ul>
+<li>
+<p><code>@BeanProperty</code>表示给字段生成符合JavaBean的getter/setter方法，比如对于<em>subject</em>字段，scala生成的getter/setter都是字段本身，如果它出现在<code>=</code>的左边则为set，右边则为get，而使用了<code>@BeanProperty</code>注解后，会添加<code>getSubject()</code>和<code>setSubject()</code>，主要是JPA序列会和反序列化需要。如果参数是Boolean类型，而你希望生成的<em>getter</em>为<em>isXXX</em>，则应该使用<code>@BooleanBeanProperty</code>。</p>
+</li>
+<li>
+<p>JPA需要一个空的构造函数，而Scala中带构造参数的类是没有无参构造函数的，所以需要单独定义，<em>private</em>即可。</p>
+</li>
+<li>
+<p><code>@(Id @field)</code>：表示<code>@Id</code>注解仅应用在字段上，而不会应用在getter/setter等方法上。</p>
+</li>
+</ul>
+<h2 id="定义repository">定义Repository</h2>
+<p>这个与Java基本没区别，使用Scala的语法即可：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala"><span style="color:#ff79c6">import</span> org.springframework.data.jpa.repository.JpaRepository
+<span style="color:#ff79c6">import</span> org.springframework.stereotype.Repository
+
+@Repository
+<span style="color:#ff79c6">trait</span> <span style="color:#50fa7b">ArticleRepository</span> <span style="color:#ff79c6">extends</span> <span style="color:#50fa7b">JpaRepository</span><span style="color:#ff79c6">[</span><span style="color:#8be9fd">ArticleEntity</span>, <span style="color:#8be9fd">Long</span><span style="color:#ff79c6">]</span>
+</code></pre></div><h2 id="service与controller">Service与Controller</h2>
+<p>因为框架使用的还是SpringBoot和JPA，因此API的使用是一样的，这里仅给出部分示例代码供参考，项目完整代码在<a href="https://github.com/nkcoder/springboot-samples/tree/master/springboot-scala">SpringBoot-Scala</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">@Service
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ArticleServiceImpl</span> @Autowired<span style="color:#ff79c6">()(</span>articleRepository<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">ArticleRepository</span><span style="color:#ff79c6">)</span>
+    <span style="color:#ff79c6">extends</span> <span style="color:#50fa7b">ArticleService</span> <span style="color:#ff79c6">{</span>
+
+  <span style="color:#ff79c6">override</span> <span style="color:#ff79c6">def</span> create<span style="color:#ff79c6">(</span>
+    createArticleRequest<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">CreateOrUpdateArticleRequest</span>
+  <span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#ff79c6">import</span> createArticleRequest._
+    articleRepository
+      <span style="color:#ff79c6">.</span>save<span style="color:#ff79c6">(</span>
+        <span style="color:#50fa7b">ArticleEntity</span>
+          <span style="color:#ff79c6">.</span>create<span style="color:#ff79c6">(</span>subject <span style="color:#ff79c6">=</span> subject<span style="color:#ff79c6">,</span> content <span style="color:#ff79c6">=</span> content<span style="color:#ff79c6">,</span> createdBy <span style="color:#ff79c6">=</span> createdBy<span style="color:#ff79c6">)</span>
+      <span style="color:#ff79c6">)</span>
+      <span style="color:#ff79c6">.</span>id
+  <span style="color:#ff79c6">}</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-scala" data-lang="scala">@RestController
+@RequestMapping<span style="color:#ff79c6">(</span><span style="color:#50fa7b">Array</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/articles&#34;</span><span style="color:#ff79c6">))</span>
+<span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ArticleController</span> @Autowired<span style="color:#ff79c6">()(</span>articleService<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">ArticleService</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+
+  @PostMapping<span style="color:#ff79c6">(</span><span style="color:#50fa7b">Array</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;&#34;</span><span style="color:#ff79c6">))</span>
+  @ResponseStatus<span style="color:#ff79c6">(</span><span style="color:#50fa7b">HttpStatus</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">CREATED</span><span style="color:#ff79c6">)</span>
+  <span style="color:#ff79c6">def</span> create<span style="color:#ff79c6">(</span>
+    @RequestBody createArticleRequest<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">CreateOrUpdateArticleRequest</span>
+  <span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span> <span style="color:#ff79c6">=</span>
+    articleService<span style="color:#ff79c6">.</span>create<span style="color:#ff79c6">(</span>createArticleRequest<span style="color:#ff79c6">)</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><blockquote>
+<p>完整的示例代码见项目：<a href="https://github.com/nkcoder/springboot-samples/tree/master/springboot-scala">github-springboot-scala</a></p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.javacodegeeks.com/2016/02/spring-boot-scala.html">Spring Boot with Scala</a></li>
+<li><a href="https://stackoverflow.com/questions/37014280/usage-of-field-annotations">Usage of @field annotations
+</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

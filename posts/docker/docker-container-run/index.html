@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="镜像拉取后，就可以基于镜像运行容器了。
+运行镜像的命令为docker container run ，等价命令为：docker run，命令的格式为：
+docker container run [OPTIONS] IMAGE [COMMAND] [ARG...] 该命令的参数很多，详细参数及说明可以通过help查看，这里根据使用场景介绍几个常用且重要的参数。
+创建交互式终端 ➜ ~ docker run --name my_alpine -it alpine / # ls bin dev etc home lib media mnt opt proc root run sbin srv sys tmp usr var / # ps -ef PID USER TIME COMMAND 1 root 0:00 /bin/sh 7 root 0:00 ps -ef 上面的例子，运行一个容器，命名为my_alpine，并创建一个交互式的伪终端（tty），连接到容器。
+ --name：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称 --interactive , -i：打开容器的stdin，即可以通过输入与容器交互 --tty , -t：分配一个伪终端连接到容器的stdin，-it一般同时使用，表示创建一个交互式终端，可以直接与容器交互  这里的-i和-t参数可能还是有点晕，我举个例子就明白了：如果只使用-i参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用-t参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果：">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker容器：运行容器"/>
+<meta name="twitter:description" content="镜像拉取后，就可以基于镜像运行容器了。
+运行镜像的命令为docker container run ，等价命令为：docker run，命令的格式为：
+docker container run [OPTIONS] IMAGE [COMMAND] [ARG...] 该命令的参数很多，详细参数及说明可以通过help查看，这里根据使用场景介绍几个常用且重要的参数。
+创建交互式终端 ➜ ~ docker run --name my_alpine -it alpine / # ls bin dev etc home lib media mnt opt proc root run sbin srv sys tmp usr var / # ps -ef PID USER TIME COMMAND 1 root 0:00 /bin/sh 7 root 0:00 ps -ef 上面的例子，运行一个容器，命名为my_alpine，并创建一个交互式的伪终端（tty），连接到容器。
+ --name：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称 --interactive , -i：打开容器的stdin，即可以通过输入与容器交互 --tty , -t：分配一个伪终端连接到容器的stdin，-it一般同时使用，表示创建一个交互式终端，可以直接与容器交互  这里的-i和-t参数可能还是有点晕，我举个例子就明白了：如果只使用-i参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用-t参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果："/>
+
+    <meta property="og:title" content="Docker容器：运行容器" />
+<meta property="og:description" content="镜像拉取后，就可以基于镜像运行容器了。
+运行镜像的命令为docker container run ，等价命令为：docker run，命令的格式为：
+docker container run [OPTIONS] IMAGE [COMMAND] [ARG...] 该命令的参数很多，详细参数及说明可以通过help查看，这里根据使用场景介绍几个常用且重要的参数。
+创建交互式终端 ➜ ~ docker run --name my_alpine -it alpine / # ls bin dev etc home lib media mnt opt proc root run sbin srv sys tmp usr var / # ps -ef PID USER TIME COMMAND 1 root 0:00 /bin/sh 7 root 0:00 ps -ef 上面的例子，运行一个容器，命名为my_alpine，并创建一个交互式的伪终端（tty），连接到容器。
+ --name：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称 --interactive , -i：打开容器的stdin，即可以通过输入与容器交互 --tty , -t：分配一个伪终端连接到容器的stdin，-it一般同时使用，表示创建一个交互式终端，可以直接与容器交互  这里的-i和-t参数可能还是有点晕，我举个例子就明白了：如果只使用-i参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用-t参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/docker-container-run/" />
+<meta property="article:published_time" content="2020-07-09T06:46:44+08:00" />
+<meta property="article:modified_time" content="2020-07-09T06:46:44+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/docker/docker-container-run/">
+    
+    <title>
+  Docker容器：运行容器 · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/docker/docker-container-run/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Docker容器：运行容器</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-07-09T06:46:44&#43;08:00'>
+                July 9, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              3-minute read
+            </span>
+          </div>
+          <div class="categories">
+  <i class="fas fa-folder"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div>
+        
+        <p>镜像拉取后，就可以基于镜像运行容器了。</p>
+<p>运行镜像的命令为<code>docker container run </code>，等价命令为：<code>docker run</code>，命令的格式为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">docker container run <span style="color:#ff79c6">[</span>OPTIONS<span style="color:#ff79c6">]</span> IMAGE <span style="color:#ff79c6">[</span>COMMAND<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">[</span>ARG...<span style="color:#ff79c6">]</span>
+</code></pre></div><p>该命令的参数很多，详细参数及说明可以通过<code>help</code>查看，这里根据使用场景介绍几个常用且重要的参数。</p>
+<h3 id="创建交互式终端">创建交互式终端</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker run --name my_alpine -it alpine
+/ <span style="color:#6272a4"># ls</span>
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ <span style="color:#6272a4"># ps -ef</span>
+PID   USER     TIME  COMMAND
+    <span style="color:#bd93f9">1</span> root      0:00 /bin/sh
+    <span style="color:#bd93f9">7</span> root      0:00 ps -ef
+</code></pre></div><p>上面的例子，运行一个容器，命名为<em>my_alpine</em>，并创建一个交互式的伪终端（tty），连接到容器。</p>
+<ul>
+<li><code>--name</code>：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称</li>
+<li><code>--interactive , -i</code>：打开容器的stdin，即可以通过输入与容器交互</li>
+<li><code>--tty , -t</code>：分配一个伪终端连接到容器的stdin，<code>-it</code>一般同时使用，表示创建一个交互式终端，可以直接与容器交互</li>
+</ul>
+<p>这里的<code>-i</code>和<code>-t</code>参数可能还是有点晕，我举个例子就明白了：如果只使用<code>-i</code>参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用<code>-t</code>参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker run --name my_alpine2 -i alpine
+ls
+bin
+dev
+etc
+...
+ps -ef
+PID   USER     TIME  COMMAND
+    <span style="color:#bd93f9">1</span> root      0:00 /bin/sh
+    <span style="color:#bd93f9">7</span> root      0:00 ps -ef
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker run --name my_alpine3 -t alpine
+/ <span style="color:#6272a4"># ps -ef</span>
+ls
+</code></pre></div><h3 id="指定启动命令">指定启动命令</h3>
+<p>运行容器时，可以指定一个命令，表示容器启动后要执行的命令。一般image都有默认的启动命令，如alpine是/bin/sh，redis是redis-server等，指定的命令会覆盖默认的命令：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_alpine -it alpine sh
+/ <span style="color:#6272a4"># ls</span>
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ <span style="color:#6272a4">#</span>
+
+➜  ~ docker container run --name my_redis -it redis
+1:C <span style="color:#bd93f9">12</span> May <span style="color:#bd93f9">2020</span> 14:49:06.873 <span style="color:#6272a4"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span>
+1:C <span style="color:#bd93f9">12</span> May <span style="color:#bd93f9">2020</span> 14:49:06.873 <span style="color:#6272a4"># Redis version=6.0.1, bits=64, commit=00000000, modified=0, pid=1, just started</span>
+1:C <span style="color:#bd93f9">12</span> May <span style="color:#bd93f9">2020</span> 14:49:06.873 <span style="color:#6272a4"># Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span>
+                _._
+           _.-<span style="color:#f1fa8c">``</span>__ <span style="color:#f1fa8c">&#39;&#39;</span>-._
+      _.-<span style="color:#f1fa8c">``</span>    <span style="color:#f1fa8c">`</span>.  <span style="color:#f1fa8c">`</span>_.  <span style="color:#f1fa8c">&#39;&#39;</span>-._           Redis 6.0.1 <span style="color:#ff79c6">(</span>00000000/0<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">64</span> bit
+</code></pre></div><h3 id="后台运行">后台运行</h3>
+<p>容器启动默认在前台运行，<code>--detach , -d</code>参数使容器在后台运行：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_alpine -it -d alpine
+aa9937e0e4eaab5a1ad7e7b1909a171b4e835d30e72c0ee54b77899af51e0fa8
+➜  ~ docker container ls
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+aa9937e0e4ea        alpine              <span style="color:#f1fa8c">&#34;/bin/sh&#34;</span>                <span style="color:#bd93f9">8</span> seconds ago       Up <span style="color:#bd93f9">7</span> seconds                                            my_alpine
+</code></pre></div><p>如果想进入容器看看，可以通过<code>docker container exec</code>进入容器：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container <span style="color:#8be9fd;font-style:italic">exec</span> -it my_alpine sh
+/ <span style="color:#6272a4"># ls</span>
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ <span style="color:#6272a4">#</span>
+</code></pre></div><h3 id="端口映射">端口映射</h3>
+<p>如果容器运行的服务需要对外暴露，则需要将容器中的端口与Host端口做映射，将容器的端口暴露出来。使用<code>--publish , -p</code>参数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_redis -dit -p 12379:2379 redis
+497024cab9374510c3d201e8ab8c54b3dc3319b7ccd0f4b6b3f5b0dfc35f3b04
+</code></pre></div><p>Host访问12379端口，即访问容器中的2379端口。</p>
+<h3 id="挂载目录">挂载目录</h3>
+<p>挂载目录就是使容器中的目录和Host的目录共享，对任何一个目录的修改都会反映到另一个目录。</p>
+<p>目录挂载可以作为容器中数据持久化的一种方式。</p>
+<p><code>--volume , -v</code>参数用于挂载目录</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  docker container run --name my_redis -dit -p 12379:2379 -v /Users/ling.guo/Downloads:/data redis
+95d25399ef471f30944d3ddbcc86ef9b79b6eab18347c239da097059d65f85b8
+➜  ls /Users/ling.guo/Downloads
+test.md
+➜  docker <span style="color:#8be9fd;font-style:italic">exec</span> -it my_redis sh
+<span style="color:#6272a4"># ls</span>
+test.md
+<span style="color:#6272a4">#</span>
+</code></pre></div><p>也可以配合<code>--read-only</code>参数，表示container的文件系统是只读的，只有挂载的目录是可写的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  docker container run --name my_redis2 -dit -p 22379:2379 --read-only -v /Users/ling.guo/Downloads:/data -w /data redis
+deae39e6c897d639a6a169221292815464ca48c3cee4ab6f34135c28f09fa989
+➜  docker <span style="color:#8be9fd;font-style:italic">exec</span> -it my_redis2 sh
+<span style="color:#6272a4"># touch test2.md</span>
+<span style="color:#6272a4"># ls</span>
+test.md  test2.md
+<span style="color:#6272a4"># mkdir /hi</span>
+mkdir: cannot create directory <span style="color:#f1fa8c">&#39;/hi&#39;</span>: Read-only file system
+</code></pre></div><p>其中，<code>-w</code>参数表示设置工作目录。</p>
+<h3 id="设置环境变量">设置环境变量</h3>
+<p>使用<code>--env , -e</code>参数可以设置环境变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_alpine -e <span style="color:#8be9fd;font-style:italic">VAR1</span><span style="color:#ff79c6">=</span>hello --env <span style="color:#8be9fd;font-style:italic">VAR2</span><span style="color:#ff79c6">=</span>world alpine env | grep VAR
+<span style="color:#8be9fd;font-style:italic">VAR1</span><span style="color:#ff79c6">=</span>hello
+<span style="color:#8be9fd;font-style:italic">VAR2</span><span style="color:#ff79c6">=</span>world
+</code></pre></div><p>也可以从文件中批量读取环境变量，使用<code>--env-file</code>参数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_alpine --env-file env.list --rm alpine env | grep VAR
+<span style="color:#8be9fd;font-style:italic">VAR1</span><span style="color:#ff79c6">=</span>hello
+<span style="color:#8be9fd;font-style:italic">VAR2</span><span style="color:#ff79c6">=</span>world
+</code></pre></div><h3 id="限制容器的cpu和内存">限制容器的CPU和内存</h3>
+<p><code>--cpus</code>表示cpu的个数，<code>--memory -m</code>表示内存的硬限制：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker container run --name my_alpine -it --rm -m 100MB --cpus <span style="color:#bd93f9">1</span> alpine
+/ <span style="color:#6272a4"># cat /sys/fs/cgroup/memory/memory.limit_in_bytes</span>
+<span style="color:#bd93f9">104857600</span>
+</code></pre></div><h3 id="重启策略">重启策略</h3>
+<p>有些场景下，容器停止后，我们希望它可以自动重启。<code>--restart</code>参数用于控制容器的重启，支持4种策略：</p>
+<ul>
+<li><code>no</code>：不自动重启容器，默认值</li>
+<li><code>on-failure[:max-retries]</code>：只有当容器意外退出（即退出状态为非0）时重启，可以限制最大重启次数</li>
+<li><code>unless-stopped</code>：当容器是主动被停止，或者由于Docker退出或重启导致容器停止时自动重启</li>
+<li><code>always</code>：总是自动重启</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-bash" data-lang="bash">➜  ~ docker run --restart<span style="color:#ff79c6">=</span>always redis
+</code></pre></div><h3 id="reference-docs">reference docs:</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/commandline/run/">docker run</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

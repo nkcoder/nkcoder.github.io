@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scala on Just Coding</title>
+    <link>https://nkcoder.github.io/categories/scala/</link>
+    <description>Recent content in Scala on Just Coding</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 18 Jul 2021 08:22:29 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/scala/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scala: Basics of class and object</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</link>
+      <pubDate>Sun, 18 Jul 2021 08:22:29 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</guid>
+      <description>Classes, fields, and methods Once you define a class, you can create objects with the keyword new.
+public is Scala&amp;rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0  acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&amp;rsquo;s state—the values of its instance variables—remains valid during its entire lifetime.</description>
+    </item>
+    
+  </channel>
+</rss>

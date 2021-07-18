@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+
+    <meta name="author" content="Daniel Guo">
+    <meta name="description" content="Junit 5 简介 Junit 5 由三个子项目构成：
+JUnit 5 = JUnit Platform &#43; JUnit Jupiter &#43; JUnit Vintage   JUnit Platform：在 JVM 上启动测试框架的基础 JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型 JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试  Junit 5 需要 Java 8 以上版本。
+如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;)  如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) testImplementation(&#39;org.junit.vintage:junit-vintage-engine:5.4.1&#39;) testImplementation(&#39;junit:junit:4.12&#39;)  常用注解汇总    注解 说明     @Test 表明这是一个测试方法，类比于 JUnit 4 的@Test但是不支持任何参数   @ParameterizedTest 带参数的测试   @RepeatedTest 使测试重复执行   @TestFactory 该方法是一个支持动态测试的测试工厂   @TestTemplate 该方法是一个测试模板，支持在不同的测试场景下的多次调用   @TestMethodOrder 配置测试方法的执行顺序   @TestInstance 配置测试实例的生命周期   @DisplayName 自定义显示名称   @DisplayNameGeneration 自定义显示名称生成器   @BeforeEach 该方法会在当前类的每一个测试方法之前执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@Before 类似   @AfterEach 该方法会在当前类的每一个测试方法之后执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@After 类似   @BeforeAll 该方法在当前类的所有测试方法之前执行，类似于 JUnit 4 的@BeforeClass   @AfterAll 该方法在当前类的所有测试方法之后执行，类似于 JUnit 4 的@AfterClass   @Tag 用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group   @Disabled 禁用当前测试，类比于 JUnit 4 的@Ignore   @TempDir 通过字段注入或参数注入提供一个临时目录    自定义注解 比如我们要给一个类的所有测试方法加上一个@Tag(&quot;fast&quot;)，我们可以定义一个新的注解，然后用@FastTest替换@Test:">
+    <meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+    
+
+    <script data-ad-client="ca-pub-6193773296453862" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Junit5 用法介绍"/>
+<meta name="twitter:description" content="Junit 5 简介 Junit 5 由三个子项目构成：
+JUnit 5 = JUnit Platform &#43; JUnit Jupiter &#43; JUnit Vintage   JUnit Platform：在 JVM 上启动测试框架的基础 JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型 JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试  Junit 5 需要 Java 8 以上版本。
+如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;)  如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) testImplementation(&#39;org.junit.vintage:junit-vintage-engine:5.4.1&#39;) testImplementation(&#39;junit:junit:4.12&#39;)  常用注解汇总    注解 说明     @Test 表明这是一个测试方法，类比于 JUnit 4 的@Test但是不支持任何参数   @ParameterizedTest 带参数的测试   @RepeatedTest 使测试重复执行   @TestFactory 该方法是一个支持动态测试的测试工厂   @TestTemplate 该方法是一个测试模板，支持在不同的测试场景下的多次调用   @TestMethodOrder 配置测试方法的执行顺序   @TestInstance 配置测试实例的生命周期   @DisplayName 自定义显示名称   @DisplayNameGeneration 自定义显示名称生成器   @BeforeEach 该方法会在当前类的每一个测试方法之前执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@Before 类似   @AfterEach 该方法会在当前类的每一个测试方法之后执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@After 类似   @BeforeAll 该方法在当前类的所有测试方法之前执行，类似于 JUnit 4 的@BeforeClass   @AfterAll 该方法在当前类的所有测试方法之后执行，类似于 JUnit 4 的@AfterClass   @Tag 用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group   @Disabled 禁用当前测试，类比于 JUnit 4 的@Ignore   @TempDir 通过字段注入或参数注入提供一个临时目录    自定义注解 比如我们要给一个类的所有测试方法加上一个@Tag(&quot;fast&quot;)，我们可以定义一个新的注解，然后用@FastTest替换@Test:"/>
+
+    <meta property="og:title" content="Junit5 用法介绍" />
+<meta property="og:description" content="Junit 5 简介 Junit 5 由三个子项目构成：
+JUnit 5 = JUnit Platform &#43; JUnit Jupiter &#43; JUnit Vintage   JUnit Platform：在 JVM 上启动测试框架的基础 JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型 JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试  Junit 5 需要 Java 8 以上版本。
+如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;)  如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) testImplementation(&#39;org.junit.vintage:junit-vintage-engine:5.4.1&#39;) testImplementation(&#39;junit:junit:4.12&#39;)  常用注解汇总    注解 说明     @Test 表明这是一个测试方法，类比于 JUnit 4 的@Test但是不支持任何参数   @ParameterizedTest 带参数的测试   @RepeatedTest 使测试重复执行   @TestFactory 该方法是一个支持动态测试的测试工厂   @TestTemplate 该方法是一个测试模板，支持在不同的测试场景下的多次调用   @TestMethodOrder 配置测试方法的执行顺序   @TestInstance 配置测试实例的生命周期   @DisplayName 自定义显示名称   @DisplayNameGeneration 自定义显示名称生成器   @BeforeEach 该方法会在当前类的每一个测试方法之前执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@Before 类似   @AfterEach 该方法会在当前类的每一个测试方法之后执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@After 类似   @BeforeAll 该方法在当前类的所有测试方法之前执行，类似于 JUnit 4 的@BeforeClass   @AfterAll 该方法在当前类的所有测试方法之后执行，类似于 JUnit 4 的@AfterClass   @Tag 用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group   @Disabled 禁用当前测试，类比于 JUnit 4 的@Ignore   @TempDir 通过字段注入或参数注入提供一个临时目录    自定义注解 比如我们要给一个类的所有测试方法加上一个@Tag(&quot;fast&quot;)，我们可以定义一个新的注解，然后用@FastTest替换@Test:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/junit5-tutorial/" />
+<meta property="article:published_time" content="2020-02-19T23:23:29+08:00" />
+<meta property="article:modified_time" content="2020-02-19T23:23:29+08:00" />
+
+
+    
+      <base href="https://nkcoder.github.io/posts/junit5-tutorial/">
+    
+    <title>
+  Junit5 用法介绍 · Just Coding
+</title>
+
+    
+      <link rel="canonical" href="https://nkcoder.github.io/posts/junit5-tutorial/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.070454269d1fdb565d8c87a7042bdea5231ac2b69990e4b993397cf19cd75eb1.css" integrity="sha256-BwRUJp0f21ZdjIenBCvepSMawraZkOS5kzl88ZzXXrE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+
+    
+      <link rel="stylesheet" href="https://nkcoder.github.io/css/custom.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  
+  
+  <body class="colorscheme-light"
+        onload=""
+  >
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      Just Coding
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+          </li>
+        
+      
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Junit5 用法介绍</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-02-19T23:23:29&#43;08:00'>
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://nkcoder.github.io/tags/junit5/">junit5</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <h2 id="junit-5-简介">Junit 5 简介</h2>
+<p>Junit 5 由三个子项目构成：</p>
+<pre><code>JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage
+</code></pre>
+<ul>
+<li>JUnit Platform：在 JVM 上启动测试框架的基础</li>
+<li>JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型</li>
+<li>JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试</li>
+</ul>
+<p>Junit 5 需要 Java 8 以上版本。</p>
+<p>如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：</p>
+<pre><code>testImplementation('org.junit.jupiter:junit-jupiter:5.4.2')
+</code></pre>
+<p>如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：</p>
+<pre><code>testImplementation('org.junit.jupiter:junit-jupiter:5.4.2')
+testImplementation('org.junit.vintage:junit-vintage-engine:5.4.1')
+testImplementation('junit:junit:4.12')
+</code></pre>
+<h2 id="常用注解汇总">常用注解汇总</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">注解</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">@Test</td>
+<td style="text-align:left">表明这是一个测试方法，类比于 JUnit 4 的<code>@Test</code>但是不支持任何参数</td>
+</tr>
+<tr>
+<td style="text-align:left">@ParameterizedTest</td>
+<td style="text-align:left">带参数的测试</td>
+</tr>
+<tr>
+<td style="text-align:left">@RepeatedTest</td>
+<td style="text-align:left">使测试重复执行</td>
+</tr>
+<tr>
+<td style="text-align:left">@TestFactory</td>
+<td style="text-align:left">该方法是一个支持动态测试的测试工厂</td>
+</tr>
+<tr>
+<td style="text-align:left">@TestTemplate</td>
+<td style="text-align:left">该方法是一个测试模板，支持在不同的测试场景下的多次调用</td>
+</tr>
+<tr>
+<td style="text-align:left">@TestMethodOrder</td>
+<td style="text-align:left">配置测试方法的执行顺序</td>
+</tr>
+<tr>
+<td style="text-align:left">@TestInstance</td>
+<td style="text-align:left">配置测试实例的生命周期</td>
+</tr>
+<tr>
+<td style="text-align:left">@DisplayName</td>
+<td style="text-align:left">自定义显示名称</td>
+</tr>
+<tr>
+<td style="text-align:left">@DisplayNameGeneration</td>
+<td style="text-align:left">自定义显示名称生成器</td>
+</tr>
+<tr>
+<td style="text-align:left">@BeforeEach</td>
+<td style="text-align:left">该方法会在当前类的<code>每一个</code>测试方法<code>之前</code>执行，包括：<code>@Test</code>, <code>@RepeatedTest</code>, <code>@ParameterizedTest</code>, <code>@TestFactory</code>, 与 JUnit 4 的<code>@Before</code> 类似</td>
+</tr>
+<tr>
+<td style="text-align:left">@AfterEach</td>
+<td style="text-align:left">该方法会在当前类的<code>每一个</code>测试方法<code>之后</code>执行，包括：<code>@Test</code>, <code>@RepeatedTest</code>, <code>@ParameterizedTest</code>, <code>@TestFactory</code>, 与 JUnit 4 的<code>@After</code> 类似</td>
+</tr>
+<tr>
+<td style="text-align:left">@BeforeAll</td>
+<td style="text-align:left">该方法在当前类的<code>所有</code>测试方法<code>之前</code>执行，类似于 JUnit 4 的<code>@BeforeClass</code></td>
+</tr>
+<tr>
+<td style="text-align:left">@AfterAll</td>
+<td style="text-align:left">该方法在当前类的<code>所有</code>测试方法<code>之后</code>执行，类似于 JUnit 4 的<code>@AfterClass</code></td>
+</tr>
+<tr>
+<td style="text-align:left">@Tag</td>
+<td style="text-align:left">用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group</td>
+</tr>
+<tr>
+<td style="text-align:left">@Disabled</td>
+<td style="text-align:left">禁用当前测试，类比于 JUnit 4 的<code>@Ignore</code></td>
+</tr>
+<tr>
+<td style="text-align:left">@TempDir</td>
+<td style="text-align:left">通过字段注入或参数注入提供一个临时目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自定义注解">自定义注解</h2>
+<p>比如我们要给一个类的所有测试方法加上一个<code>@Tag(&quot;fast&quot;)</code>，我们可以定义一个新的注解，然后用<code>@FastTest</code>替换<code>@Test</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Target<span style="color:#ff79c6">({</span>ElementType<span style="color:#ff79c6">.</span><span style="color:#50fa7b">TYPE</span><span style="color:#ff79c6">,</span> ElementType<span style="color:#ff79c6">.</span><span style="color:#50fa7b">METHOD</span><span style="color:#ff79c6">})</span>
+@Retention<span style="color:#ff79c6">(</span>RetentionPolicy<span style="color:#ff79c6">.</span><span style="color:#50fa7b">RUNTIME</span><span style="color:#ff79c6">)</span>
+@Test
+@Tag<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;fast&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">public</span> @interface FastTest <span style="color:#ff79c6">{</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="displayname">@DisplayName</h2>
+<p>可以用在 class 和 method 上，测试报告和 IDE 上会使用<code>@DisplayName</code>配置的名称，支持特殊字符和 emoji。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@DisplayName<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;display name demo&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">DisplayNameDemo</span> <span style="color:#ff79c6">{</span>
+
+  @Test
+  @DisplayName<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;simple name test&#34;</span><span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">testSimpleName</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#ff79c6">}</span>
+
+  @Test
+  @DisplayName<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;╯°□°）╯&#34;</span><span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">testSpecialCharacters</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#ff79c6">}</span>
+
+  @Test
+  @DisplayName<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;😱&#34;</span><span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">testWithDisplayNameContainingEmoji</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#ff79c6">}</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="displaynamegeneration">@DisplayNameGeneration</h2>
+<p>只能用在 class 上，如果与<code>@DisplayName</code> 一起使用，<code>@DisplayNameGeneration</code> 不生效。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@DisplayNameGeneration<span style="color:#ff79c6">(</span>DisplayNameGenerator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">ReplaceUnderscores</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">DisplayNameGeneratorDemo</span> <span style="color:#ff79c6">{</span>
+
+  @Test
+  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">test_replace_underscore_with_space</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+
+  <span style="color:#ff79c6">}</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="assertions">Assertions</h2>
+<p>断言在<code>org.junit.jupiter.api.Assertions</code>包下，可以静态导入。</p>
+<p><code>assertEquals</code>和<code>assertTrue</code>的消息放在第三个参数，而不是第一个。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">standardAssertions</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  assertEquals<span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">,</span> 1 <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">);</span>
+  assertEquals<span style="color:#ff79c6">(</span>4<span style="color:#ff79c6">,</span> 2 <span style="color:#ff79c6">*</span> 2<span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;The optional failure message is now the last parameter&#34;</span><span style="color:#ff79c6">);</span>
+  assertTrue<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#39;a&#39;</span> <span style="color:#ff79c6">&lt;</span> <span style="color:#f1fa8c">&#39;b&#39;</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#f1fa8c">&#34;Assertion messages can be lazily evaluated -- &#34;</span>
+      <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;to avoid constructing complex messages unnecessarily.&#34;</span><span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p><code>assertAll</code>表示分组断言，每一个分组都会执行，任何一个分组执行失败都会导致该测试失败。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">groupedAssertions</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// In a grouped assertion all assertions are executed, and all
+</span><span style="color:#6272a4"></span>  <span style="color:#6272a4">// failures will be reported together.
+</span><span style="color:#6272a4"></span>  assertAll<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;person&#34;</span><span style="color:#ff79c6">,</span>
+      <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Jane&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Jane&#34;</span><span style="color:#ff79c6">),</span>
+      <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Doe&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Doe&#34;</span><span style="color:#ff79c6">)</span>
+  <span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>但是同一个分组中（block）的断言之间有前后依赖关系，即如果前面的断言失败了，后面的断言不会执行。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">dependentAssertions</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// Within a code block, if an assertion fails the
+</span><span style="color:#6272a4"></span>  <span style="color:#6272a4">// subsequent code in the same block will be skipped.
+</span><span style="color:#6272a4"></span>  assertAll<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;properties&#34;</span><span style="color:#ff79c6">,</span>
+      <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+        String firstName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Jane&#34;</span><span style="color:#ff79c6">;</span>
+        assertNotNull<span style="color:#ff79c6">(</span>firstName<span style="color:#ff79c6">);</span>
+
+        <span style="color:#6272a4">// Executed only if the previous assertion is valid.
+</span><span style="color:#6272a4"></span>        assertAll<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;first name&#34;</span><span style="color:#ff79c6">,</span>
+            <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertTrue<span style="color:#ff79c6">(</span>firstName<span style="color:#ff79c6">.</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;J&#34;</span><span style="color:#ff79c6">)),</span>
+            <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertTrue<span style="color:#ff79c6">(</span>firstName<span style="color:#ff79c6">.</span><span style="color:#50fa7b">endsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;e&#34;</span><span style="color:#ff79c6">))</span>
+        <span style="color:#ff79c6">);</span>
+      <span style="color:#ff79c6">},</span>
+      <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+        <span style="color:#6272a4">// Grouped assertion, so processed independently
+</span><span style="color:#6272a4"></span>        <span style="color:#6272a4">// of results of first name assertions.
+</span><span style="color:#6272a4"></span>        String lastName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Doe&#34;</span><span style="color:#ff79c6">;</span>
+        assertNotNull<span style="color:#ff79c6">(</span>lastName<span style="color:#ff79c6">);</span>
+
+        <span style="color:#6272a4">// Executed only if the previous assertion is valid.
+</span><span style="color:#6272a4"></span>        assertAll<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;last name&#34;</span><span style="color:#ff79c6">,</span>
+            <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertTrue<span style="color:#ff79c6">(</span>lastName<span style="color:#ff79c6">.</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;D&#34;</span><span style="color:#ff79c6">)),</span>
+            <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> assertTrue<span style="color:#ff79c6">(</span>lastName<span style="color:#ff79c6">.</span><span style="color:#50fa7b">endsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;e&#34;</span><span style="color:#ff79c6">))</span>
+        <span style="color:#ff79c6">);</span>
+      <span style="color:#ff79c6">}</span>
+  <span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p><code>assertThrows</code>测试抛出的异常。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">exceptionTesting</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  Exception exception <span style="color:#ff79c6">=</span> assertThrows<span style="color:#ff79c6">(</span>ArithmeticException<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">,</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> divide<span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">));</span>
+  assertEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;/ by zero&#34;</span><span style="color:#ff79c6">,</span> exception<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getMessage</span><span style="color:#ff79c6">());</span>
+<span style="color:#ff79c6">}</span>
+
+<span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">divide</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> a<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> b<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">/</span> b<span style="color:#ff79c6">;</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p><code>assertTimeout</code>测试超时，<code>assertTimeoutPreemptively</code>表示抢占超时，即如果超时了，方法还没有返回，则立即中断执行。</p>
+<blockquote>
+<p>需要注意的是：<code>assertTimeoutPreemptively</code>中的参数方法 Executable 是在独立的线程中执行的，而不是在调用线程中执行，因此如果 executable 中的代码依赖 ThreadLocal，可能会导致意料之外的结果。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">timeoutNotExceeded</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// The following assertion succeeds.
+</span><span style="color:#6272a4"></span>  assertTimeout<span style="color:#ff79c6">(</span>ofMinutes<span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">),</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// Perform task that takes less than 2 minutes.
+</span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">});</span>
+<span style="color:#ff79c6">}</span>
+
+@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">timeoutNotExceededWithResult</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// The following assertion succeeds, and returns the supplied object.
+</span><span style="color:#6272a4"></span>  String actualResult <span style="color:#ff79c6">=</span> assertTimeout<span style="color:#ff79c6">(</span>ofMinutes<span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">),</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#f1fa8c">&#34;a result&#34;</span><span style="color:#ff79c6">);</span>
+  assertEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;a result&#34;</span><span style="color:#ff79c6">,</span> actualResult<span style="color:#ff79c6">);</span>
+<span style="color:#ff79c6">}</span>
+
+@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">timeoutExceeded</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// The following assertion fails with an error message similar to:
+</span><span style="color:#6272a4"></span>  <span style="color:#6272a4">// execution exceeded timeout of 10 ms by 91 ms
+</span><span style="color:#6272a4"></span>  assertTimeout<span style="color:#ff79c6">(</span>ofMillis<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">),</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// Simulate task that takes more than 10 ms.
+</span><span style="color:#6272a4"></span>    Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sleep</span><span style="color:#ff79c6">(</span>100<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">});</span>
+<span style="color:#ff79c6">}</span>
+
+@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">timeoutExceededWithPreemptiveTermination</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// The following assertion fails with an error message similar to:
+</span><span style="color:#6272a4"></span>  <span style="color:#6272a4">// execution timed out after 10 ms
+</span><span style="color:#6272a4"></span>  assertTimeoutPreemptively<span style="color:#ff79c6">(</span>ofMillis<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">),</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+    <span style="color:#6272a4">// Simulate task that takes more than 10 ms.
+</span><span style="color:#6272a4"></span>    Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sleep</span><span style="color:#ff79c6">(</span>100<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">});</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><p>第三方测试库如<code>Hamcrest</code>可以继续使用，但 JUnit 5 没有提供方法可以接受<code>Matcher</code>作为参数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">assertWithHamcrestMatcher</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    assertThat<span style="color:#ff79c6">(</span>calculator<span style="color:#ff79c6">.</span><span style="color:#50fa7b">subtract</span><span style="color:#ff79c6">(</span>4<span style="color:#ff79c6">,</span> 1<span style="color:#ff79c6">),</span> is<span style="color:#ff79c6">(</span>equalTo<span style="color:#ff79c6">(</span>3<span style="color:#ff79c6">)));</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="disabled">@Disabled</h2>
+<p>可以用在 class 和 method 上，强烈建议提供原因描述。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Disabled<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Disabled until bug #99 has been fixed&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">DisableDemo</span> <span style="color:#ff79c6">{</span>
+
+  @Disabled<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Disabled until bug #42 has been resolved&#34;</span><span style="color:#ff79c6">)</span>
+  @Test
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">testWillBeSkipped</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#ff79c6">}</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="条件执行">条件执行</h2>
+<p>支持包括操作系统类型、Java 运行时版本、系统变量、环境变量、脚本（实验阶段）等的条件执行，具体见示例：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+@EnabledOnOs<span style="color:#ff79c6">({</span>LINUX<span style="color:#ff79c6">,</span> MAC<span style="color:#ff79c6">})</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onLinuxOrMac</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+
+@Test
+@DisabledOnJre<span style="color:#ff79c6">({</span>JAVA_9<span style="color:#ff79c6">,</span> JAVA_10<span style="color:#ff79c6">})</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onJava9Or10</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+
+@Test
+@EnabledIfSystemProperty<span style="color:#ff79c6">(</span>named <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;os.arch&#34;</span><span style="color:#ff79c6">,</span> matches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;.*64.*&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onlyOn64BitArchitectures</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+
+@Test
+@EnabledIfEnvironmentVariable<span style="color:#ff79c6">(</span>named <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;ENV&#34;</span><span style="color:#ff79c6">,</span> matches <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;staging-server&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">onlyOnStagingServer</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+
+@Test <span style="color:#6272a4">// Static JavaScript expression.
+</span><span style="color:#6272a4"></span>@EnabledIf<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;2 * 3 == 6&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">willBeExecuted</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+
+@RepeatedTest<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span> <span style="color:#6272a4">// Dynamic JavaScript expression.
+</span><span style="color:#6272a4"></span>@DisabledIf<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Math.random() &lt; 0.314159&#34;</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">mightNotBeExecuted</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="测试实例生命周期">测试实例生命周期</h2>
+<p>为了保证测试方法之间相互隔离，默认情况下，对每个测试方法，都会创建一个测试类的实例，即<code>Lifecycle.PER_METHOD</code>。如果我们希望所有测试方法共享同一个类实例，在测试类上添加注解：<code>@TestInstance(Lifecycle.PER_CLASS)</code>，这种情况下，所有测试方法共享测试类的实例数据。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@TestMethodOrder<span style="color:#ff79c6">(</span>OrderAnnotation<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">)</span>
+@TestInstance<span style="color:#ff79c6">(</span>Lifecycle<span style="color:#ff79c6">.</span><span style="color:#50fa7b">PER_CLASS</span><span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">OrderedTestsDemo</span> <span style="color:#ff79c6">{</span>
+  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">int</span> count <span style="color:#ff79c6">=</span> 1<span style="color:#ff79c6">;</span>
+
+  @Test
+  @Order<span style="color:#ff79c6">(</span>4<span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">nullValues</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    assertEquals<span style="color:#ff79c6">(</span>4<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">++</span>count<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+
+  @Test
+  @Order<span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">emptyValues</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    assertEquals<span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">++</span>count<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+
+  @Test
+  @Order<span style="color:#ff79c6">(</span>3<span style="color:#ff79c6">)</span>
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">validValues</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+    assertEquals<span style="color:#ff79c6">(</span>3<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">++</span>count<span style="color:#ff79c6">);</span>
+  <span style="color:#ff79c6">}</span>
+
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="repeatedtest">@RepeatedTest</h2>
+<p>将测试方法重复执行多次。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@RepeatedTest<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">repeatedTest</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+<span style="color:#6272a4">// ...
+</span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="parameterizedtest">@ParameterizedTest</h2>
+<p>使用不同的参数，重复执行测试，每一个参数的执行结果都会单独给出。需要提供一个数据源，Junit 5 提供的有：<code>@ValueSource</code>, <code>@NullAndEmptySource</code>, <code>@NullSource</code>, <code>@EmptySource</code>, <code>@EnumSource</code>, <code>@MethodSource</code>, <code>@CsvSource</code>, <code>@CsvFileSource</code>, <code>@ArgumentsSource</code>。该特性目前处于试验阶段。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@ParameterizedTest
+@NullSource
+@EmptySource
+@ValueSource<span style="color:#ff79c6">(</span>strings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;racecar&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;radar&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;able was I ere I saw elba&#34;</span><span style="color:#ff79c6">,})</span>
+<span style="color:#8be9fd">void</span> <span style="color:#50fa7b">palindromes</span><span style="color:#ff79c6">(</span>String candidate<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+  assertTrue<span style="color:#ff79c6">(</span>StringUtils<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isNotBlank</span><span style="color:#ff79c6">(</span>candidate<span style="color:#ff79c6">));</span>
+<span style="color:#ff79c6">}</span>
+</code></pre></div><h2 id="tempdir">@TempDir</h2>
+<p>默认提供一个临时目录用于测试。<code>@TempDir</code>可以用在字段上，也可以用在方法参数上，变量类型必须是<code>java.nio.file.Path</code> 或者 <code>java.io.File</code>，用在字段上，可以所有测试共享，用在测试方法参数上，由测试方法独立使用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2"><code class="language-java" data-lang="java">@Test
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">writeItemsToFile</span><span style="color:#ff79c6">(</span>@TempDir Path tempDir<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">throws</span> IOException <span style="color:#ff79c6">{</span>
+    Path file <span style="color:#ff79c6">=</span> tempDir<span style="color:#ff79c6">.</span><span style="color:#50fa7b">resolve</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;test.txt&#34;</span><span style="color:#ff79c6">);</span>
+
+    Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">write</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">,</span> singletonList<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">));</span>
+
+    assertEquals<span style="color:#ff79c6">(</span>singletonList<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">),</span> Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">readAllLines</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">));</span>
+  <span style="color:#ff79c6">}</span>
+
+
+  @TempDir
+  <span style="color:#8be9fd;font-style:italic">static</span> Path sharedTempDir<span style="color:#ff79c6">;</span>
+
+  @Test
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">writeItemsToFile</span><span style="color:#ff79c6">()</span> <span style="color:#8be9fd;font-style:italic">throws</span> IOException <span style="color:#ff79c6">{</span>
+    Path file <span style="color:#ff79c6">=</span> sharedTempDir<span style="color:#ff79c6">.</span><span style="color:#50fa7b">resolve</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;tmp.txt&#34;</span><span style="color:#ff79c6">);</span>
+
+    Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">write</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">,</span> singletonList<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">));</span>
+
+    assertEquals<span style="color:#ff79c6">(</span>singletonList<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">),</span> Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">readAllLines</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">));</span>
+  <span style="color:#ff79c6">}</span>
+
+  @Test
+  <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">writeOtherItemsToFile</span><span style="color:#ff79c6">()</span> <span style="color:#8be9fd;font-style:italic">throws</span> IOException <span style="color:#ff79c6">{</span>
+    Path file <span style="color:#ff79c6">=</span> sharedTempDir<span style="color:#ff79c6">.</span><span style="color:#50fa7b">resolve</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;tmp.txt&#34;</span><span style="color:#ff79c6">);</span>
+
+    Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">write</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">,</span> singletonList<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;world&#34;</span><span style="color:#ff79c6">));</span>
+
+    assertEquals<span style="color:#ff79c6">(</span>Lists<span style="color:#ff79c6">.</span><span style="color:#50fa7b">newArrayList</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;world&#34;</span><span style="color:#ff79c6">),</span> Files<span style="color:#ff79c6">.</span><span style="color:#50fa7b">readAllLines</span><span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">));</span>
+  <span style="color:#ff79c6">}</span>
+</code></pre></div><ul>
+<li>参考：<a href="https://junit.org/junit5/docs/current/user-guide/">JUnit 5 User Guide</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        
+        
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+        <p>Enjoy coding, friends!</p>
+      
+      
+        ©
+        
+        2021
+         Daniel Guo 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+    </main>
+
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+    
+
+  </body>
+
+</html>

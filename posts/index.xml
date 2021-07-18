@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Just Coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Jul 2021 08:22:29 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Jul 2021 17:06:23 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scala: Basic Types and Operations</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</link>
+      <pubDate>Sun, 18 Jul 2021 17:06:23 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</guid>
+      <description>Basic types Basic types of Scala：
+Byte, Short, Int, Long, Char, String, Float, Double, Boolean scala&amp;gt; val aFloat = 1.2345F val aFloat: Float = 1.2345 scala&amp;gt; val aDouble = 3E5 val aDouble: Double = 300000.0 scala&amp;gt; val anotherDouble = 1.2345D val anotherDouble: Double = 1.2345 A string literal is a composed of characters surrounded by double quotes.
+A raw string starts and ends with three double quotation marks in a row(&amp;quot;&amp;quot;&amp;quot;).</description>
+    </item>
+    
     <item>
       <title>Scala: Basics of class and object</title>
       <link>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</link>

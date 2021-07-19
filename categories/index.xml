@@ -6,7 +6,16 @@
     <description>Recent content in Categories on Just Coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 18 Jul 2021 17:06:23 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Jul 2021 21:55:40 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>English</title>
+      <link>https://nkcoder.github.io/categories/english/</link>
+      <pubDate>Mon, 19 Jul 2021 21:55:40 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/english/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Scala</title>
       <link>https://nkcoder.github.io/categories/scala/</link>

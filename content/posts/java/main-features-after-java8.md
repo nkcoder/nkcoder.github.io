@@ -1,8 +1,10 @@
 ---
-title: "Java refresh: main Features After Java8"
+title: "Java refresh: main features after Java8"
 date: 2023-08-31T21:55:36+10:00
 draft: false
 ---
+
+Just take some time to refresh my Java knowledge, especially the new features after Java 8. 
 
 ## 1. JEP 413: Code Snippets in Java API Documentation (@18)
 

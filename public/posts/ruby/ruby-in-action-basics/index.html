@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Ruby in action: basics · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="pring vs puts vs p Link to heading ## print: no new line at the end ## puts: new line at the end ## p: print the argument as it is and returns the argument print &#39;Good morning.&#39; puts &#39;Hello World!&#39; puts &#39;Come on.&#39; p &#39;Hello World!&#39; p [&#39;one&#39;, &#39;two&#39;, 3] ## output: # Good morning.Hello World! # Come on. # &#34;Hello World!&#34; # [&#34;one&#34;, &#34;two&#34;, 3] string Link to heading ## single quote vs double quote, single quote doesn&#39;t support interpolation first_name = &#39;Michael&#39; last_name = &#39;Dent&#39; puts &#34;first name is #{first_name}, last name is #{last_name}&#34; puts &#39;first name is #{first_name}, last name is #{last_name}&#39; ## output # first name is Michael, last name is Dent # first name is #{first_name}, last name is #{last_name} ## the methods will return a new copy hello = &#39;Hello World!">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ruby in action: basics"/>
+<meta name="twitter:description" content="pring vs puts vs p Link to heading ## print: no new line at the end ## puts: new line at the end ## p: print the argument as it is and returns the argument print &#39;Good morning.&#39; puts &#39;Hello World!&#39; puts &#39;Come on.&#39; p &#39;Hello World!&#39; p [&#39;one&#39;, &#39;two&#39;, 3] ## output: # Good morning.Hello World! # Come on. # &#34;Hello World!&#34; # [&#34;one&#34;, &#34;two&#34;, 3] string Link to heading ## single quote vs double quote, single quote doesn&#39;t support interpolation first_name = &#39;Michael&#39; last_name = &#39;Dent&#39; puts &#34;first name is #{first_name}, last name is #{last_name}&#34; puts &#39;first name is #{first_name}, last name is #{last_name}&#39; ## output # first name is Michael, last name is Dent # first name is #{first_name}, last name is #{last_name} ## the methods will return a new copy hello = &#39;Hello World!"/>
+
+<meta property="og:title" content="Ruby in action: basics" />
+<meta property="og:description" content="pring vs puts vs p Link to heading ## print: no new line at the end ## puts: new line at the end ## p: print the argument as it is and returns the argument print &#39;Good morning.&#39; puts &#39;Hello World!&#39; puts &#39;Come on.&#39; p &#39;Hello World!&#39; p [&#39;one&#39;, &#39;two&#39;, 3] ## output: # Good morning.Hello World! # Come on. # &#34;Hello World!&#34; # [&#34;one&#34;, &#34;two&#34;, 3] string Link to heading ## single quote vs double quote, single quote doesn&#39;t support interpolation first_name = &#39;Michael&#39; last_name = &#39;Dent&#39; puts &#34;first name is #{first_name}, last name is #{last_name}&#34; puts &#39;first name is #{first_name}, last name is #{last_name}&#39; ## output # first name is Michael, last name is Dent # first name is #{first_name}, last name is #{last_name} ## the methods will return a new copy hello = &#39;Hello World!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-04T22:37:14+08:00" />
+<meta property="article:modified_time" content="2022-02-04T22:37:14+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/">
+              Ruby in action: basics
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-02-04T22:37:14&#43;08:00">
+                February 4, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/ruby/">ruby</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="pring-vs-puts-vs-p">
+  pring vs puts vs p
+  <a class="heading-link" href="#pring-vs-puts-vs-p">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">## print: no new line at the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## puts: new line at the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## p: print the argument as it is and returns the argument</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#39;Good morning.&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Hello World!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Come on.&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#f1fa8c">&#39;Hello World!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;one&#39;</span>, <span style="color:#f1fa8c">&#39;two&#39;</span>, <span style="color:#bd93f9">3</span><span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Good morning.Hello World!</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Come on.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># &#34;Hello World!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># [&#34;one&#34;, &#34;two&#34;, 3]</span>
+</span></span></code></pre></div><h2 id="string">
+  string
+  <a class="heading-link" href="#string">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">## single quote vs double quote, single quote doesn&#39;t support interpolation</span>
+</span></span><span style="display:flex;"><span>first_name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Michael&#39;</span>
+</span></span><span style="display:flex;"><span>last_name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Dent&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;first name is </span><span style="color:#f1fa8c">#{</span>first_name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, last name is </span><span style="color:#f1fa8c">#{</span>last_name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;first name is #{first_name}, last name is #{last_name}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># first name is Michael, last name is Dent</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># first name is #{first_name}, last name is #{last_name}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## the methods will return a new copy</span>
+</span></span><span style="display:flex;"><span>hello <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Hello World!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;upcase: </span><span style="color:#f1fa8c">#{</span>hello<span style="color:#ff79c6">.</span>upcase<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;capitalize: </span><span style="color:#f1fa8c">#{</span>hello<span style="color:#ff79c6">.</span>capitalize<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;original: </span><span style="color:#f1fa8c">#{</span>hello<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># HELLO WORLD!</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hello world!</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hello World!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## string escape</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#f1fa8c">&#39;welcome, #{first_name}&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#f1fa8c">&#39;welcome, \&#39;how are you?\&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># &#34;welcome, \#{first_name}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># &#34;welcome, &#39;how are you?&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## other string methods</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;hello&#39;</span><span style="color:#ff79c6">.</span>reverse
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;hello&#39;</span><span style="color:#ff79c6">.</span>empty?
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;&#39;</span><span style="color:#ff79c6">.</span>empty?
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;hello&#39;</span><span style="color:#ff79c6">.</span>nil?
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Welcome to the ruby world&#39;</span><span style="color:#ff79c6">.</span>sub(<span style="color:#f1fa8c">&#39;the ruby&#39;</span>, <span style="color:#f1fa8c">&#39;the Scala&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># olleh</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Welcome to the Scala world</span>
+</span></span></code></pre></div><h2 id="numbers">
+  numbers
+  <a class="heading-link" href="#numbers">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">############# math operators ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## +, -, *, /, **, %</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">%</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">3</span><span style="color:#ff79c6">.</span><span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">.</span><span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 13</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 7</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 30</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 3.3333333333333335</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 3.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# number/string conversion ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## to_s, to_i, to_f</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">#{</span><span style="color:#bd93f9">30</span><span style="color:#ff79c6">.</span>to_s <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;abc&#39;</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;50&#39;</span><span style="color:#ff79c6">.</span>to_i <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;50&#39;</span><span style="color:#ff79c6">.</span>to_f <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 30abc</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 150</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 100.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# the `times` method of Integer ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## `times`: Iterates the given block int times, passing in values from zero to int - 1.</span>
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>times <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">|</span>i<span style="color:#ff79c6">|</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">print</span> i, <span style="color:#f1fa8c">&#39; &#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>times { <span style="color:#ff79c6">|</span>i<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">print</span> i, <span style="color:#f1fa8c">&#39; &#39;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 0 1 2 3 4 5 6 7 8 9</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 0 1 2 3 4 5 6 7 8 9</span>
+</span></span></code></pre></div><h2 id="variables">
+  variables
+  <a class="heading-link" href="#variables">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">## convention is to use under_score(_) between words</span>
+</span></span><span style="display:flex;"><span>first_name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Michael&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> first_name
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Michael</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## variables names can be reused, and re-assigned</span>
+</span></span><span style="display:flex;"><span>house_number <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">501</span>
+</span></span><span style="display:flex;"><span>house_number <span style="color:#ff79c6">=</span> house_number <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> house_number
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 504</span>
+</span></span></code></pre></div><h2 id="operators">
+  operators
+  <a class="heading-link" href="#operators">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">############# comparison operators ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## ==, !=, &gt;, &gt;=, &lt;, &lt;=</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## ===: equivalent to ==, but no recommend</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## eql?: compares value and type</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">9</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Michael&#39;</span> <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;michael&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>to_f
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span> <span style="color:#ff79c6">===</span> <span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>to_f
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>eql?(<span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>to_f)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;-&#39;</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">30</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# assignment operators ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## =, +=, -=, *=, /=, %=, **=</span>
+</span></span><span style="display:flex;"><span>num <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> num <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> num <span style="color:#ff79c6">-=</span> <span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> num <span style="color:#ff79c6">*=</span> <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> num <span style="color:#ff79c6">/=</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> num <span style="color:#f1fa8c">%= 3
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">puts num **=</span> <span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 20</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 15</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 30</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 1</span>
+</span></span></code></pre></div><h2 id="get-user-inputs">
+  get user inputs
+  <a class="heading-link" href="#get-user-inputs">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">############# get user input with gets ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## similar to puts, gets also has a new line at the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## `chomp` method will remove the new line at the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## you need to convert the input to your expected type using conversion methods like `to_i`</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;What&#39;s your name: &#34;</span>
+</span></span><span style="display:flex;"><span>your_name <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">gets</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;Hello, </span><span style="color:#f1fa8c">#{</span>your_name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, how are you?&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#34;What&#39;s your name again: &#34;</span>
+</span></span><span style="display:flex;"><span>your_name2 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">gets</span><span style="color:#ff79c6">.</span>chomp
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;Hello, </span><span style="color:#f1fa8c">#{</span>your_name2<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, how are you?&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span> <span style="color:#f1fa8c">&#39;Enter a number: &#39;</span>
+</span></span><span style="display:flex;"><span>your_number <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">gets</span><span style="color:#ff79c6">.</span>chomp<span style="color:#ff79c6">.</span>to_i
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;your input multiply 2 is </span><span style="color:#f1fa8c">#{</span>your_number <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">2</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># What&#39;s your name: Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hello, Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># , how are you?</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># What&#39;s your name again: Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hello, Michael, how are you?</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Enter a number: 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># your input multiply 2 is 20</span>
+</span></span></code></pre></div><h2 id="conditional-statements">
+  conditional statements
+  <a class="heading-link" href="#conditional-statements">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4"># frozen_string_literal: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;../util&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# if/else conditional statements ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## if...elsif...else</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;if..elsif..else&#39;</span>)
+</span></span><span style="display:flex;"><span>guess <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (guess <span style="color:#ff79c6">%</span> <span style="color:#bd93f9">3</span>)<span style="color:#ff79c6">.</span>zero?
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;your guess is dividable by 3&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">elsif</span> (guess <span style="color:#ff79c6">%</span> <span style="color:#bd93f9">5</span>)<span style="color:#ff79c6">.</span>zero?
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;your guess is dividable by 5&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;bad guess&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># your guess is dividable by 5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### you can use &amp;&amp;, || to combine conditions</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;&amp;&amp;, ||&#39;</span>)
+</span></span><span style="display:flex;"><span>first_condition <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>second_condition <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> first_condition <span style="color:#ff79c6">&amp;&amp;</span> second_condition
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;both are true&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">elsif</span> first_condition <span style="color:#ff79c6">||</span> second_condition
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;at least one is true&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;both are false&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># at least one is true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### if and unless</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># if and unless are opposite</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;if and unless&#39;</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span>)<span style="color:#ff79c6">.</span>each <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">|</span>num<span style="color:#ff79c6">|</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;num is even&#39;</span> <span style="color:#ff79c6">if</span> num<span style="color:#ff79c6">.</span>even?
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;num is odd&#39;</span> <span style="color:#ff79c6">unless</span> num<span style="color:#ff79c6">.</span>even?
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># num is odd</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># num is even</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># num is odd</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># num is even</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># num is odd</span>
+</span></span></code></pre></div><h3 id="references">
+  References
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="http://ruby-for-beginners.rubymonstas.org/objects/classes.html"  class="external-link" target="_blank" rel="noopener">ruby-for-beginners</a></li>
+<li><a href="https://www.udemy.com/course/the-complete-ruby-on-rails-developer-course/"  class="external-link" target="_blank" rel="noopener">The Complete Ruby on Rails Developer Course</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

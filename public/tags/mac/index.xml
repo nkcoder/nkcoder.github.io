@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mac on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/tags/mac/</link>
+    <description>Recent content in mac on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Feb 2021 20:44:51 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mac中设置应用在TouchBar上默认显示F1～F12功能键</title>
+      <link>https://nkcoder.github.io/posts/mac-touchbar-functions-keys/</link>
+      <pubDate>Thu, 25 Feb 2021 20:44:51 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/mac-touchbar-functions-keys/</guid>
+      <description>在带TouchBar的Mac上，不同的app，TouchBar上的快捷功能是不同的。对于编程的同学来说，F1～F12的功能键太常用了，如果每次debug/run都需要同时按住fn去切换是极不方便的。
+Mac支持设置在某些app里，TouchBar默认显示F1～F12，System Preferene -&amp;gt; Keyboard -&amp;gt; Shortcuts：将对应的app添加到Function Keys中去即可：</description>
+    </item>
+    
+  </channel>
+</rss>

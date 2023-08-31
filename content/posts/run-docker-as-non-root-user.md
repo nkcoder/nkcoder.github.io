@@ -1,0 +1,40 @@
+---
+title: 非root用户运行docker命令
+date: 2020-02-15T22:38:37+08:00
+tags:
+- Docker
+draft: false
+---
+
+在Linux上安装Docker后，如果当前登陆用户不是root（一般建议使用普通用户），运行docker命令会报错：
+
+    [ec2-user@ip ~]$ docker ps
+    Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/json: dial unix /var/run/docker.sock: connect: permission denied
+
+如果希望以非root用户运行docker命令，需要将用户添加到docker用户组中。
+
+在安装docker的时候，一般已经默认创建了docker用户组。可以先判断下docker用户组是否存在：
+
+    $ [ec2-user@ip ~]$ cat /etc/group | grep docker
+    docker:x:993:ec2-user
+
+如果docker用户组不存在，先创建：
+
+    $ sudo groupadd docker
+
+然后将当前用户添加到docker用户组：
+
+    [ec2-user@ip ~]$ sudo usermod -aG docker ${USER}
+
+然后注销重登陆使用户组生效，或者使用以下命令直接登陆到docker组中：
+
+    [ec2-user@ip ~]$ newgrp docker
+
+最后检查下，普通用户是否可以使用docker命令：
+
+    [ec2-user@ip ~]$ docker ps
+    CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+**参考：**
+
+- [How to fix docker: Got permission denied issue](https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue)

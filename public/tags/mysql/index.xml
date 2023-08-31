@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/tags/mysql/</link>
+    <description>Recent content in MySQL on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 15 Feb 2020 13:36:04 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL常用的DDL操作</title>
+      <link>https://nkcoder.github.io/posts/mysql-migration-examples/</link>
+      <pubDate>Sat, 15 Feb 2020 13:36:04 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/mysql-migration-examples/</guid>
+      <description>在web应用中，由于需求的变更或者当初设计的不合理，数据库设计难免需要同步变更。比如，在SpringBoot中，一般用Flyway或者Liquibase做数据库的迁移和版本控制，在Play中使用Evolution做数据库迁移。
+这里将常用的MySQL的DDL操作总结录下，主要用于备查。
+1. create table Link to heading USE `freeimmi`; CREATE TABLE IF NOT EXISTS `user` ( `id` BIGINT NOT NULL AUTO_INCREMENT, `name` VARCHAR(32) NOT NULL, `email` VARCHAR(32) NOT NULL, `password` VARCHAR(128) NOT NULL, `status` VARCHAR(16) NOT NULL, `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `idx_email` (`email`), KEY `idx_status` (`status`) ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci; 2. add column Link to heading USE `freeimmi`; ALTER TABLE `topic` ADD COLUMN `logo_url` VARCHAR(64) NULL AFTER `name`, ADD COLUMN `description` VARCHAR(64) DEFAULT &amp;#39;&amp;#39; AFTER `logo_url`; 3.</description>
+    </item>
+    
+  </channel>
+</rss>

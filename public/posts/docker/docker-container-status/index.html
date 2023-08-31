@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker容器：查看容器状态 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="本文涉及到的主要命令如下：
+docker container inspect：查看容器的详细信息 docker container log：查看容器的日志 docker container stats：查看容器的实时统计 查看容器的详细信息 Link to heading docker container inspect或docker inspect命令会显示容器的详细信息，默认以JSON格式输出：
+➜ ~ docker container inspect 3f3c3d02c947 [ { &#34;Id&#34;: &#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&#34;, &#34;Created&#34;: &#34;2020-06-01T22:58:05.916162Z&#34;, &#34;Path&#34;: &#34;/tini&#34;, &#34;Args&#34;: [ &#34;--&#34;, &#34;/usr/local/bin/docker-entrypoint.sh&#34;, &#34;eswrapper&#34; ], ... } ... ] 默认的输出信息很多，可以通过-f, --format格式化输出：
+➜ ~ docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.LogPath}}&#39; 3f3c3d02c947 /var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log 如果只想查看某个子节点，比如NetworkSettings下的Ports，因为Ports本身是个对象，默认只会显示节点中值的集合，可以使用模版函数json，将对象以json格式输出：
+➜ ~ docker inspect --format=&#39;{{json .">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker容器：查看容器状态"/>
+<meta name="twitter:description" content="本文涉及到的主要命令如下：
+docker container inspect：查看容器的详细信息 docker container log：查看容器的日志 docker container stats：查看容器的实时统计 查看容器的详细信息 Link to heading docker container inspect或docker inspect命令会显示容器的详细信息，默认以JSON格式输出：
+➜ ~ docker container inspect 3f3c3d02c947 [ { &#34;Id&#34;: &#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&#34;, &#34;Created&#34;: &#34;2020-06-01T22:58:05.916162Z&#34;, &#34;Path&#34;: &#34;/tini&#34;, &#34;Args&#34;: [ &#34;--&#34;, &#34;/usr/local/bin/docker-entrypoint.sh&#34;, &#34;eswrapper&#34; ], ... } ... ] 默认的输出信息很多，可以通过-f, --format格式化输出：
+➜ ~ docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.LogPath}}&#39; 3f3c3d02c947 /var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log 如果只想查看某个子节点，比如NetworkSettings下的Ports，因为Ports本身是个对象，默认只会显示节点中值的集合，可以使用模版函数json，将对象以json格式输出：
+➜ ~ docker inspect --format=&#39;{{json ."/>
+
+<meta property="og:title" content="Docker容器：查看容器状态" />
+<meta property="og:description" content="本文涉及到的主要命令如下：
+docker container inspect：查看容器的详细信息 docker container log：查看容器的日志 docker container stats：查看容器的实时统计 查看容器的详细信息 Link to heading docker container inspect或docker inspect命令会显示容器的详细信息，默认以JSON格式输出：
+➜ ~ docker container inspect 3f3c3d02c947 [ { &#34;Id&#34;: &#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&#34;, &#34;Created&#34;: &#34;2020-06-01T22:58:05.916162Z&#34;, &#34;Path&#34;: &#34;/tini&#34;, &#34;Args&#34;: [ &#34;--&#34;, &#34;/usr/local/bin/docker-entrypoint.sh&#34;, &#34;eswrapper&#34; ], ... } ... ] 默认的输出信息很多，可以通过-f, --format格式化输出：
+➜ ~ docker inspect --format=&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&#39;{{.LogPath}}&#39; 3f3c3d02c947 /var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log 如果只想查看某个子节点，比如NetworkSettings下的Ports，因为Ports本身是个对象，默认只会显示节点中值的集合，可以使用模版函数json，将对象以json格式输出：
+➜ ~ docker inspect --format=&#39;{{json ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/docker-container-status/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-07-09T06:52:13+08:00" />
+<meta property="article:modified_time" content="2020-07-09T06:52:13+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/docker-container-status/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/docker-container-status/">
+              Docker容器：查看容器状态
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-07-09T06:52:13&#43;08:00">
+                July 9, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>本文涉及到的主要命令如下：</p>
+<ul>
+<li><code>docker container inspect</code>：查看容器的详细信息</li>
+<li><code>docker container log</code>：查看容器的日志</li>
+<li><code>docker container stats</code>：查看容器的实时统计</li>
+</ul>
+<h2 id="查看容器的详细信息">
+  查看容器的详细信息
+  <a class="heading-link" href="#%e6%9f%a5%e7%9c%8b%e5%ae%b9%e5%99%a8%e7%9a%84%e8%af%a6%e7%bb%86%e4%bf%a1%e6%81%af">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><code>docker container inspect</code>或<code>docker inspect</code>命令会显示容器的详细信息，默认以<code>JSON</code>格式输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>➜  ~ docker container inspect <span style="color:#bd93f9">3</span>f<span style="color:#bd93f9">3</span>c<span style="color:#bd93f9">3</span>d<span style="color:#bd93f9">02</span>c<span style="color:#bd93f9">947</span>
+</span></span><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;Id&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;Created&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:05.916162Z&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;Path&#34;</span>: <span style="color:#f1fa8c">&#34;/tini&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;Args&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;--&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;/usr/local/bin/docker-entrypoint.sh&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;eswrapper&#34;</span>
+</span></span><span style="display:flex;"><span>        ],
+</span></span><span style="display:flex;"><span>      ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>默认的输出信息很多，可以通过<code>-f, --format</code>格式化输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker inspect --format<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39;</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span>172.17.0.2
+</span></span><span style="display:flex;"><span>➜  ~ docker inspect --format<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&#39;</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span>172.17.0.2
+</span></span><span style="display:flex;"><span>➜  ~ docker inspect --format<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;{{.LogPath}}&#39;</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span>/var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log
+</span></span></code></pre></div><p>如果只想查看某个子节点，比如<code>NetworkSettings</code>下的<code>Ports</code>，因为<code>Ports</code>本身是个对象，默认只会显示节点中值的集合，可以使用模版函数<code>json</code>，将对象以json格式输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker inspect --format<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;{{json .NetworkSettings.Ports}}&#39;</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;9200/tcp&#34;</span>:<span style="color:#ff79c6">[{</span><span style="color:#f1fa8c">&#34;HostIp&#34;</span>:<span style="color:#f1fa8c">&#34;0.0.0.0&#34;</span>,<span style="color:#f1fa8c">&#34;HostPort&#34;</span>:<span style="color:#f1fa8c">&#34;9200&#34;</span><span style="color:#ff79c6">}]</span>,<span style="color:#f1fa8c">&#34;9300/tcp&#34;</span>:<span style="color:#ff79c6">[{</span><span style="color:#f1fa8c">&#34;HostIp&#34;</span>:<span style="color:#f1fa8c">&#34;0.0.0.0&#34;</span>,<span style="color:#f1fa8c">&#34;HostPort&#34;</span>:<span style="color:#f1fa8c">&#34;9300&#34;</span><span style="color:#ff79c6">}]}</span>
+</span></span></code></pre></div><h2 id="查看容器的运行日志">
+  查看容器的运行日志
+  <a class="heading-link" href="#%e6%9f%a5%e7%9c%8b%e5%ae%b9%e5%99%a8%e7%9a%84%e8%bf%90%e8%a1%8c%e6%97%a5%e5%bf%97">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><code>docker container logs</code>或<code>docker logs</code>可以查看容器的日志。</p>
+<blockquote>
+<p>该命令仅适用于使用<code>json-file</code>和<code>journald</code>作为日志驱动的容器。</p>
+</blockquote>
+<p>常用的参数说明如下：</p>
+<ul>
+<li><code>--tail</code>: 显示最新的多少行日志，默认是所有</li>
+<li><code>-f, --follow</code>: 动态显示更新的日志</li>
+<li><code>-t, --timestap</code>: 显示每行日志的时间戳</li>
+<li><code>details</code>: 显示额外的详细信息</li>
+<li><code>--since</code>: 仅显示某个时间点（比如：2020-06-02T10:23:37）之后的日志，或者使用相对值（42m表示42分钟）</li>
+<li><code>--until</code>: 仅显示某个时间点（比如：2020-06-02T10:23:37）之前的日志，或者使用相对值（42m表示42分钟）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker logs 3f3c3d02c947
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:11,829Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.e.NodeEnvironment&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;using [1] data paths, mounts [[/ (overlay)]], net usable_space [49.5gb], net total_space [58.4gb], types [overlay]&#34;</span> <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:11,837Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.e.NodeEnvironment&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;heap size [1gb], compressed ordinary object pointers [true]&#34;</span> <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker logs -f --tail <span style="color:#bd93f9">3</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:27,353Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.x.i.a.TransportPutLifecycleAction&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;adding index lifecycle policy [slm-history-ilm-policy]&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.uuid&#34;</span>: <span style="color:#f1fa8c">&#34;q8H8WMzpS6qMLzP1IgTjGQ&#34;</span>, <span style="color:#f1fa8c">&#34;node.id&#34;</span>: <span style="color:#f1fa8c">&#34;sTkmBkS4QwG4h4IaWBMzQQ&#34;</span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:27,480Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.l.LicenseService&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;license [d7cc442a-9316-4f91-8547-5c75384da38b] mode [basic] - valid&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.uuid&#34;</span>: <span style="color:#f1fa8c">&#34;q8H8WMzpS6qMLzP1IgTjGQ&#34;</span>, <span style="color:#f1fa8c">&#34;node.id&#34;</span>: <span style="color:#f1fa8c">&#34;sTkmBkS4QwG4h4IaWBMzQQ&#34;</span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:27,482Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.x.s.s.SecurityStatusChangeListener&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;Active license is now [BASIC]; Security is disabled&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.uuid&#34;</span>: <span style="color:#f1fa8c">&#34;q8H8WMzpS6qMLzP1IgTjGQ&#34;</span>, <span style="color:#f1fa8c">&#34;node.id&#34;</span>: <span style="color:#f1fa8c">&#34;sTkmBkS4QwG4h4IaWBMzQQ&#34;</span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker logs -t --since <span style="color:#f1fa8c">&#39;2020-06-01T22:58:27.483306900Z&#39;</span> 3f3c3d02c947
+</span></span><span style="display:flex;"><span>2020-06-01T22:58:27.483306900Z <span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;type&#34;</span>: <span style="color:#f1fa8c">&#34;server&#34;</span>, <span style="color:#f1fa8c">&#34;timestamp&#34;</span>: <span style="color:#f1fa8c">&#34;2020-06-01T22:58:27,482Z&#34;</span>, <span style="color:#f1fa8c">&#34;level&#34;</span>: <span style="color:#f1fa8c">&#34;INFO&#34;</span>, <span style="color:#f1fa8c">&#34;component&#34;</span>: <span style="color:#f1fa8c">&#34;o.e.x.s.s.SecurityStatusChangeListener&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.name&#34;</span>: <span style="color:#f1fa8c">&#34;docker-cluster&#34;</span>, <span style="color:#f1fa8c">&#34;node.name&#34;</span>: <span style="color:#f1fa8c">&#34;3f3c3d02c947&#34;</span>, <span style="color:#f1fa8c">&#34;message&#34;</span>: <span style="color:#f1fa8c">&#34;Active license is now [BASIC]; Security is disabled&#34;</span>, <span style="color:#f1fa8c">&#34;cluster.uuid&#34;</span>: <span style="color:#f1fa8c">&#34;q8H8WMzpS6qMLzP1IgTjGQ&#34;</span>, <span style="color:#f1fa8c">&#34;node.id&#34;</span>: <span style="color:#f1fa8c">&#34;sTkmBkS4QwG4h4IaWBMzQQ&#34;</span>  <span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="查看容器的实时统计">
+  查看容器的实时统计
+  <a class="heading-link" href="#%e6%9f%a5%e7%9c%8b%e5%ae%b9%e5%99%a8%e7%9a%84%e5%ae%9e%e6%97%b6%e7%bb%9f%e8%ae%a1">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>可以使用<code>docker container stats</code>或<code>docker stats</code>查看容器的运行状态。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker stats
+</span></span><span style="display:flex;"><span>CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+</span></span><span style="display:flex;"><span>19469f79b8a4        kafka_zookeeper_1   0.14%               78.54MiB / 3.848GiB   1.99%               5.63kB / 3.15kB     0B / 0B             <span style="color:#bd93f9">23</span>
+</span></span><span style="display:flex;"><span>e69d55f4eb91        kafka_kafka_1       0.00%               0B / 0B               0.00%               0B / 0B             0B / 0B             <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>3f3c3d02c947        vigilant_merkle     0.49%               1.283GiB / 3.848GiB   33.34%              1.73kB / 0B         0B / 0B             <span style="color:#bd93f9">55</span>
+</span></span></code></pre></div><p>默认返回所有运行的容器的实时状态，不停刷新。主要参数有：</p>
+<ul>
+<li><code>--all, -a</code>: 返回所有容器的状态，包括已停止的容器，但是停止的容器没有状态数据</li>
+<li><code>--no-stream</code>: 仅返回第一次的结果，不会动态地实时刷新</li>
+<li><code>--no-trunc</code>: 数据不截断</li>
+</ul>
+<p>也可以指定具体的容器ID，多个容器ID以空格分隔：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker stats --no-trunc --no-stream 3f3c3d02c947
+</span></span><span style="display:flex;"><span>CONTAINER ID                                                       NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+</span></span><span style="display:flex;"><span>3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2   vigilant_merkle     0.46%               1.283GiB / 3.848GiB   33.35%              2.01kB / 0B         0B / 0B             <span style="color:#bd93f9">55</span>
+</span></span></code></pre></div><h3 id="reference-docs">
+  reference docs:
+  <a class="heading-link" href="#reference-docs">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/commandline/logs/"  class="external-link" target="_blank" rel="noopener">docker logs</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/inspect/"  class="external-link" target="_blank" rel="noopener">docker inspect</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/stats/"  class="external-link" target="_blank" rel="noopener">docker stats</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

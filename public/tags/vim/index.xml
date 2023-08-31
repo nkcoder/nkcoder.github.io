@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vim on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/tags/vim/</link>
+    <description>Recent content in vim on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Feb 2021 23:02:20 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VIM中输入法自动切换的问题</title>
+      <link>https://nkcoder.github.io/posts/vim-input-methods-auto-switch/</link>
+      <pubDate>Wed, 24 Feb 2021 23:02:20 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/vim-input-methods-auto-switch/</guid>
+      <description>问题描述：
+在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。
+期望结果：
+插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。
+确定英文输入法 Link to heading 首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的U.S.，如下图所示：
+VSCode Vim中如何解决 Link to heading 首先需要安装im-select，参考最新的安装文档，如在macOS系统下，通过以下命令安装：
+curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh 获取当前输入法的ID，如果英文输入法为U.S.，则ID应该为com.apple.keylayout.US：
+➜ ~ im-select com.apple.keylayout.US 然后在VSCode的settings.json（通过 Open Settings (JSON) 命令可以直接打开）中添加如下配置：
+&amp;#34;vim.autoSwitchInputMethod.enable&amp;#34;: true, &amp;#34;vim.autoSwitchInputMethod.defaultIM&amp;#34;: &amp;#34;com.apple.keylayout.US&amp;#34;, &amp;#34;vim.autoSwitchInputMethod.obtainIMCmd&amp;#34;: &amp;#34;/usr/local/bin/im-select&amp;#34;, &amp;#34;vim.autoSwitchInputMethod.switchIMCmd&amp;#34;: &amp;#34;/usr/local/bin/im-select {im}&amp;#34; 测试下，应该可以了。
+iTerm2 Vim中如何解决 Link to heading 通过SmartIM解决，先参考官方文档安装，如通过Vundle安装：
+在~/.vimrc中添加配置：Plugin &#39;ybian/smartim&#39; 打开vim，执行命令：:PluginInstall 相关的.vimrc参考：
+set nocompatible &amp;#34; be iMproved, required filetype off &amp;#34; required &amp;#34; set the runtime path to include Vundle and initialize set rtp+=~/.</description>
+    </item>
+    
+    <item>
+      <title>Intellij Idea在VIM模式下，Shift&#43;方向键无法选中</title>
+      <link>https://nkcoder.github.io/posts/vim-shift-arrow-not-work/</link>
+      <pubDate>Wed, 19 Feb 2020 23:20:51 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/vim-shift-arrow-not-work/</guid>
+      <description>正常情况下，Intellij Idea 中使用Shift+方向键是可以选中内容的，但是如果启用VIM 插件，无论在哪种模式下，Shift+方向键无法选中内容，而是在单词之间移动。
+查看 Intellij Idea 的 Perference -&amp;gt; KeyMap，通过快捷键搜索，发现该快捷键组合只赋给了Selection，并没有冲突。
+这是 VIM 插件的一个 bug，ticket 在这里，正式版本还未修复，EAP 版本已经修复了。
+在正式版本下，也可以通过添加配置文件~/.ideavimrc启用 Shift+方向键的选中功能，内容如下：
+nnoremap &amp;lt;S-Left&amp;gt; :action EditorLeftWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Right&amp;gt; :action EditorRightWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Up&amp;gt; :action EditorUpWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Down&amp;gt; :action EditorDownWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Left&amp;gt; &amp;lt;C-O&amp;gt;:action EditorLeftWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Right&amp;gt; &amp;lt;C-O&amp;gt;:action EditorRightWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Up&amp;gt; &amp;lt;C-O&amp;gt;:action EditorUpWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Down&amp;gt; &amp;lt;C-O&amp;gt;:action EditorDownWithSelection&amp;lt;CR&amp;gt; 参考:
+Using PhpStorm IdeaVim, I can&amp;rsquo;t use shift+arrow keys to select words Possible to enable shift+arrows selection mode? </description>
+    </item>
+    
+  </channel>
+</rss>

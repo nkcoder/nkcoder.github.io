@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  SpringBoot系列七：Spring Boot Admin · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。
+server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。
+client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。
+server 端配置 Link to heading 首先需要添加spring-boot-admin-starter-server依赖，另外spring-boot-admin-server-ui提供友好的登入、登出界面：
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39; implementation &#39;org.springframework.boot:spring-boot-starter-security&#39; implementation &#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&#39; implementation &#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&#39; 然后在启动类（即使用@SpringBootApplication注解的类）上添加注解@EnableAdminServer即可。
+@SpringBootApplication @EnableAdminServer public class SpringAdminApplication { public static void main(String[] args) { SpringApplication.run(SpringAdminApplication.class, args); } } 如果需要增加安全控制，使用spring-boot-starter-security根据需要配置即可，示例如：
+@Override protected void configure(HttpSecurity http) throws Exception { String contextPath = adminServerProperties.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SpringBoot系列七：Spring Boot Admin"/>
+<meta name="twitter:description" content="Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。
+server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。
+client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。
+server 端配置 Link to heading 首先需要添加spring-boot-admin-starter-server依赖，另外spring-boot-admin-server-ui提供友好的登入、登出界面：
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39; implementation &#39;org.springframework.boot:spring-boot-starter-security&#39; implementation &#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&#39; implementation &#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&#39; 然后在启动类（即使用@SpringBootApplication注解的类）上添加注解@EnableAdminServer即可。
+@SpringBootApplication @EnableAdminServer public class SpringAdminApplication { public static void main(String[] args) { SpringApplication.run(SpringAdminApplication.class, args); } } 如果需要增加安全控制，使用spring-boot-starter-security根据需要配置即可，示例如：
+@Override protected void configure(HttpSecurity http) throws Exception { String contextPath = adminServerProperties."/>
+
+<meta property="og:title" content="SpringBoot系列七：Spring Boot Admin" />
+<meta property="og:description" content="Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。
+server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。
+client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。
+server 端配置 Link to heading 首先需要添加spring-boot-admin-starter-server依赖，另外spring-boot-admin-server-ui提供友好的登入、登出界面：
+implementation &#39;org.springframework.boot:spring-boot-starter-web&#39; implementation &#39;org.springframework.boot:spring-boot-starter-security&#39; implementation &#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&#39; implementation &#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&#39; 然后在启动类（即使用@SpringBootApplication注解的类）上添加注解@EnableAdminServer即可。
+@SpringBootApplication @EnableAdminServer public class SpringAdminApplication { public static void main(String[] args) { SpringApplication.run(SpringAdminApplication.class, args); } } 如果需要增加安全控制，使用spring-boot-starter-security根据需要配置即可，示例如：
+@Override protected void configure(HttpSecurity http) throws Exception { String contextPath = adminServerProperties." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-29T11:33:44+08:00" />
+<meta property="article:modified_time" content="2020-03-29T11:33:44+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/">
+              SpringBoot系列七：Spring Boot Admin
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-03-29T11:33:44&#43;08:00">
+                March 29, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/springboot/">SpringBoot</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。</p>
+<p>server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。</p>
+<p>client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。</p>
+<h2 id="server-端配置">
+  server 端配置
+  <a class="heading-link" href="#server-%e7%ab%af%e9%85%8d%e7%bd%ae">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>首先需要添加<code>spring-boot-admin-starter-server</code>依赖，另外<code>spring-boot-admin-server-ui</code>提供友好的登入、登出界面：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>implementation <span style="color:#f1fa8c">&#39;org.springframework.boot:spring-boot-starter-web&#39;</span>
+</span></span><span style="display:flex;"><span>implementation <span style="color:#f1fa8c">&#39;org.springframework.boot:spring-boot-starter-security&#39;</span>
+</span></span><span style="display:flex;"><span>implementation <span style="color:#f1fa8c">&#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&#39;</span>
+</span></span><span style="display:flex;"><span>implementation <span style="color:#f1fa8c">&#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&#39;</span>
+</span></span></code></pre></div><p>然后在启动类（即使用<code>@SpringBootApplication</code>注解的类）上添加注解<code>@EnableAdminServer</code>即可。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@SpringBootApplication
+</span></span><span style="display:flex;"><span>@EnableAdminServer
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">SpringAdminApplication</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    SpringApplication<span style="color:#ff79c6">.</span><span style="color:#50fa7b">run</span><span style="color:#ff79c6">(</span>SpringAdminApplication<span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span><span style="color:#ff79c6">,</span> args<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>如果需要增加安全控制，使用<code>spring-boot-starter-security</code>根据需要配置即可，示例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Override
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">protected</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">configure</span><span style="color:#ff79c6">(</span>HttpSecurity http<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">throws</span> Exception <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    String contextPath <span style="color:#ff79c6">=</span> adminServerProperties<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getContextPath</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    SavedRequestAwareAuthenticationSuccessHandler successHandler <span style="color:#ff79c6">=</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">new</span> SavedRequestAwareAuthenticationSuccessHandler<span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>    successHandler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setTargetUrlParameter</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;redirectTo&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    successHandler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">setDefaultTargetUrl</span><span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    http<span style="color:#ff79c6">.</span><span style="color:#50fa7b">authorizeRequests</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">antMatchers</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>            contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/instances&#34;</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>            contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/login&#34;</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>            contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/assets/**&#34;</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>            contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/actuator/**&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">permitAll</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">anyRequest</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">authenticated</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">formLogin</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">loginPage</span><span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/login&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">successHandler</span><span style="color:#ff79c6">(</span>successHandler<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">logout</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">logoutUrl</span><span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/logout&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">csrf</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">csrfTokenRepository</span><span style="color:#ff79c6">(</span>CookieCsrfTokenRepository<span style="color:#ff79c6">.</span><span style="color:#50fa7b">withHttpOnlyFalse</span><span style="color:#ff79c6">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">ignoringRequestMatchers</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">new</span> AntPathRequestMatcher<span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/instances&#34;</span><span style="color:#ff79c6">,</span> HttpMethod<span style="color:#ff79c6">.</span><span style="color:#50fa7b">POST</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">toString</span><span style="color:#ff79c6">()),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">new</span> AntPathRequestMatcher<span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/instances/*&#34;</span><span style="color:#ff79c6">,</span> HttpMethod<span style="color:#ff79c6">.</span><span style="color:#50fa7b">DELETE</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">toString</span><span style="color:#ff79c6">()),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">new</span> AntPathRequestMatcher<span style="color:#ff79c6">(</span>contextPath <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/actuator/**&#34;</span><span style="color:#ff79c6">))</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">rememberMe</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">key</span><span style="color:#ff79c6">(</span>UUID<span style="color:#ff79c6">.</span><span style="color:#50fa7b">randomUUID</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">toString</span><span style="color:#ff79c6">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">tokenValiditySeconds</span><span style="color:#ff79c6">(</span>60 <span style="color:#ff79c6">*</span> 60 <span style="color:#ff79c6">*</span> 24<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>如果采用 Eureka 服务注册，应该禁止 server 自身被注册为服务，可以通过配置属性实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>eureka:
+</span></span><span style="display:flex;"><span>  client:
+</span></span><span style="display:flex;"><span>    register-with-eureka: false
+</span></span></code></pre></div><p>server 启动后，访问<code>http://localhost:8080</code>即可看到 GUI 界面。</p>
+<h2 id="client-端配置">
+  client 端配置
+  <a class="heading-link" href="#client-%e7%ab%af%e9%85%8d%e7%bd%ae">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>为 Spring Boot 应用添加<code>spring-boot-admin-starter-client</code>依赖使其成为 client：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>implementation <span style="color:#f1fa8c">&#34;de.codecentric:spring-boot-admin-starter-client:2.2.2&#34;</span>
+</span></span></code></pre></div><p>主动注册方式，需要配置下 server 的地址：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>spring:
+</span></span><span style="display:flex;"><span>  application:
+</span></span><span style="display:flex;"><span>    name: spring-actuator-demo
+</span></span><span style="display:flex;"><span>  boot:
+</span></span><span style="display:flex;"><span>    admin:
+</span></span><span style="display:flex;"><span>      client:
+</span></span><span style="display:flex;"><span>        url: http://localhost:9090
+</span></span></code></pre></div><p>最好将<code>spring.boot.admin.client.url</code>配置在<code>Spring Cloud Config Server</code>服务中。</p>
+<p>如果采用 Eureka 注册方式，client 和 server 添加 Eureka 依赖后，通过服务发现自动注册。</p>
+<p>如果 client 启用并配置了<code>spring-boot-starter-security</code>，则需要将认证信息发给 server。</p>
+<p>如果是主动注册的方式，配置如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>spring:
+</span></span><span style="display:flex;"><span>  boot:
+</span></span><span style="display:flex;"><span>    admin:
+</span></span><span style="display:flex;"><span>      client:
+</span></span><span style="display:flex;"><span>        instance:
+</span></span><span style="display:flex;"><span>          metadata:
+</span></span><span style="display:flex;"><span>            user.name: ${spring.security.user.name}
+</span></span><span style="display:flex;"><span>            user.password: ${spring.security.user.password}
+</span></span></code></pre></div><p>如果通过 Eureka 方式注册，配置如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>eureka:
+</span></span><span style="display:flex;"><span>  instance:
+</span></span><span style="display:flex;"><span>    metadata-map:
+</span></span><span style="display:flex;"><span>      user.name: admin
+</span></span><span style="display:flex;"><span>      user.password: password
+</span></span></code></pre></div><p>Actuator 暴露的接口，在 Spring Boot Admin 中都可以查看或操作。</p>
+<blockquote>
+<p>完整的示例代码见项目：<a href="https://github.com/nkcoder/springboot-samples/tree/master/springboot-admin"  class="external-link" target="_blank" rel="noopener">github-springboot-admin</a></p>
+</blockquote>
+<h2 id="参考">
+  参考
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ul>
+<li><a href="https://www.manning.com/books/spring-in-action-fifth-edition"  class="external-link" target="_blank" rel="noopener">Spring in Action, Fifth Edition</a></li>
+<li><a href="https://www.baeldung.com/spring-boot-admin"  class="external-link" target="_blank" rel="noopener">A Guide to Spring Boot Admin</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

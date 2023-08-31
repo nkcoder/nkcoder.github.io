@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>quartz on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/quartz/</link>
+    <description>Recent content in quartz on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Feb 2020 21:12:59 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/quartz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quartz系列九：Job Stores</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/</link>
+      <pubDate>Wed, 19 Feb 2020 21:12:59 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/</guid>
+      <description>JobStore 主要是追踪 scheduler 中的&amp;quot;工作数据&amp;quot;: jobs, triggers, calendars 等。为 scheduler 选择合适的 JobStore 是很重要的一步。如果你理解了它们之间的区别，选择就很简单了。在 SchedulerFactory 使用的配置文件（或对象）中声明 scheduler 的 JobStore（通过配置）。
+不要在代码中直接声明 JobStore 实例。由于某些原因，很多人尝试这样做。JobStore 是 Quartz 幕后使用的。你只需要通过配置告诉 Quartz 使用哪个 JobStore，然后在代码中使用 Scheduler 接口即可。
+RAMJobStore Link to heading RAMJobStore 是最容易使用的 JobStore，也是性能最好的（从 CPU 角度来看）。从名字就可以看出来：它将所有数据存在 RAM 中。这也是它如此快、如此易配置的原因。缺点是：当应用停止（或崩溃）时，所有的调度信息都将丢失 - 这也意味着 RAMJobStore 并不支持 jobs 和 triggers 的“持久性”。对有些应用来说这是可接受的 - 甚至是期望的，但是对于其它的应用，这可能是灾难性的。
+配置 Quartz 使用 RAMJobStore
+org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore 没有其它的配置了。
+JDBCJobStore Link to heading JDBCJobStore - 将所有的数据通过 JDBC 保存在数据库中。正因如此，它比 RAMJobStore 的配置要复杂一些，也没那么快。但是，它的性能缺陷并没有那么不堪，尤其是当你在数据库的主键上都创建了索引。在目前主流的机器上，在局域网（scheduler 和 databasae 之间）环境下，接收和更新一个 trigger 的时间一般小于 10 毫秒。</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列八：SchedulerListener</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-8-scheduler-listener/</link>
+      <pubDate>Wed, 19 Feb 2020 21:11:38 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-8-scheduler-listener/</guid>
+      <description>SchedulerListener与TriggerListener、JobListener类似，但它仅接收来自Scheduler自身的消息，而不一定是某个具体的trigger或job的消息。
+scheduler相关的消息包括：job/trigger的增加、job/trigger的删除、scheduler内部发生的严重错误以及scheduler关闭的消息等；
+org.quartz.SchedulerListener接口：
+public interface SchedulerListener { public void jobScheduled(Trigger trigger); public void jobUnscheduled(String triggerName, String triggerGroup); public void triggerFinalized(Trigger trigger); public void triggersPaused(String triggerName, String triggerGroup); public void triggersResumed(String triggerName, String triggerGroup); public void jobsPaused(String jobName, String jobGroup); public void jobsResumed(String jobName, String jobGroup); public void schedulerError(String msg, SchedulerException cause); public void schedulerStarted(); public void schedulerInStandbyMode(); public void schedulerShutdown(); public void schedulingDataCleared(); } SchedulerListener也是注册到scheduler的ListenerManager上的，任何实现了org.quartz.SchedulerListener接口的对象都可以是SchedulerListener。
+添加一个SchedulerListener：
+scheduler.getListenerManager().addSchedulerListener(mySchedListener); 删除一个SchedulerListener：
+scheduler.getListenerManager().removeSchedulerListener(mySchedListener); 参考链接：Lesson 8: SchedulerListeners 有兴趣的朋友可以参考我在github上的项目：quartz源码注释 </description>
+    </item>
+    
+    <item>
+      <title>Quartz系列七：TriggerListeners与JobListeners</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/</link>
+      <pubDate>Wed, 19 Feb 2020 21:11:02 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/</guid>
+      <description>listener是一个对象，用于监听scheduler中发生的事件，然后执行相应的操作；你可能已经猜到了，TriggerListeners接受与trigger相关的事件，JobListeners接受与jobs相关的事件。
+trigger相关的事件包括：trigger的触发、trigger错过触发(mis-fire)以及trigger的完成(即trigger触发的job执行完成)。
+org.quartz.TriggerListener接口:
+public interface TriggerListener { public String getName(); public void triggerFired(Trigger trigger, JobExecutionContext context); public boolean vetoJobExecution(Trigger trigger, JobExecutionContext context); public void triggerMisfired(Trigger trigger); public void triggerComplete(Trigger trigger, JobExecutionContext context, int triggerInstructionCode); } job相关的事件包括：job即将执行的通知以及job执行完毕的通知。
+org.quartz.JobListener接口：
+public interface JobListener { public String getName(); public void jobToBeExecuted(JobExecutionContext context); public void jobExecutionVetoed(JobExecutionContext context); public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException); } 使用自定义的listener Link to heading 创建一个listener，只需要实现org.quartz.TriggerListener接口或者org.quartz.JobListener 接口即可；然后在运行时将listener注册到scheduler上，并且需要给listener取个名称(因为listener需要通过其getName()方法广播它的名称)。
+我们可以实现上面提到的接口，但更方便的方式是继承JobListenerSupport类或者TriggerListenerSupport类，只需重写需要的方法即可。
+listener是注册到scheduler的ListenerManager上的，与listener一同注册的还有一个Matcher对象，该对象用于描述listener期望接收事件的job或trigger。
+listener是在运行的时候注册到scheduler上的，而且不会与job和trigger一样保存在JobStore中。因为listener一般是应用的一个集成点(integration point)，因此，应用每次运行的时候，listener都应该重新注册到scheduler上。 给一个job添加JobListener：</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列六：CronTrigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-6-cron-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:10:24 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-6-cron-trigger/</guid>
+      <description>如果你需要的是基于日历表示法的调度，而不是基于指定间隔的简单调度，那么CronTrigger比SimpleTrigger更合适。
+使用CronTrigger，你可以配置这样的调度：“每周五的中午”，或者“每个工作日的上午9:30”，或者“在一月的每个周一、周三和周五的上午9点到10点之间每隔5分钟”。
+与SimpleTrigger一样，CronTrigger需要设置startTime属性，表示调度生效的时间，以及(可选的)endTime属性，表示调度的结束时间。
+Cron表达式 Link to heading Cron表达式用于配置CronTrigger的实例，它由7个字段组成，字段之间由空格分开，它们表示的含义如下：
+1. 秒 (Seconds) 2. 分钟 (Minutes) 3. 小时 (Hours) 4. 日(一个月的一天) (Day-of-Month) 5. 月份 (Month) 6. 周(一周的一天) (Day-of-Week) 7. 年份(可选的) (Year) 一个完整的Cron表达式的例子如字符串：”0 0 12 ? * WED” - 表示“每周三的中午12:00:00”；
+每一个字段可以包含范围或者列举。比如，上例中的周字段(即”WED“)可以被替换为：”MON-FRI”, “MON,WED,FRI”, 或者”MON-WED,SAT”。
+通配符()表示该字段上每一个可取的值。因此，上例中月字段上的表示“每个月”。周字段上的*表示“一周的每一天”。
+所有的字段都有一些可取的值的集合。有些就很明显 - 比如，秒和分钟字段可以取0到59的整数，小时字段可以取0到23的整数，日字段(Day-of-Month)可以取1到31的整数，不过你需要注意指定的月份到底有多少天。月字段可以取0到11之间的整数，或者使用字符串表示：JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV 和 DEC。周字段(Days-of-Week)可以取的值为1到7(1表示Sunday)，或者使用字符串表示：SUN, MON, TUE, WED, THU, FRI and SAT。
+字符‘/’表示增量。比如，分钟字段使用”0/15“，表示”在这个小时内，从0分钟开始，每隔15分钟“；如果分钟字段使用”3/20“，则表示”在这个小时内，从第3分钟开始，每隔20分钟“，这与在分钟字段使用“3,23,43”表示的含义是一样的。注意一个细节，“/35”的含义并不是“每隔35分钟”，而是“在这个小时内，从第0分钟开始，每隔35分钟”。
+字符’?’可以用于日字段和周字段，表示“没有具体的值“。它主要用于在这两个字段的某一个中指定某个值，更好的理解请参考下面的示例（以及CrontTrigger的JavaDoc）。
+字符’L’可以用于日字段和周字段，它是last的缩写，但是用于这两个字段时，含义并不相同。比如，“L”用于日子段，表示“这个月的最后一天” - 即一月的第31天，非闰年二月的第28天。如果‘L’单独用于周字段，它的含义就是“7”或者“SAT”。但是，如果‘L’用于周字段时，前面还有一个值，则表示“这个月的最后一个周××” - 比如，“6L”或“FRIL”表示“这个月的最后一个周五”。我们也可以指定与这个月最后一天的偏移量，比如“L-3”表示与这个月的最后一天相差3天。需要注意的是，如果使用选项‘L’，则不要使用列举和范围，否则结果将是不可预料的。</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列五：SimpleTrigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:09:37 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/</guid>
+      <description>SimpleTrigger可以满足的调度需求是：在具体的时间点执行一次，或者在具体的时间点执行，并且以指定的间隔重复执行若干次。比如，你有一个trigger，你可以设置它在2015年1月13日的上午11:23:54准时触发，或者在这个时间点触发，并且每隔2秒触发一次，一共重复5次。
+根据描述，你可能已经发现了，SimpleTrigger的属性包括：开始时间、结束时间、重复次数以及重复的间隔。这些属性的含义与你所期望的是一致的，只是关于结束时间有一些地方需要注意。
+重复次数，可以是0、正整数，以及常量SimpleTrigger.REPEAT_INDEFINITELY。重复的间隔，必须是0，或者long型的正数，表示毫秒。注意，如果重复间隔为0，trigger将会以重复次数并发执行(或者以scheduler可以处理的近似并发数)。
+如果你还不熟悉DateBuilder，了解后你会发现使用它可以非常方便地构造基于开始时间(或终止时间)的调度策略。
+endTime属性的值会覆盖设置重复次数的属性值；比如，你可以创建一个trigger，在终止时间之前每隔10秒执行一次，你不需要去计算在开始时间和终止时间之间的重复次数，只需要设置终止时间并将重复次数设置为REPEAT_INDEFINITELY(当然，你也可以将重复次数设置为一个很大的值，并保证该值比trigger在终止时间之前实际触发的次数要大即可)。
+SimpleTrigger实例通过TriggerBuilder设置主要的属性，通过SimpleScheduleBuilder设置与SimpleTrigger相关的属性。要使用这些builder的静态方法，需要静态导入：
+import static org.quartz.TriggerBuilder.*; import static org.quartz.SimpleScheduleBuilder.*; import static org.quartz.DateBuilder.*: 下面的例子，是基于简单调度(simple schedule)创建的trigger。建议都看一下，因为每个例子都包含一个不同的实现点：
+指定时间开始触发，不重复：
+SimpleTrigger trigger = (SimpleTrigger) newTrigger() .withIdentity(&amp;#34;trigger1&amp;#34;, &amp;#34;group1&amp;#34;) .startAt(myStartTime) // some Date .forJob(&amp;#34;job1&amp;#34;, &amp;#34;group1&amp;#34;) // identify job with name, group strings .build(); 指定时间触发，每隔10秒执行一次，重复10次：
+trigger = newTrigger() .withIdentity(&amp;#34;trigger3&amp;#34;, &amp;#34;group1&amp;#34;) .startAt(myTimeToStartFiring) // if a start time is not given (if this line were omitted), &amp;#34;now&amp;#34; is implied .withSchedule(simpleSchedule() .withIntervalInSeconds(10) .withRepeatCount(10)) // note that 10 repeats will give a total of 11 firings .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列四：Trigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-4-more-on-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:08:49 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-4-more-on-trigger/</guid>
+      <description>与job一样，trigger也很容易使用，但是还有一些扩展选项需要理解，以便更好地使用quartz。trigger也有很多类型，可以根据实际需要来选择。
+最常用的两种trigger会分别在教程五：SimpleTrigger和教程六：CronTrigger中讲到；
+Trigger的公共属性 Link to heading 所有类型的trigger都有TriggerKey这个属性，表示trigger的身份；除此之外，trigger还有很多其它的公共属性。这些属性，在构建trigger的时候可以通过TriggerBuilder设置。
+trigger的公共属性有：
+jobKey属性：当trigger触发时被执行的job的身份； startTime属性：设置trigger第一次触发的时间；该属性的值是java.util.Date类型，表示某个指定的时间点；有些类型的trigger，会在设置的startTime时立即触发，有些类型的trigger，表示其触发是在startTime之后开始生效。比如，现在是1月份，你设置了一个trigger–“在每个月的第5天执行”，然后你将startTime属性设置为4月1号，则该trigger第一次触发会是在几个月以后了(即4月5号)。 endTime属性：表示trigger失效的时间点。比如，”每月第5天执行”的trigger，如果其endTime是7月1号，则其最后一次执行时间是6月5号。 其它的属性，会在下面的小节中解释。 优先级(priority) Link to heading 如果你的trigger很多(或者Quartz线程池的工作线程太少)，Quartz可能没有足够的资源同时触发所有的trigger；这种情况下，你可能希望控制哪些trigger优先使用Quartz的工作线程，要达到该目的，可以在trigger上设置priority属性。比如，你有N个trigger需要同时触发，但只有Z个工作线程，优先级最高的Z个trigger会被首先触发。如果没有为trigger设置优先级，trigger使用默认优先级，值为5；priority属性的值可以是任意整数，正数、负数都可以。
+注意：只有同时触发的trigger之间才会比较优先级。10:59触发的trigger总是在11:00触发的trigger之前执行。
+注意：如果trigger是可恢复的，在恢复后再调度时，优先级与原trigger是一样的。
+错过触发(misfire) Link to heading trigger还有一个重要的属性misfire；如果scheduler关闭了，或者Quartz线程池中没有可用的线程来执行job，此时持久性的trigger就会错过(miss)其触发时间，即错过触发(misfire)。不同类型的trigger，有不同的misfire机制。它们默认都使用“智能机制(smart policy)”，即根据trigger的类型和配置动态调整行为。当scheduler启动的时候，查询所有错过触发(misfire)的持久性trigger。然后根据它们各自的misfire机制更新trigger的信息。当你在项目中使用Quartz时，你应该对各种类型的trigger的misfire机制都比较熟悉，这些misfire机制在JavaDoc中有说明。关于misfire机制的细节，会在讲到具体的trigger时作介绍。
+日历(calendar) Link to heading Quartz的Calendar对象(不是java.util.Calendar对象)可以在定义和存储trigger的时候与trigger进行关联。Calendar用于从trigger的调度计划中排除时间段。比如，可以创建一个trigger，每个工作日的上午9:30执行，然后增加一个Calendar，排除掉所有的商业节日。
+任何实现了Calendar接口的可序列化对象都可以作为Calendar对象，Calendar接口如下：
+package org.quartz; public interface Calendar { public boolean isTimeIncluded(long timeStamp); public long getNextIncludedTime(long timeStamp); } 注意到这些方法的参数类型为long。你也许猜到了，他们就是毫秒单位的时间戳。即Calendar排除时间段的单位可以精确到毫秒。你也许对“排除一整天”的Calendar比较感兴趣。Quartz提供的org.quartz.impl.HolidayCalendar类可以很方便地实现。
+Calendar必须先实例化，然后通过addCalendar()方法注册到scheduler。如果使用HolidayCalendar，实例化后，需要调用addExcludedDate(Date date)方法从调度计划中排除时间段。以下示例是将同一个Calendar实例用于多个trigger：
+HolidayCalendar cal = new HolidayCalendar(); cal.addExcludedDate( someDate ); cal.addExcludedDate( someOtherDate ); sched.addCalendar(&amp;#34;myHolidays&amp;#34;, cal, false); Trigger t = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;) .forJob(&amp;#34;myJob&amp;#34;) .withSchedule(dailyAtHourAndMinute(9, 30)) // execute job daily at 9:30 .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列三：使用Job和JobDetail</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-3-job-detail/</link>
+      <pubDate>Wed, 19 Feb 2020 21:08:06 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-3-job-detail/</guid>
+      <description>正如在教程二中讲到的，Job实现起来很容易，该接口只有一个“execute”方法。本节主要关注：Job的特点、Job接口的execute方法以及JobDetail。
+你定义了一个实现Job接口的类，这个类仅仅表明该job需要完成什么类型的任务，除此之外，Quartz还需要知道该Job实例所包含的属性；这将由JobDetail类来完成。
+JobDetail实例是通过JobBuilder类创建的，导入该类下的所有静态方法，会让你编码时有DSL的感觉：
+import static org.quartz.JobBuilder.*; 让我们先看看Job的特征（nature）以及Job实例的生命期。不妨先回头看看教程一中的代码片段：
+// define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) // name &amp;#34;myJob&amp;#34;, group &amp;#34;group1&amp;#34; .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .startNow() .withSchedule(simpleSchedule() .withIntervalInSeconds(40) .repeatForever()) .build(); // Tell quartz to schedule the job using our trigger sched.scheduleJob(job, trigger); “HelloJob”类可以如下定义：
+public class HelloJob implements Job { public HelloJob() { } public void execute(JobExecutionContext context) throws JobExecutionException { System.</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列二：API, Job和Trigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:07:06 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/</guid>
+      <description>Quartz API Link to heading Quartz API核心接口有：
+Scheduler – 与scheduler交互的主要API； Job – 你通过scheduler执行任务，你的任务类需要实现的接口； JobDetail – 定义Job的实例； Trigger – 触发Job的执行； JobBuilder – 定义和创建JobDetail实例的接口; TriggerBuilder – 定义和创建Trigger实例的接口； Scheduler的生命期，从SchedulerFactory创建它时开始，到Scheduler调用shutdown()方法时结束；Scheduler被创建后，可以增加、删除和列举Job和Trigger，以及执行其它与调度相关的操作（如暂停Trigger）。但是，Scheduler只有在调用start()方法后，才会真正地触发trigger（即执行job），见教程一。
+Quartz提供的“builder”类，可以认为是一种领域特定语言（DSL，Domain Specific Language)。教程一中有相关示例，这里是其中的代码片段：（校对注：这种级联的API非常方便用户使用，大家以后写对外接口时也可以使用这种方式）
+// define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) // name &amp;#34;myJob&amp;#34;, group &amp;#34;group1&amp;#34; .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列一：使用Quartz</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-1-using-quartz/</link>
+      <pubDate>Wed, 19 Feb 2020 21:04:43 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-1-using-quartz/</guid>
+      <description>Scheduler在使用之前需要实例化。一般通过SchedulerFactory来创建一个实例。有些用户将factory的实例保存在JNDI中，但直接初始化，然后使用该实例也许更简单（见下面的示例）。
+scheduler实例化后，可以启动(start)、暂停(stand-by)、停止(shutdown)。注意：scheduler被停止后，除非重新实例化，否则不能重新启动；只有当scheduler启动后，即使处于暂停状态也不行，trigger才会被触发（job才会被执行）。
+下面的代码片段，实例化并启动一个scheduler，调度执行一个job：
+SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory(); Scheduler sched = schedFact.getScheduler(); sched.start(); // define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .startNow() .withSchedule(simpleSchedule() .withIntervalInSeconds(40) .repeatForever()) .build(); // Tell quartz to schedule the job using our trigger sched.scheduleJob(job, trigger); 你看到了，quartz的使用并不难。教程二会简要地介绍job和trigger，以及quartz的API，然后你会更好地理解该示例。
+原文链接：Lesson 1: Using Quartz 有兴趣的朋友可以参考我在github上的项目：quartz源码注释 </description>
+    </item>
+    
+  </channel>
+</rss>

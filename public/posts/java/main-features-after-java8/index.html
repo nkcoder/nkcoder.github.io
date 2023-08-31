@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Java refresh: main Features After Java8 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &lt;pre&gt;{@code ...}&lt;/pre&gt; blocks.
+/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&#34;v: &#34; &#43; v.get()); * } * } */ 2. JEP 400: UTF-8 by Default (@18) Link to heading Specify UTF-8 as the default charset of the standard Java APIs.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java refresh: main Features After Java8"/>
+<meta name="twitter:description" content="1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &lt;pre&gt;{@code ...}&lt;/pre&gt; blocks.
+/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&#34;v: &#34; &#43; v.get()); * } * } */ 2. JEP 400: UTF-8 by Default (@18) Link to heading Specify UTF-8 as the default charset of the standard Java APIs."/>
+
+<meta property="og:title" content="Java refresh: main Features After Java8" />
+<meta property="og:description" content="1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &lt;pre&gt;{@code ...}&lt;/pre&gt; blocks.
+/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&#34;v: &#34; &#43; v.get()); * } * } */ 2. JEP 400: UTF-8 by Default (@18) Link to heading Specify UTF-8 as the default charset of the standard Java APIs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/java/main-features-after-java8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-08-31T21:55:36+10:00" />
+<meta property="article:modified_time" content="2023-08-31T21:55:36+10:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/java/main-features-after-java8/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/java/main-features-after-java8/">
+              Java refresh: main Features After Java8
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2023-08-31T21:55:36&#43;10:00">
+                August 31, 2023
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="1-jep-413-code-snippets-in-java-api-documentation-18">
+  1. JEP 413: Code Snippets in Java API Documentation (@18)
+  <a class="heading-link" href="#1-jep-413-code-snippets-in-java-api-documentation-18">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>To replace the use of <code>&lt;pre&gt;{@code ...}&lt;/pre&gt;</code> blocks.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * JEP 413: Code Snippets in Java API Documentation
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * The following code shows how to use {@code Optional.isPresent}:
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * {@snippet :
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * if (v.isPresent()) {
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> *     System.out.println(&#34;v: &#34; + v.get());
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * }
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> */</span>
+</span></span></code></pre></div><h2 id="2-jep-400-utf-8-by-default-18">
+  2. JEP 400: UTF-8 by Default (@18)
+  <a class="heading-link" href="#2-jep-400-utf-8-by-default-18">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Specify UTF-8 as the default charset of the standard Java APIs. With this change, APIs that depend upon the default charset will behave consistently across all implementations, operating systems, locales, and configurations.</p>
+<p>If a charset argument is not passed, then standard Java APIs typically use the default charset. The JDK chooses the default charset at startup based upon the run-time environment: the operating system, the user&rsquo;s locale, and other factors.</p>
+<p>Because the default charset is not the same everywhere, APIs that use the default charset pose many non-obvious hazards, even to experienced developers.</p>
+<h2 id="3-jep-409-sealed-classes-17">
+  3. JEP 409: Sealed Classes (@17)
+  <a class="heading-link" href="#3-jep-409-sealed-classes-17">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>A sealed class or interface can be extended or implemented only by those classes and interfaces permitted to do so.</p>
+<p>A sealed class imposes three constraints on its permitted subclasses:</p>
+<ul>
+<li>The sealed class and its permitted subclasses must belong to the same module, and, if declared in an unnamed module, to the same package.</li>
+<li>Every permitted subclass must directly extend the sealed class.</li>
+<li>Every permitted subclass must use a modifier:
+<ul>
+<li>final: prevent from being extended further</li>
+<li>sealed: allow to be extended further</li>
+<li>non-sealed: being open for extension by unknown subclasses</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">abstract</span> sealed <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Shape</span>
+</span></span><span style="display:flex;"><span>        permits Circle<span style="color:#ff79c6">,</span> Rectangle<span style="color:#ff79c6">,</span> Square <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Circle</span> <span style="color:#8be9fd;font-style:italic">extends</span> Shape <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> sealed <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Rectangle</span> <span style="color:#8be9fd;font-style:italic">extends</span> Shape
+</span></span><span style="display:flex;"><span>    permits FilledRectangle<span style="color:#ff79c6">,</span> TransparentRectangle<span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Square</span> <span style="color:#8be9fd;font-style:italic">extends</span> Shape <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">FilledRectangle</span> <span style="color:#8be9fd;font-style:italic">extends</span> Rectangle <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">TransparentRectangle</span> <span style="color:#8be9fd;font-style:italic">extends</span> Rectangle <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="4-jep-395-records-16">
+  4. JEP 395: Records (@16)
+  <a class="heading-link" href="#4-jep-395-records-16">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Record classes are a new kind of class in the Java language. Record classes help to model plain data aggregates with less ceremony than normal classes.</p>
+<p>Rules for <code>Record</code> classes:</p>
+<ul>
+<li>A record class cannot explicitly extend any class</li>
+<li>A record class is implicitly final, and cannot be abstract.</li>
+<li>The fields derived from the record components are final.</li>
+<li>A record class cannot explicitly declare instance fields, and cannot contain instance initializers.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>record <span style="color:#50fa7b">Point</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> x<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> y<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">square</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x <span style="color:#ff79c6">*</span> y<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>record <span style="color:#50fa7b">Range</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> lo<span style="color:#ff79c6">,</span> <span style="color:#8be9fd">int</span> hi<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    Range <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>lo <span style="color:#ff79c6">&gt;</span> hi<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> IllegalArgumentException<span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">.</span><span style="color:#50fa7b">format</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;(%d,%d)&#34;</span><span style="color:#ff79c6">,</span> lo<span style="color:#ff79c6">,</span> hi<span style="color:#ff79c6">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="5-jep-394-pattern-matching-for-instanceof-16">
+  5. JEP 394: Pattern Matching for instanceof (@16)
+  <a class="heading-link" href="#5-jep-394-pattern-matching-for-instanceof-16">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>If obj is an instance of String, then it is cast to String and the value is assigned to the variable s.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>obj <span style="color:#ff79c6">instanceof</span> String s<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Let pattern matching do the work!
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>A pattern variable is only in scope where the compiler can deduce that the pattern has definitely matched and the variable will have been assigned a value.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">instanceof</span> Point p<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// p is in scope
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// p not in scope here
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>b <span style="color:#ff79c6">instanceof</span> Point p<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>     <span style="color:#6272a4">// Sure!
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>The use of pattern matching in <code>instanceof</code> should significantly reduce the overall number of explicit casts in Java programs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">equals</span><span style="color:#ff79c6">(</span>Object o<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">(</span>o <span style="color:#ff79c6">instanceof</span> CaseInsensitiveString cis<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        cis<span style="color:#ff79c6">.</span><span style="color:#50fa7b">s</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">equalsIgnoreCase</span><span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="6-jep-378-text-blocks-15">
+  6. JEP 378: Text Blocks (@15)
+  <a class="heading-link" href="#6-jep-378-text-blocks-15">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>A text block is a multi-line string literal that avoids the need for most escape sequences, automatically formats the string in a predictable way, and gives the developer control over the format when desired.</p>
+<p>The opening delimiter is a sequence of three double quote characters (&quot;&quot;&quot;) followed by zero or more white spaces followed by a line terminator. The content begins at the first character after the line terminator of the opening delimiter.</p>
+<p>The closing delimiter is a sequence of three double quote characters. The content ends at the last character before the first double quote of the closing delimiter.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>String html <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">            &lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                &lt;p&gt;Hello, world&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">            &lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &#34;&#34;&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>html<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>String query <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        SELECT &#34;</span>EMP_ID<span style="color:#f1fa8c">&#34;, &#34;</span>LAST_NAME<span style="color:#f1fa8c">&#34; FROM &#34;</span>EMPLOYEE_TB<span style="color:#f1fa8c">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        WHERE &#34;</span>CITY<span style="color:#f1fa8c">&#34; = &#39;INDIANAPOLIS&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        ORDER B
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &#34;&#34;&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>query<span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="7-new-string-methods">
+  7. New String methods
+  <a class="heading-link" href="#7-new-string-methods">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ul>
+<li><code>formatted()</code>, <code>stripIndent</code>, <code>translateEscape()</code>: @15</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span> <span style="color:#6272a4">// formatted(): equivalent to String.format()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>String formatted <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;1. %s 2. %s 3. %s &#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">formatted</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;one&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;two&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;three&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>formatted<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// stripIndent(): remove incidental white spaces from the beginning and end of every line
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>String stripIndent <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34; Good day!   &#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">stripIndent</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>String html <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &lt;html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">            &lt;body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                &lt;p&gt;Hello, world&lt;/p&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">            &lt;/body&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        &lt;/html&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">            &#34;&#34;&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">stripIndent</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>stripIndent<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>html<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>String str <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;This is tab \t, Next New Line \n,next backspace \b,next Single Quotes \&#39; next,Double Quotes \&#34; &#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>str<span style="color:#ff79c6">.</span><span style="color:#50fa7b">translateEscapes</span><span style="color:#ff79c6">());</span>
+</span></span></code></pre></div><ul>
+<li><code>indent()</code> and <code>transform()</code>: @12</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// indent(n): insert n spaces before each line after `lines()`
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>String multilineStr <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;This is\na multiline\nstring.&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>multilineStr<span style="color:#ff79c6">.</span><span style="color:#50fa7b">indent</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// transform: apply a single argument function to the string
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>String concat <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">transform</span><span style="color:#ff79c6">(</span>p <span style="color:#ff79c6">-&gt;</span> p <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34; world&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>Integer parsedInt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;45&#34;</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">transform</span><span style="color:#ff79c6">(</span>Integer<span style="color:#ff79c6">::</span>parseInt<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>concat<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>parsedInt<span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="8-jep-361-switch-expressions-14">
+  8. JEP 361: Switch Expressions @14
+  <a class="heading-link" href="#8-jep-361-switch-expressions-14">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>In addition to traditional &ldquo;case L :&rdquo; labels in a switch block, we define a new simplified form, with &ldquo;case L -&gt;&rdquo; labels. If a label is matched, then only the expression or statement to the right of the arrow is executed; there is no fall through.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">switch</span> <span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 1 <span style="color:#ff79c6">-&gt;</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;one&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 2 <span style="color:#ff79c6">-&gt;</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;two&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">default</span> <span style="color:#ff79c6">-&gt;</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;many&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>String value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">switch</span> <span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 1 <span style="color:#ff79c6">-&gt;</span> <span style="color:#f1fa8c">&#34;one&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 2 <span style="color:#ff79c6">-&gt;</span> <span style="color:#f1fa8c">&#34;two&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">default</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#f1fa8c">&#34;many&#34;</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">};</span>
+</span></span></code></pre></div><p>In the event that a full block is needed, we introduce a new yield statement to yield a value, which becomes the value of the enclosing switch expression.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd">int</span> j <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">switch</span> <span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 0<span style="color:#ff79c6">,</span> 1 <span style="color:#ff79c6">-&gt;</span> 0<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 4 <span style="color:#ff79c6">-&gt;</span> 1<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">default</span> <span style="color:#ff79c6">-&gt;</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd">int</span> result <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Random<span style="color:#ff79c6">().</span><span style="color:#50fa7b">nextInt</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>        yield result<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">};</span>
+</span></span></code></pre></div><h2 id="9-jep-286-local-variable-type-inference-10">
+  9. JEP 286: Local-Variable Type Inference @10
+  <a class="heading-link" href="#9-jep-286-local-variable-type-inference-10">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>For local variable declarations with initializers, enhanced for-loop indexes, and index variables declared in traditional for loops, allow the reserved type name <code>var</code> to be accepted in place of manifest types:</p>
+<p>It would not be available for method formals, constructor formals, method return types, fields, catch formals, or any other kind of variable declaration.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>var list <span style="color:#ff79c6">=</span> Arrays<span style="color:#ff79c6">.</span><span style="color:#50fa7b">asList</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;A&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;B&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;C&#34;</span><span style="color:#ff79c6">);</span>   <span style="color:#6272a4">// infers ArrayList&lt;String&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>var stream <span style="color:#ff79c6">=</span> list<span style="color:#ff79c6">.</span><span style="color:#50fa7b">stream</span><span style="color:#ff79c6">();</span>     <span style="color:#6272a4">// infers Stream&lt;String&gt;
+</span></span></span></code></pre></div><h2 id="10-jep-269-convenience-factory-methods-for-collections-9">
+  10. JEP 269: Convenience Factory Methods for Collections @9
+  <a class="heading-link" href="#10-jep-269-convenience-factory-methods-for-collections-9">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Provide static factory methods on the List, Set, and Map interfaces for creating unmodifiable instances of those collections.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>var set1 <span style="color:#ff79c6">=</span> Set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 5<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 10<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>var list1 <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;A&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Grade&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Morning&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;A&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>var set1 <span style="color:#ff79c6">=</span> Set<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 5<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 10<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>var list1 <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;A&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Grade&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Morning&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;A&#34;</span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="11-interface-private-methods-9">
+  11. Interface private methods @9
+  <a class="heading-link" href="#11-interface-private-methods-9">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>From Java 9, private methods can be added to interfaces in Java.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">Animal</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">default</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">bark</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        think<span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">think</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;thinking...&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="12-new-optional-methods-9">
+  12. New Optional Methods @9
+  <a class="heading-link" href="#12-new-optional-methods-9">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// ifPresentOrElse()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Optional<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> nonEmpty <span style="color:#ff79c6">=</span> Optional<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Hello World&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>nonEmpty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">ifPresentOrElse</span><span style="color:#ff79c6">(</span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">::</span>println<span style="color:#ff79c6">,</span> <span style="color:#ff79c6">()</span> <span style="color:#ff79c6">-&gt;</span> System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Empty&#34;</span><span style="color:#ff79c6">));</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// or()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Optional<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> empty <span style="color:#ff79c6">=</span> Optional<span style="color:#ff79c6">.</span><span style="color:#50fa7b">empty</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>nonEmpty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">or</span><span style="color:#ff79c6">(()</span> <span style="color:#ff79c6">-&gt;</span> Optional<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Default&#34;</span><span style="color:#ff79c6">)).</span><span style="color:#50fa7b">ifPresent</span><span style="color:#ff79c6">(</span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">::</span>println<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>empty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">or</span><span style="color:#ff79c6">(()</span> <span style="color:#ff79c6">-&gt;</span> Optional<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Default&#34;</span><span style="color:#ff79c6">)).</span><span style="color:#50fa7b">ifPresent</span><span style="color:#ff79c6">(</span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">::</span>println<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// stream()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>var fruits <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Apple&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Orange&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Pear&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;Banana&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>fruits<span style="color:#ff79c6">.</span><span style="color:#50fa7b">stream</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>NewOptionalMethods<span style="color:#ff79c6">::</span>transform<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">flatMap</span><span style="color:#ff79c6">(</span>Optional<span style="color:#ff79c6">::</span>stream<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">forEach</span><span style="color:#ff79c6">(</span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">::</span>println<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// isEmpty()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>nonEmpty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">());</span>
+</span></span><span style="display:flex;"><span>System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>empty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isEmpty</span><span style="color:#ff79c6">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// orElseThrow()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>nonEmpty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">orElseThrow</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>empty<span style="color:#ff79c6">.</span><span style="color:#50fa7b">orElseThrow</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><hr>
+<blockquote>
+<p>The playground source code of this blog can be found <a href="https://github.com/nkcoder/main-features-after-java8"  class="external-link" target="_blank" rel="noopener">here</a>.</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

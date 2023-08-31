@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Quartz系列七：TriggerListeners与JobListeners · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Quartz系列文章的第七篇：介绍TriggerListeners与JobListeners">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Quartz系列七：TriggerListeners与JobListeners"/>
+<meta name="twitter:description" content="Quartz系列文章的第七篇：介绍TriggerListeners与JobListeners"/>
+
+<meta property="og:title" content="Quartz系列七：TriggerListeners与JobListeners" />
+<meta property="og:description" content="Quartz系列文章的第七篇：介绍TriggerListeners与JobListeners" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-19T21:11:02+08:00" />
+<meta property="article:modified_time" content="2020-02-19T21:11:02+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/">
+              Quartz系列七：TriggerListeners与JobListeners
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-19T21:11:02&#43;08:00">
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/quartz/">quartz</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>listener是一个对象，用于监听scheduler中发生的事件，然后执行相应的操作；你可能已经猜到了，<code>TriggerListeners</code>接受与trigger相关的事件，<code>JobListeners</code>接受与jobs相关的事件。</p>
+<p>trigger相关的事件包括：trigger的触发、trigger错过触发(mis-fire)以及trigger的完成(即trigger触发的job执行完成)。</p>
+<p><strong>org.quartz.TriggerListener接口:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">TriggerListener</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">getName</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">triggerFired</span><span style="color:#ff79c6">(</span>Trigger trigger<span style="color:#ff79c6">,</span> JobExecutionContext context<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">boolean</span> <span style="color:#50fa7b">vetoJobExecution</span><span style="color:#ff79c6">(</span>Trigger trigger<span style="color:#ff79c6">,</span> JobExecutionContext context<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">triggerMisfired</span><span style="color:#ff79c6">(</span>Trigger trigger<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">triggerComplete</span><span style="color:#ff79c6">(</span>Trigger trigger<span style="color:#ff79c6">,</span> JobExecutionContext context<span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#8be9fd">int</span> triggerInstructionCode<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>job相关的事件包括：job即将执行的通知以及job执行完毕的通知。</p>
+<p><strong>org.quartz.JobListener接口：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">interface</span> <span style="color:#50fa7b">JobListener</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> String <span style="color:#50fa7b">getName</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">jobToBeExecuted</span><span style="color:#ff79c6">(</span>JobExecutionContext context<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">jobExecutionVetoed</span><span style="color:#ff79c6">(</span>JobExecutionContext context<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">jobWasExecuted</span><span style="color:#ff79c6">(</span>JobExecutionContext context<span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>            JobExecutionException jobException<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h2 id="使用自定义的listener">
+  使用自定义的listener
+  <a class="heading-link" href="#%e4%bd%bf%e7%94%a8%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9a%84listener">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>创建一个listener，只需要实现org.quartz.TriggerListener接口或者org.quartz.JobListener 接口即可；然后在运行时将listener注册到scheduler上，并且需要给listener取个名称(因为listener需要通过其getName()方法广播它的名称)。</p>
+<p>我们可以实现上面提到的接口，但更方便的方式是继承JobListenerSupport类或者TriggerListenerSupport类，只需重写需要的方法即可。</p>
+<p>listener是注册到scheduler的ListenerManager上的，与listener一同注册的还有一个Matcher对象，该对象用于描述listener期望接收事件的job或trigger。</p>
+<pre><code>listener是在运行的时候注册到scheduler上的，而且不会与job和trigger一样保存在JobStore中。因为listener一般是应用的一个集成点(integration point)，因此，应用每次运行的时候，listener都应该重新注册到scheduler上。
+</code></pre>
+<p><strong>给一个job添加JobListener：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getListenerManager</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">addJobListener</span><span style="color:#ff79c6">(</span>myJobListener<span style="color:#ff79c6">,</span> KeyMatcher<span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobKeyEquals</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> JobKey<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myJobName&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;myJobGroup&#34;</span><span style="color:#ff79c6">)));</span>
+</span></span></code></pre></div><p>可以对matcher和key下的类进行静态导入，这样使得matcher的定义更加清晰：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.JobKey.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.impl.matchers.KeyMatcher.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.impl.matchers.GroupMatcher.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.impl.matchers.AndMatcher.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.impl.matchers.OrMatcher.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import static</span> org.quartz.impl.matchers.EverythingMatcher.*<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">...</span><span style="color:#50fa7b">etc</span><span style="color:#ff79c6">.</span>
+</span></span></code></pre></div><p>静态导入后，上面的实例可以写成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getListenerManager</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">addJobListener</span><span style="color:#ff79c6">(</span>myJobListener<span style="color:#ff79c6">,</span> jobKeyEquals<span style="color:#ff79c6">(</span>jobKey<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myJobName&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;myJobGroup&#34;</span><span style="color:#ff79c6">)));</span>
+</span></span></code></pre></div><p>给一个group下的所有job添加一个JobListener：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getListenerManager</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">addJobListener</span><span style="color:#ff79c6">(</span>myJobListener<span style="color:#ff79c6">,</span> jobGroupEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myJobGroup&#34;</span><span style="color:#ff79c6">));</span>
+</span></span></code></pre></div><p>给两个group下的所有job添加一个JobListener：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getListenerManager</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">addJobListener</span><span style="color:#ff79c6">(</span>myJobListener<span style="color:#ff79c6">,</span> or<span style="color:#ff79c6">(</span>jobGroupEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;myJobGroup&#34;</span><span style="color:#ff79c6">),</span> jobGroupEquals<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;yourGroup&#34;</span><span style="color:#ff79c6">)));</span>
+</span></span></code></pre></div><p>给所有的job添加一个JobListener：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>scheduler<span style="color:#ff79c6">.</span><span style="color:#50fa7b">getListenerManager</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">addJobListener</span><span style="color:#ff79c6">(</span>myJobListener<span style="color:#ff79c6">,</span> allJobs<span style="color:#ff79c6">());</span>
+</span></span></code></pre></div><p>TriggerListener的注册过程与JobListener类似。</p>
+<p>Quartz的大部分用户可能都用不到listener，但如果应用对发生的事件感兴趣，使用listener会更方便，不需要job显式去通知应用。</p>
+<ul>
+<li>原文链接：<a href="http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/tutorials/tutorial-lesson-07.html"  class="external-link" target="_blank" rel="noopener">Lesson 7: TriggerListeners and JobListeners</a></li>
+<li>有兴趣的朋友可以参考我在github上的项目：<a href="https://github.com/nkcoder/quartz-explained"  class="external-link" target="_blank" rel="noopener">quartz源码注释</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

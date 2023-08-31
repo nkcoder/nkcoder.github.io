@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Go的基本数据类型 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="整数类型 Link to heading 整数区分有符号和无符号，且有四种大小：
+int8, int16, int32,	int64	// 有符号 uint8, uint16,	uint32,	uint64	// 无符号 其它类型说明：
+int和uint，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同
+rune类型是int32的同义词，表示该值是一个Unicode码点(code point)
+byte是uint8的同义词，表示该值是原始数据(raw data)
+uintptr也是一个整型类型，但大小不确定，主要用于低级编程（如调用C语言库）。
+int, uint, uintptr与带大小的类型如int32, uint64等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。
+r1, _ := utf8.DecodeRuneInString(&#34;世&#34;) fmt.Printf(&#34;r1 = %c\n&#34;, r1)	// 世 比较运算符：
+== !=	&lt;	&lt;= &gt;	&gt;= 所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。
+fmt.Printf(&#34;%t\n&#34;, 10 &lt; 5)	// false fmt.Printf(&#34;%t\n&#34;, 10 &lt; 20.1)	// true fmt.Printf(&#34;%t\n&#34;, &#34;abc&#34; &gt;= &#34;ab&#34;)	// true 位运算符：
+&amp;	位AND，位的交集 |	位OR，位的并集 ^	位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反 &amp;^	位清空(AND NOT), z=x &amp;^ y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同 &lt;&lt;	位左移 &gt;&gt;	位右移 // bit operation const b1 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 5	// set 1 and 5 bit const b2 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 2	// set 1 and 2 bit fmt.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go的基本数据类型"/>
+<meta name="twitter:description" content="整数类型 Link to heading 整数区分有符号和无符号，且有四种大小：
+int8, int16, int32,	int64	// 有符号 uint8, uint16,	uint32,	uint64	// 无符号 其它类型说明：
+int和uint，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同
+rune类型是int32的同义词，表示该值是一个Unicode码点(code point)
+byte是uint8的同义词，表示该值是原始数据(raw data)
+uintptr也是一个整型类型，但大小不确定，主要用于低级编程（如调用C语言库）。
+int, uint, uintptr与带大小的类型如int32, uint64等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。
+r1, _ := utf8.DecodeRuneInString(&#34;世&#34;) fmt.Printf(&#34;r1 = %c\n&#34;, r1)	// 世 比较运算符：
+== !=	&lt;	&lt;= &gt;	&gt;= 所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。
+fmt.Printf(&#34;%t\n&#34;, 10 &lt; 5)	// false fmt.Printf(&#34;%t\n&#34;, 10 &lt; 20.1)	// true fmt.Printf(&#34;%t\n&#34;, &#34;abc&#34; &gt;= &#34;ab&#34;)	// true 位运算符：
+&amp;	位AND，位的交集 |	位OR，位的并集 ^	位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反 &amp;^	位清空(AND NOT), z=x &amp;^ y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同 &lt;&lt;	位左移 &gt;&gt;	位右移 // bit operation const b1 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 5	// set 1 and 5 bit const b2 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 2	// set 1 and 2 bit fmt."/>
+
+<meta property="og:title" content="Go的基本数据类型" />
+<meta property="og:description" content="整数类型 Link to heading 整数区分有符号和无符号，且有四种大小：
+int8, int16, int32,	int64	// 有符号 uint8, uint16,	uint32,	uint64	// 无符号 其它类型说明：
+int和uint，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同
+rune类型是int32的同义词，表示该值是一个Unicode码点(code point)
+byte是uint8的同义词，表示该值是原始数据(raw data)
+uintptr也是一个整型类型，但大小不确定，主要用于低级编程（如调用C语言库）。
+int, uint, uintptr与带大小的类型如int32, uint64等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。
+r1, _ := utf8.DecodeRuneInString(&#34;世&#34;) fmt.Printf(&#34;r1 = %c\n&#34;, r1)	// 世 比较运算符：
+== !=	&lt;	&lt;= &gt;	&gt;= 所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。
+fmt.Printf(&#34;%t\n&#34;, 10 &lt; 5)	// false fmt.Printf(&#34;%t\n&#34;, 10 &lt; 20.1)	// true fmt.Printf(&#34;%t\n&#34;, &#34;abc&#34; &gt;= &#34;ab&#34;)	// true 位运算符：
+&amp;	位AND，位的交集 |	位OR，位的并集 ^	位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反 &amp;^	位清空(AND NOT), z=x &amp;^ y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同 &lt;&lt;	位左移 &gt;&gt;	位右移 // bit operation const b1 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 5	// set 1 and 5 bit const b2 uint8 = 1 &lt;&lt; 1 | 1 &lt;&lt; 2	// set 1 and 2 bit fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/go/03-go-basic-data-types/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-18T22:36:16+08:00" />
+<meta property="article:modified_time" content="2021-04-18T22:36:16+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/go/03-go-basic-data-types/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/go/03-go-basic-data-types/">
+              Go的基本数据类型
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-04-18T22:36:16&#43;08:00">
+                April 18, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">Go程序设计</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h3 id="整数类型">
+  整数类型
+  <a class="heading-link" href="#%e6%95%b4%e6%95%b0%e7%b1%bb%e5%9e%8b">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><strong>整数区分有符号和无符号</strong>，且有四种大小：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd">int8</span>, 	<span style="color:#8be9fd">int16</span>, 	<span style="color:#8be9fd">int32</span>,	<span style="color:#8be9fd">int64</span>		<span style="color:#6272a4">// 有符号
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd">uint8</span>, 	<span style="color:#8be9fd">uint16</span>,	<span style="color:#8be9fd">uint32</span>,	<span style="color:#8be9fd">uint64</span>	<span style="color:#6272a4">// 无符号
+</span></span></span></code></pre></div><p>其它类型说明：</p>
+<ul>
+<li>
+<p><code>int</code>和<code>uint</code>，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同</p>
+</li>
+<li>
+<p><code>rune</code>类型是<code>int32</code>的同义词，表示该值是一个Unicode码点(<em>code point</em>)</p>
+</li>
+<li>
+<p><code>byte</code>是<code>uint8</code>的同义词，表示该值是原始数据(<em>raw data</em>)</p>
+</li>
+<li>
+<p><code>uintptr</code>也是一个整型类型，但大小不确定，主要用于低级编程（如调用<code>C</code>语言库）。</p>
+</li>
+</ul>
+<blockquote>
+<p><code>int</code>, <code>uint</code>, <code>uintptr</code>与带大小的类型如<code>int32</code>, <code>uint64</code>等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>r1, _ <span style="color:#ff79c6">:=</span> utf8.<span style="color:#50fa7b">DecodeRuneInString</span>(<span style="color:#f1fa8c">&#34;世&#34;</span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;r1 = %c\n&#34;</span>, r1)				<span style="color:#6272a4">// 世
+</span></span></span></code></pre></div><hr>
+<p><strong>比较运算符</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">==</span> 	<span style="color:#ff79c6">!=</span>	&lt;		<span style="color:#ff79c6">&lt;=</span> 	&gt;		<span style="color:#ff79c6">&gt;=</span>
+</span></span></code></pre></div><p>所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%t\n&#34;</span>, <span style="color:#bd93f9">10</span> &lt; <span style="color:#bd93f9">5</span>)					<span style="color:#6272a4">// false
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%t\n&#34;</span>, <span style="color:#bd93f9">10</span> &lt; <span style="color:#bd93f9">20.1</span>)				<span style="color:#6272a4">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%t\n&#34;</span>, <span style="color:#f1fa8c">&#34;abc&#34;</span> <span style="color:#ff79c6">&gt;=</span> <span style="color:#f1fa8c">&#34;ab&#34;</span>)		<span style="color:#6272a4">// true
+</span></span></span></code></pre></div><hr>
+<p><strong>位运算符：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">&amp;</span>		位AND，位的交集
+</span></span><span style="display:flex;"><span>|		位OR，位的并集
+</span></span><span style="display:flex;"><span>^		位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&amp;^</span>	位清空(AND NOT), z=x <span style="color:#ff79c6">&amp;^</span> y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;&lt;</span>	位左移
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&gt;&gt;</span>	位右移
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#6272a4">// bit operation
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">const</span> b1 <span style="color:#8be9fd">uint8</span> = <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">1</span> | <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">5</span>	<span style="color:#6272a4">// set 1 and 5 bit
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">const</span> b2 <span style="color:#8be9fd">uint8</span> = <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">1</span> | <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&lt;&lt;</span> <span style="color:#bd93f9">2</span>	<span style="color:#6272a4">// set 1 and 2 bit
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b1)		<span style="color:#6272a4">// 00100010
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b2)		<span style="color:#6272a4">// 00000110
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b1 <span style="color:#ff79c6">&amp;</span> b2)		<span style="color:#6272a4">// 00000010
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b1 | b2)		<span style="color:#6272a4">// 00100110
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b1 ^ b2)		<span style="color:#6272a4">// 00100100
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%08b\n&#34;</span>, b1 <span style="color:#ff79c6">&amp;^</span> b2)	<span style="color:#6272a4">// 00100100
+</span></span></span></code></pre></div><blockquote>
+<ul>
+<li>%08b：将结果以8位展示，不足8位的用0补齐。</li>
+<li>对于无符号数，左移右移都是补0，对于有符号数，左移补0，右移补符号位。所以整数在做位运算时，要注意使用无符号。</li>
+</ul>
+</blockquote>
+<p>在Go语言中，对于不能为负值的整数，一般使用有符号数来表示，比如数组的长度，<code>len</code>函数返回的是<code>int</code>，如果返回的是<code>uint</code>，在与0比较时永远为true：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>data <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;hello&#34;</span>, <span style="color:#f1fa8c">&#34;world&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">len</span>(data) <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>; i <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">0</span>; i<span style="color:#ff79c6">--</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">println</span>(data[i])
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p><strong>类型转换</strong></p>
+<p>将一个值从一个类型转换成另一个类型，需要进行显示的类型转换。二元操作符的算术和逻辑运算（移位操作除外），要求两个操作数的类型完全一样。</p>
+<p><code>T(x)</code>表示将x转换成类型T。不同宽度类型的整数之间转换，或者整数与浮点数之间转换，可能会修改变量的值或丢失精度，比如浮点数转换成整数，小数部分会被丢弃。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> n1 <span style="color:#8be9fd">int16</span> = <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> n2 <span style="color:#8be9fd">int32</span> = <span style="color:#bd93f9">20</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> sum <span style="color:#8be9fd">int</span> = <span style="color:#8be9fd;font-style:italic">int</span>(n1) <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">int</span>(n2)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(sum)		<span style="color:#6272a4">// 30
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>f1 <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">3.1415</span>
+</span></span><span style="display:flex;"><span>i1 <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">int</span>(f1)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(i1)		<span style="color:#6272a4">// 3
+</span></span></span></code></pre></div><h3 id="浮点数">
+  浮点数
+  <a class="heading-link" href="#%e6%b5%ae%e7%82%b9%e6%95%b0">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>浮点数只有两种类型：<code>float32</code>和<code>float64</code>，其中<code>float32</code>的精度为6位，<code>float64</code>的精度为15位。因为<code>float32</code>类型的浮点数运算很容易出错，所以，在大多数情况下，应该优先使用<code>float64</code>类型进行浮点数运算。</p>
+<p><code>+Inf</code>和<code>-Inf</code>分别表示正无穷、负无穷，即除以0的结果，<code>NaN</code>表示不是一个数值类型，通常为<em>0/0</em>或对*Sqrt(-1)*的结果，任何涉及<code>NaN</code>的比较结果都是false：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> z <span style="color:#8be9fd">float64</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(z, <span style="color:#ff79c6">-</span>z, <span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span>z, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span>z, z<span style="color:#ff79c6">/</span>z)	<span style="color:#6272a4">// 0 -0 +Inf -Inf NaN
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(math.<span style="color:#50fa7b">IsInf</span>(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span>z, <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>), math.<span style="color:#50fa7b">IsInf</span>(<span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span>z, <span style="color:#bd93f9">1</span>))	<span style="color:#6272a4">// true true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>nan <span style="color:#ff79c6">:=</span> math.<span style="color:#50fa7b">NaN</span>()
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(nan <span style="color:#ff79c6">==</span> nan, nan &lt; nan, nan &gt; nan)		<span style="color:#6272a4">// false false	false
+</span></span></span></code></pre></div><h3 id="复数complex">
+  复数（complex）
+  <a class="heading-link" href="#%e5%a4%8d%e6%95%b0complex">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>复数由实数和虚数构成，有两种类型的复数，<code>complex64</code>和<code>complex128</code>，对应的组成部分（实数和虚数）的类型为<code>float32</code>和<code>float64</code>。</p>
+<p><code>complex</code>函数可以创建一个复数，<code>real</code>和<code>imag</code>函数获取对应的实数和虚数部分，<code>math/cmplx</code>包提供了对复数操作的函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> x <span style="color:#8be9fd">complex64</span> = <span style="color:#8be9fd;font-style:italic">complex</span>(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> y <span style="color:#8be9fd">complex64</span> = <span style="color:#8be9fd;font-style:italic">complex</span>(<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> z = x <span style="color:#ff79c6">*</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(x, y, z)						<span style="color:#6272a4">// (1+2i) (3+4i) (-5+10i)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">real</span>(z), <span style="color:#8be9fd;font-style:italic">imag</span>(z))		<span style="color:#6272a4">// -5 10
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%T %T\n&#34;</span>, <span style="color:#8be9fd;font-style:italic">real</span>(z), <span style="color:#8be9fd;font-style:italic">imag</span>(z))		<span style="color:#6272a4">// float32 float32
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> r = cmplx.<span style="color:#50fa7b">Sqrt</span>(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(r)					<span style="color:#6272a4">// (0+1i)
+</span></span></span></code></pre></div><h3 id="布尔">
+  布尔
+  <a class="heading-link" href="#%e5%b8%83%e5%b0%94">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>布尔类型为<code>bool</code>，取值只能为<code>true</code>或<code>false</code>，布尔变量或表达式可以使用<code>&amp;&amp;</code>和<code>||</code>进行组合，并且支持<strong>短路</strong>。</p>
+<p>布尔变量不会隐式转换成0或1:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">const</span> b <span style="color:#8be9fd">bool</span> = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> (b) {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(b)				<span style="color:#6272a4">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#50fa7b">btoi</span>(b))		<span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#50fa7b">itob</span>(<span style="color:#bd93f9">1</span>))		<span style="color:#6272a4">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">btoi</span>(b <span style="color:#8be9fd">bool</span>) <span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> b {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">itob</span>(i <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> i <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="字符串">
+  字符串
+  <a class="heading-link" href="#%e5%ad%97%e7%ac%a6%e4%b8%b2">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>字符串类型为<code>string</code>，表示一个不可变的字节序列。在<code>string</code>上的操作都是基于字节（<code>byte</code>）的，比如:</p>
+<ul>
+<li><code>len()</code>函数返回字节数</li>
+<li><code>s[i:j]</code>操作返回第i（包含）个字节到第j（不包含）个字节间的子串</li>
+<li>比较操作（如<code>==</code>或<code>&lt;</code>），逐个字节的比较</li>
+</ul>
+<p><code>string</code>的第i个字节并不一定等于第i个字符，因为非<code>ASCII</code>字符码点（<code>rune</code>）需要2个或多个字节。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>s <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello, world&#34;</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">len</span>(s))										<span style="color:#6272a4">// 12
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(s[<span style="color:#bd93f9">0</span>], s[<span style="color:#bd93f9">7</span>], s[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;h&#39;</span>, s[<span style="color:#bd93f9">7</span>] <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;w&#39;</span>)		<span style="color:#6272a4">// 104 119 true true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(s[<span style="color:#bd93f9">7</span>:])			<span style="color:#6272a4">// world
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(s[:<span style="color:#bd93f9">5</span>])			<span style="color:#6272a4">// hello
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(s[:])				<span style="color:#6272a4">// hello, world
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>s2 <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello&#34;</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(s &gt; s2)		<span style="color:#6272a4">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(s2 <span style="color:#ff79c6">==</span> s[:<span style="color:#bd93f9">5</span>])		<span style="color:#6272a4">// true
+</span></span></span></code></pre></div><hr>
+<p>原始（<code>raw</code>）字符串以反引号表示，即**``**，其中的所有字符都不会被转义，因此可以跨行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> GoRunHelp = <span style="color:#f1fa8c">`
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	usage: go run [build flags] [-exec xprog] package [arguments...]
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	Run &#39;go help run&#39; for details.
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	`</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(GoRunHelp)
+</span></span></code></pre></div><hr>
+<p>Unicode码点（<em>code point</em>），在Go中叫<code>rune</code>。在<code>UTF-8</code>编码中，对于<code>ASCII</code>字符，一个字节表示一个<code>rune</code>，但其它语言中的有些字符，可能2～3个字节表示一个<code>rune</code>。</p>
+<p>在<code>string</code>变量上使用<code>range</code>循环时，会自动进行<code>UTF-8</code>解码（decoding）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>s3 <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello, 世界&#34;</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">len</span>(s3))												<span style="color:#6272a4">// 13
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(utf8.<span style="color:#50fa7b">RuneCountInString</span>(s3))			<span style="color:#6272a4">// 9
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#8be9fd;font-style:italic">len</span>(s); {
+</span></span><span style="display:flex;"><span>r, size <span style="color:#ff79c6">:=</span> utf8.<span style="color:#50fa7b">DecodeRuneInString</span>(s3[i:])
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%d\t%c\n&#34;</span>, i, r)
+</span></span><span style="display:flex;"><span>i <span style="color:#ff79c6">+=</span> size
+</span></span><span style="display:flex;"><span>}	
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i, r <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span>(s3) {
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%d\t%c\n&#34;</span>, i, r)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">0	h
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">1	e
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">2	l
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">3	l
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">4	o
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">5	,
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">6
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">7	世
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">10	界
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">*/</span>
+</span></span></code></pre></div><p>将整数转换成字符串时，会将整数解析成<code>UTF-8</code>表示的<code>rune</code>值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">string</span>(<span style="color:#bd93f9">65</span>))				<span style="color:#6272a4">// &#34;A&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%d&#34;</span>, <span style="color:#bd93f9">65</span>))		<span style="color:#6272a4">// &#34;65&#34;
+</span></span></span></code></pre></div><hr>
+<p>在对字符串进行操作时，以下4个包很重要：</p>
+<ul>
+<li><code>strings</code>：字符串的搜索、替换、连接、包含等函数</li>
+<li><code>bytes</code>：对<code>[]byte</code>类型的操作</li>
+<li><code>strconv</code>：<code>bool</code>、<code>int</code>、<code>float</code>与<code>string</code>之间的互相转换</li>
+<li><code>unicode</code>：对<code>rune</code>的操作，包括<code>IsDigit</code>, <code>IsLetter</code>, <code>IsUpper</code>, <code>IsLower</code>等函数</li>
+</ul>
+<p><code>string</code>类型是不可变的，所以不能进行修改，但是<code>[]byte</code>是可以任意修改的。同时<code>bytes</code>包提供了<code>Buffer</code>类型用于对[]byte的高效操作。</p>
+<p>为了避免不必要的类型转换以及内存分配，<code>bytes</code>包提供了与<code>strings</code>包中功能相同的工具函数，只是函数参数是<code>[]byte</code>，而不是<code>string</code>，如<code>contains</code>,<code> count()</code>等。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">intsToString</span>(values []<span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">var</span> buf bytes.Buffer
+</span></span><span style="display:flex;"><span>  buf.<span style="color:#50fa7b">WriteRune</span>(<span style="color:#f1fa8c">&#39;[&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">for</span> i, v <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> values {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> i &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>      buf.<span style="color:#50fa7b">WriteRune</span>(<span style="color:#f1fa8c">&#39;,&#39;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Fprintf</span>(<span style="color:#ff79c6">&amp;</span>buf, <span style="color:#f1fa8c">&#34;%d&#34;</span>, v)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  buf.<span style="color:#50fa7b">WriteRune</span>(<span style="color:#f1fa8c">&#39;]&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> buf.<span style="color:#50fa7b">String</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#50fa7b">intsToString</span>([]<span style="color:#8be9fd">int</span>{<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span>}))		<span style="color:#6272a4">// [1,2,3,4]
+</span></span></span></code></pre></div><hr>
+<p>将整数转换成字符串有两种方式，使用<code>fmt.Sprintf</code>函数，或者使用<code>strconv.Itoa</code>函数（即<em>integer to ASCII</em>）。将字符串转成整数，可以使用<code>strconv.Atoi</code>函数或者<code>strconv.ParseInt</code>函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>x <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">456</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#ff79c6">:=</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%d&#34;</span>, x)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(y, strconv.<span style="color:#50fa7b">Itoa</span>(x))		<span style="color:#6272a4">// 456 456
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(strconv.<span style="color:#50fa7b">FormatInt</span>(<span style="color:#8be9fd;font-style:italic">int64</span>(x), <span style="color:#bd93f9">2</span>))		<span style="color:#6272a4">// 111001000
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>fmt.<span style="color:#50fa7b">Println</span>(fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;x = %b&#34;</span>, x))					<span style="color:#6272a4">// x = 111001000
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>m <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;789&#34;</span>
+</span></span><span style="display:flex;"><span>n, _ <span style="color:#ff79c6">:=</span> strconv.<span style="color:#50fa7b">Atoi</span>(m)
+</span></span><span style="display:flex;"><span>p, _ <span style="color:#ff79c6">:=</span> strconv.<span style="color:#50fa7b">ParseInt</span>(m, <span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">64</span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(n, p)			<span style="color:#6272a4">// 789 789
+</span></span></span></code></pre></div><h3 id="常量">
+  常量
+  <a class="heading-link" href="#%e5%b8%b8%e9%87%8f">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>const</code>关键字定义常量，即值在编译时即已知。</p>
+<p>当定义一组常量时，后定义的常量的表达式可以省略，表示与前一个常量的类型和值相同（所以第一个常量的定义不可省略）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> (
+</span></span><span style="display:flex;"><span>  a = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>  b
+</span></span><span style="display:flex;"><span>  c = <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span>  d
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(a, b, c, d)				<span style="color:#6272a4">// 1 1 3 3
+</span></span></span></code></pre></div><p>在<code>const</code>声明中，常量生成器<code>iota</code>的起始值为0，后续每一项的值递增：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Weekday <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> (
+</span></span><span style="display:flex;"><span>  Sunday Weekday = <span style="color:#ff79c6">iota</span>
+</span></span><span style="display:flex;"><span>  Monday
+</span></span><span style="display:flex;"><span>  Tuesday
+</span></span><span style="display:flex;"><span>  Wednesday
+</span></span><span style="display:flex;"><span>  Thursday
+</span></span><span style="display:flex;"><span>  Friday
+</span></span><span style="display:flex;"><span>  Saturday
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)		<span style="color:#6272a4">// 0 1 2 3 4 5 6
+</span></span></span></code></pre></div><blockquote>
+<p>参考：《The Go Programming Language》(Alan Donovan, Brian Kernighan) (英文版)</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

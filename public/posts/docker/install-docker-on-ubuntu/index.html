@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker安装：在Ubunut上安装 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 更新apt，并安装可以使用HTTPS仓库的安装包：
+$ sudo apt-get update $ sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common 安装Docker官方的GPG密钥：
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 设置stable仓库：
+$ sudo add-apt-repository \ &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&#34; 最后，安装Docker Engine：
+$ sudo apt-get update $ sudo apt-get install docker-ce docker-ce-cli containerd.io 使用安装包安装 Link to heading 从ubuntu-仓库中选择对应的Ubuntu版本，然后进入/pool/stable目录下载对应的DEB安装包，安装：
+$ sudo dpkg -i /path/to/package.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker安装：在Ubunut上安装"/>
+<meta name="twitter:description" content="在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 更新apt，并安装可以使用HTTPS仓库的安装包：
+$ sudo apt-get update $ sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common 安装Docker官方的GPG密钥：
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 设置stable仓库：
+$ sudo add-apt-repository \ &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&#34; 最后，安装Docker Engine：
+$ sudo apt-get update $ sudo apt-get install docker-ce docker-ce-cli containerd.io 使用安装包安装 Link to heading 从ubuntu-仓库中选择对应的Ubuntu版本，然后进入/pool/stable目录下载对应的DEB安装包，安装：
+$ sudo dpkg -i /path/to/package."/>
+
+<meta property="og:title" content="Docker安装：在Ubunut上安装" />
+<meta property="og:description" content="在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 更新apt，并安装可以使用HTTPS仓库的安装包：
+$ sudo apt-get update $ sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common 安装Docker官方的GPG密钥：
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 设置stable仓库：
+$ sudo add-apt-repository \ &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&#34; 最后，安装Docker Engine：
+$ sudo apt-get update $ sudo apt-get install docker-ce docker-ce-cli containerd.io 使用安装包安装 Link to heading 从ubuntu-仓库中选择对应的Ubuntu版本，然后进入/pool/stable目录下载对应的DEB安装包，安装：
+$ sudo dpkg -i /path/to/package." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-07T15:06:07+08:00" />
+<meta property="article:modified_time" content="2020-06-07T15:06:07+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/">
+              Docker安装：在Ubunut上安装
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-06-07T15:06:07&#43;08:00">
+                June 7, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>在Linux上安装Docker可以有以下几种方式：</p>
+<ul>
+<li>设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式</li>
+<li>下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。</li>
+<li>使用自动化脚本安装。这种方式主要用于开发和测试。</li>
+</ul>
+<h2 id="从仓库安装">
+  从仓库安装
+  <a class="heading-link" href="#%e4%bb%8e%e4%bb%93%e5%ba%93%e5%ae%89%e8%a3%85">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>更新<code>apt</code>，并安装可以使用HTTPS仓库的安装包：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt-get update
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ sudo apt-get install <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>    apt-transport-https <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>    ca-certificates <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>    curl <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>    gnupg-agent <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>    software-properties-common
+</span></span></code></pre></div><p>安装Docker官方的GPG密钥：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+</span></span></code></pre></div><p>设置stable仓库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo add-apt-repository <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>   <span style="color:#f1fa8c">&#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">   </span><span style="color:#ff79c6">$(</span>lsb_release -cs<span style="color:#ff79c6">)</span><span style="color:#f1fa8c"> \
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">   stable&#34;</span>
+</span></span></code></pre></div><p>最后，安装Docker Engine：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> $ sudo apt-get update
+</span></span><span style="display:flex;"><span> $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></div><h2 id="使用安装包安装">
+  使用安装包安装
+  <a class="heading-link" href="#%e4%bd%bf%e7%94%a8%e5%ae%89%e8%a3%85%e5%8c%85%e5%ae%89%e8%a3%85">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>从<a href="https://download.docker.com/linux/ubuntu/dists/"  class="external-link" target="_blank" rel="noopener">ubuntu-仓库</a>中选择对应的Ubuntu版本，然后进入<code>/pool/stable</code>目录下载对应的DEB安装包，安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo dpkg -i /path/to/package.deb
+</span></span></code></pre></div><h2 id="使用脚本安装">
+  使用脚本安装
+  <a class="heading-link" href="#%e4%bd%bf%e7%94%a8%e8%84%9a%e6%9c%ac%e5%ae%89%e8%a3%85">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>使用脚本方式安装，有以下几点需要注意：</p>
+<ul>
+<li>脚本的运行需要root或sudo权限，所以运行前务必检查脚本的内容</li>
+<li>脚本安装不支持任何安装参数的配置</li>
+<li>不需要你的确认，会安装所有的依赖和推荐的包，因此可能会安装大量不需要的安装包</li>
+<li>安装的是最新版的Edge版，而不是Stable版</li>
+</ul>
+<p>因此，脚本安装方式主要用于开发和测试，不应该用于生产环境。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ curl -fsSL https://get.docker.com -o get-docker.sh
+</span></span><span style="display:flex;"><span>$ sudo sh get-docker.sh
+</span></span></code></pre></div><p>安装完后，都以使用命令确认下安装是否成功：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker -v
+</span></span><span style="display:flex;"><span>Docker version 19.03.8, build afacb8b
+</span></span><span style="display:flex;"><span>➜  ~ docker-compose -v
+</span></span><span style="display:flex;"><span>docker-compose version 1.25.4, build 8d51620a
+</span></span></code></pre></div><h2 id="使用非root用户管理docker">
+  使用非root用户管理Docker
+  <a class="heading-link" href="#%e4%bd%bf%e7%94%a8%e9%9d%9eroot%e7%94%a8%e6%88%b7%e7%ae%a1%e7%90%86docker">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>docker守护进程（daemon）是绑定到Unix socket上的，而不是TCP端口。Unix socket默认是属于<code>root</code>的，所以在执行Docker命令时需要使用<code>sudo</code>。</p>
+<p>如果不希望执行每个Docker命令都输入<code>sudo</code>，可以创建一个Unix用户组<code>docker</code>，然后将普通用户添加到该用户组中。当Docker daemon启动时，它会创建一个可以被<code>docker</code>用户组中的用户访问的Unix socket。</p>
+<p>创建<code>docker</code>用户组并将添加用户（以上安装方式默认都创建了<code>docker</code>用户组，只是其中没有任何用户）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo groupadd docker
+</span></span><span style="display:flex;"><span>$ sudo usermod -aG docker <span style="color:#8be9fd;font-style:italic">$USER</span>
+</span></span></code></pre></div><p>注销然后重新登录可以让用户组的修改生效。在Linux上也可以执行以下命令直接使用户组的修改成效：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ newgrp docker 
+</span></span></code></pre></div><h2 id="卸载">
+  卸载
+  <a class="heading-link" href="#%e5%8d%b8%e8%bd%bd">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>首先卸载Docker engine和cli：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt-get purge docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></div><p>然后删除所有的image、container和volume：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo rm -rf /var/lib/docker
+</span></span></code></pre></div><h3 id="references">
+  references:
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/install/ubuntu/"  class="external-link" target="_blank" rel="noopener">docker-install-on-ubuntu</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

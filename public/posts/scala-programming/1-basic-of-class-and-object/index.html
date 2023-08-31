@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Scala: Basics of class and object · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Classes, fields, and methods Link to heading Once you define a class, you can create objects with the keyword new.
+public is Scala&rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0 acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&rsquo;s state—the values of its instance variables—remains valid during its entire lifetime.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scala: Basics of class and object"/>
+<meta name="twitter:description" content="Classes, fields, and methods Link to heading Once you define a class, you can create objects with the keyword new.
+public is Scala&rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0 acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&rsquo;s state—the values of its instance variables—remains valid during its entire lifetime."/>
+
+<meta property="og:title" content="Scala: Basics of class and object" />
+<meta property="og:description" content="Classes, fields, and methods Link to heading Once you define a class, you can create objects with the keyword new.
+public is Scala&rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0 acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&rsquo;s state—the values of its instance variables—remains valid during its entire lifetime." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-18T08:22:29+08:00" />
+<meta property="article:modified_time" content="2021-07-18T08:22:29+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/">
+              Scala: Basics of class and object
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-07-18T08:22:29&#43;08:00">
+                July 18, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/scala/">Scala</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="classes-fields-and-methods">
+  Classes, fields, and methods
+  <a class="heading-link" href="#classes-fields-and-methods">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Once you define a class, you can create objects with the keyword <code>new</code>.</p>
+<p><code>public</code> is Scala&rsquo;s default access level.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Accumulator</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">var</span> sum <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> acc <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Accumulator</span>
+</span></span><span style="display:flex;"><span>println<span style="color:#ff79c6">(</span>acc<span style="color:#ff79c6">.</span>sum<span style="color:#ff79c6">)</span>			<span style="color:#6272a4">// 0
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>acc<span style="color:#ff79c6">.</span>sum <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span>println<span style="color:#ff79c6">(</span>acc<span style="color:#ff79c6">.</span>sum<span style="color:#ff79c6">)</span>	<span style="color:#6272a4">// 10
+</span></span></span></code></pre></div><p>One important way to pursue robustness of an object is to ensure that the object&rsquo;s state—the values of its instance variables—remains valid during its entire lifetime. The first step is to prevent outsiders from accessing the fields directly by making the fields <code>private</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Accumulator</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">var</span> sum <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> add<span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">+</span> sum
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> subtract<span style="color:#ff79c6">(</span>b<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Unit</span> <span style="color:#ff79c6">=</span> sum <span style="color:#ff79c6">-=</span> b
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>One important characteristics of method parameters in Scala is that they are <strong>vals</strong>, not <strong>vars</strong>.</li>
+<li>In the absence of any explicit <strong>return</strong> statement, a Scala method returns the last value computed by the method. The recommend style for methods is in fact to avoid having explicit and especially multiple <strong>return</strong> statements. Instead, think of each method as an expression that yields one value, which is returned.</li>
+<li>You can leave off the curly braces <code>{}</code> If a method computes only a single result expression. If the result expression is short, it can even be placed on the same line as the <code>def</code> itself.</li>
+<li>It is often better to explicitly provide the result types of public methods  even the compiler would infer it for you. Because readers of the code will also need to mentally infer the result types by studying the bodies of the methods.</li>
+<li>Methods with a result type <code>Unit</code> are executed for their side effects. A <strong>side effect</strong> is generally defined as mutating state somewhere external to the method or performing an I/O action.</li>
+</ul>
+<hr>
+<p>In a Scala program, a semicolon(<code>;</code>) a the end of a statement is usually optional except for the following two cases:</p>
+<ul>
+<li>
+<p>A semicolon is required if you write multiple statements on a single line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> s <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;hello&#34;</span><span style="color:#ff79c6">;</span> println<span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div></li>
+<li>
+<p>If you want to enter a statement that spans multiple lines, most of the time Scala will separate the statements in the correct place. Occasionally the split may against your wishes. You can wrap it in parentheses or put the operator at the end of a line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>x 
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">+</span> y		<span style="color:#6272a4">// parsed as two statements x and +y
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">(</span>x
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">+</span> y<span style="color:#ff79c6">)</span>	<span style="color:#6272a4">// this is OK
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>x <span style="color:#ff79c6">+</span>
+</span></span><span style="display:flex;"><span>y			<span style="color:#6272a4">// this is also OK
+</span></span></span></code></pre></div></li>
+</ul>
+<h2 id="singleton-objects">
+  Singleton objects
+  <a class="heading-link" href="#singleton-objects">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Classes in Scala <strong>cannot</strong> have static members. Instead, Scala has singleton objects, which start with the keyword <code>object</code>.</p>
+<p>When a singleton object shares the same name with a class, it is called that class&rsquo;s <strong>companion object</strong>. The class and its companion object <strong>must</strong> be defined in the same source file. A class and its companion object can access each other&rsquo;s <strong>private</strong> members.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Accumulator</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">private</span> <span style="color:#ff79c6">var</span> sum <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">import</span> Accumulator.value
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">def</span> add<span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">+</span> sum <span style="color:#ff79c6">+</span> value
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">object</span> <span style="color:#50fa7b">Accumulator</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> value <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> getValue<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> value
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>println<span style="color:#ff79c6">(</span><span style="color:#50fa7b">Accumulator</span><span style="color:#ff79c6">.</span>getValue<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><p>Defining a singleton object doesn&rsquo;t define a type. However, singleton objects can extend superclass and mix in traits.</p>
+<p>Singleton objects cannot take parameters because you can&rsquo;t instantiate a single object with the <code>new</code> keyword, you have no way to pass parameters to it. In particular, a singleton object is instantiated the first time some code accesses it.</p>
+<p>A singleton object that does not share the same name with a companion class is called a <strong>standalone object</strong>. Standalone objects can be used for collecting related utility methods together or defining an entry point to a Scala application.</p>
+<h2 id="a-scala-application">
+  A Scala application
+  <a class="heading-link" href="#a-scala-application">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Any standalone object with a main method of the proper signature can be used as the entry point into an application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">object</span> <span style="color:#50fa7b">MainDemo</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">def</span> main<span style="color:#ff79c6">(</span>args<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Array</span><span style="color:#ff79c6">[</span><span style="color:#8be9fd">String</span><span style="color:#ff79c6">])</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Unit</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>		println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Hello, world&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ scalac MainDemo.scala
+</span></span><span style="display:flex;"><span>$ scala MainDemo
+</span></span></code></pre></div><p>Scala implicitly imports members of packages <code>java.lang</code> and <code>scala</code>, as well as the members of <code>Predef</code> into every Scala source file. <code>println</code> is defined in <code>Predef</code> package.</p>
+<p>In Scala, you can name <code>.scala</code> file anything you want, no matter what Scala classes or code you put in them. In general, in the case of non-script, it is recommended style to name files after the classes they contain, so that programmers can more easily locate classes by looking at file names.</p>
+<blockquote>
+<p>This is my Scala notes as a Developer with heavy Java experience.《Programming in Scala》(Fourth Edition)(2.13): Martin Odersky | Lex Spoon | Bill Venners</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

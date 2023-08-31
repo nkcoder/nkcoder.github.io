@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Java并发：可重入锁ReentrantLock · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="可重入性 Link to heading 可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出java.lang.IllegalMonitorStateException异常。
+LOCK.lock(); LOCK.lock(); try { i&#43;&#43;; } finally { LOCK.unlock(); LOCK.unlock(); } 可中断 Link to heading 通过lock()方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。
+lockInterruptibly方法允许线程在等待锁的过程中被其它线程中断。
+try { lock.lockInterruptibly(); } catch (InterruptedException exception) { // log exception } finally { if (lock.isHeldByCurrentThread()) { lock.unlock(); } 限时等待 Link to heading tryLock()表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如tryLock(3, TimeUnit.SECONDS)等待3秒，超时则失败返回false。
+try { if (lock.tryLock(3, TimeUnit.SECONDS)) { TimeUnit.SECONDS.sleep(5); System.out.println(Thread.currentThread().getId() &#43; &#34;: my job done.&#34;); } else { System.out.println(Thread.currentThread().getId() &#43; &#34;: get lock failed.&#34;); } } catch (InterruptedException exception) { exception.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java并发：可重入锁ReentrantLock"/>
+<meta name="twitter:description" content="可重入性 Link to heading 可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出java.lang.IllegalMonitorStateException异常。
+LOCK.lock(); LOCK.lock(); try { i&#43;&#43;; } finally { LOCK.unlock(); LOCK.unlock(); } 可中断 Link to heading 通过lock()方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。
+lockInterruptibly方法允许线程在等待锁的过程中被其它线程中断。
+try { lock.lockInterruptibly(); } catch (InterruptedException exception) { // log exception } finally { if (lock.isHeldByCurrentThread()) { lock.unlock(); } 限时等待 Link to heading tryLock()表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如tryLock(3, TimeUnit.SECONDS)等待3秒，超时则失败返回false。
+try { if (lock.tryLock(3, TimeUnit.SECONDS)) { TimeUnit.SECONDS.sleep(5); System.out.println(Thread.currentThread().getId() &#43; &#34;: my job done.&#34;); } else { System.out.println(Thread.currentThread().getId() &#43; &#34;: get lock failed.&#34;); } } catch (InterruptedException exception) { exception."/>
+
+<meta property="og:title" content="Java并发：可重入锁ReentrantLock" />
+<meta property="og:description" content="可重入性 Link to heading 可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出java.lang.IllegalMonitorStateException异常。
+LOCK.lock(); LOCK.lock(); try { i&#43;&#43;; } finally { LOCK.unlock(); LOCK.unlock(); } 可中断 Link to heading 通过lock()方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。
+lockInterruptibly方法允许线程在等待锁的过程中被其它线程中断。
+try { lock.lockInterruptibly(); } catch (InterruptedException exception) { // log exception } finally { if (lock.isHeldByCurrentThread()) { lock.unlock(); } 限时等待 Link to heading tryLock()表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如tryLock(3, TimeUnit.SECONDS)等待3秒，超时则失败返回false。
+try { if (lock.tryLock(3, TimeUnit.SECONDS)) { TimeUnit.SECONDS.sleep(5); System.out.println(Thread.currentThread().getId() &#43; &#34;: my job done.&#34;); } else { System.out.println(Thread.currentThread().getId() &#43; &#34;: get lock failed.&#34;); } } catch (InterruptedException exception) { exception." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-23T08:16:59+08:00" />
+<meta property="article:modified_time" content="2020-10-23T08:16:59+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/">
+              Java并发：可重入锁ReentrantLock
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-10-23T08:16:59&#43;08:00">
+                October 23, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/">Java并发</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h3 id="可重入性">
+  可重入性
+  <a class="heading-link" href="#%e5%8f%af%e9%87%8d%e5%85%a5%e6%80%a7">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出<code>java.lang.IllegalMonitorStateException</code>异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>LOCK<span style="color:#ff79c6">.</span><span style="color:#50fa7b">lock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>LOCK<span style="color:#ff79c6">.</span><span style="color:#50fa7b">lock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  i<span style="color:#ff79c6">++;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">finally</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  LOCK<span style="color:#ff79c6">.</span><span style="color:#50fa7b">unlock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>  LOCK<span style="color:#ff79c6">.</span><span style="color:#50fa7b">unlock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><hr>
+<h3 id="可中断">
+  可中断
+  <a class="heading-link" href="#%e5%8f%af%e4%b8%ad%e6%96%ad">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>通过<code>lock()</code>方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。</p>
+<p><code>lockInterruptibly</code>方法允许线程在等待锁的过程中被其它线程中断。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">lockInterruptibly</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">catch</span> <span style="color:#ff79c6">(</span>InterruptedException exception<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// log exception
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">finally</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isHeldByCurrentThread</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  	lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">unlock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><hr>
+<h3 id="限时等待">
+  限时等待
+  <a class="heading-link" href="#%e9%99%90%e6%97%b6%e7%ad%89%e5%be%85">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>tryLock()</code>表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如<code>tryLock(3, TimeUnit.SECONDS)</code>等待3秒，超时则失败返回false。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">tryLock</span><span style="color:#ff79c6">(</span>3<span style="color:#ff79c6">,</span> TimeUnit<span style="color:#ff79c6">.</span><span style="color:#50fa7b">SECONDS</span><span style="color:#ff79c6">))</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    TimeUnit<span style="color:#ff79c6">.</span><span style="color:#50fa7b">SECONDS</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">sleep</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentThread</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">getId</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;: my job done.&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span>Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentThread</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">getId</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;: get lock failed.&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">catch</span> <span style="color:#ff79c6">(</span>InterruptedException exception<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  exception<span style="color:#ff79c6">.</span><span style="color:#50fa7b">printStackTrace</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">finally</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">isHeldByCurrentThread</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    lock<span style="color:#ff79c6">.</span><span style="color:#50fa7b">unlock</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><blockquote>
+<p>注意：<code>tryLock()</code>将总是立即获得锁，只要锁是可用的（即锁没有被其它线程占用），即使该重入锁被设置为公平锁。</p>
+</blockquote>
+<hr>
+<h3 id="公平锁">
+  公平锁
+  <a class="heading-link" href="#%e5%85%ac%e5%b9%b3%e9%94%81">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>公平锁，根据申请锁的先后顺序，先到先得。非公平锁，则是从所有等待锁的线程中，随机选择。</p>
+<p>公平锁最大的特点是：不会导致线程饥饿，即只要排队，线程总是会申请到锁资源的。但是公平锁要求维护一个优先级队列，因此实现成本较高，而且性能较低下。</p>
+<p>默认情况下，锁是非公平的，没有特殊需求，<strong>不要</strong>使用公平锁。使用<code>synchronized</code>关键字产生的锁就是非公平锁。重入锁允许对公平性进行设置，构造函数的参数如果是true，则表示公平锁。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">private</span> ReentrantLock fairLock <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> ReentrantLock<span style="color:#ff79c6">(</span><span style="color:#ff79c6">true</span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h3 id="condition">
+  Condition
+  <a class="heading-link" href="#condition">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>Condition</code>的<code>await()</code>和<code>signal()/signalAll()</code>与Object的<code>wait()</code>和<code>notify()/notifyAll()</code>的用法和作用非常相似，只不过<code>wait()</code>和<code>notify()/notifyAll()</code>是与<code>synchronized</code>关键字配合使用的，而<code>Condition</code>的<code>await()</code>和<code>signal()/signalAll()</code>则是与<code>ReentrantLock</code>一起使用的。</p>
+<p>当线程使用<code>Condition.await()</code>时，要求线程必须持有相关的重入锁，在<code>Condition.await()</code>被调用后，线程会释放锁。同理，在线程调用<code>Condition.signal()</code>时，也要求线程持有锁，<code>Condition.signal()</code>被调用后，系统会从当前<code>Condition</code>对象的等待队列中唤醒一个线程，线程被唤醒后，会尝试重新获取与之绑定的重入锁，一旦获取成功，则继续执行。所以线程在调用<code>Condition.signal()</code>要释放锁，否则被唤醒的线程无法重新获取锁。</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  读书笔记系列一:《重构-改善既有代码的设计》 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="首先推荐下重构-改善既有代码的设计这本书，中文版翻译还可以，最近读了两遍，将其中的重点提取为读书笔记，关于其中每一项的详细解释和示例请参阅原书。
+什么是重构（refactoring） Link to heading 名词：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
+动词：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。
+重构的目的是使软件更容易被理解和修改。你可以在软件内部做很多修改，但必须对软件可观察的外部行为只造成很小变化，或甚至不造成变化。
+为什么重构 Link to heading 重构改进软件设计
+如果没有重构，程序的设计会逐渐腐败变质。重构很像是在整理代码，其改进设计的一个重要方向就是消除重复代码。
+重构使软件更容易理解
+除了计算机，我们编写的代码，更多的是给将来的程序员，甚至是我们自己看的。在重构上花一点时间，可以让代码更好地表达自己的意图。重构还可以帮助我们理解不熟悉的代码。
+重构帮助找到 bug
+对代码进行重构，可以加深对代码和程序结构的理解，有助于找到 bug。
+重构提高编程速度
+重构可以帮助改进软件设计，而良好的设计是快速开发的根本。
+何时重构 Link to heading 重构本来就不是一件应该特别拨出时间做的事情，重构应该随时随地进行。你不应该为重构而重构，你之所以重构，是因为你想做别的什么事，而重构可以帮助你把那些事做好。
+事不过三
+第一次做某件事时只管去做；第二次做类似的事会产生反感，但无论如何还是可以去做；第三次再做类似的事，你就应该重构。
+添加新功能时重构
+一个动机是重构可以帮助理解需要修改的代码；另一个动机是代码当前的设计无法帮助我轻松添加所需要的功能。
+修复错误时重构
+收到 bug 报告，就是需要重构的信号，因为代码没有清晰到可以一眼看出 bug 所在。
+代码评审（code review）时重构
+代码评审对于编写清晰代码很重要，也会让更多人有机会提出更多的建议。
+对于今天的工作，我了解得很充分；对于明天的工作，我了解得不够充分。但如果我纯粹只是为今天工作，明天我将完全无法工作。
+代码的坏味道 Link to heading 重复代码（Duplicated Code）
+如果你在一个以上的地点看到相同的程序结构，那么可以肯定：设法将它们合而为一，程序会变得更好。
+过长函数（Long Method）
+我们遵循这样一条原则：每当感觉需要以注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并以其用途（而非实现手法）命名。我们可以对一组甚至短短一行代码做这件事。哪怕替换后的函数调用动作比函数自身还长，只要函数名称能够解释其用途，我们也该毫不犹豫地那么做。关键不在于函数的长度，而在于函数“做什么”和“如何做”之间的语义距离。
+如何确定该提炼哪一段代码呢? 一个很好的技巧是：寻找注释。它们通常能指出代码用途和实现手法之间的语义距离。如果代码前方有一行注释，就是在提醒你：可以将这段代码替换成一个函数，而且可以在注释的基础上给这个函数命名。就算只有一行代码，如果它需要以注释来说明，那也值得将它提炼到独立函数去。
+过大的类（Long Class）
+如果想利用单个类做太多事情，其内往往就会出现太多实例变量。一旦如此，重复代码也就接踵而至了。
+过长参数列（Long Parameter List）
+太多参数会造成前后不一致、不易使用，而且一旦你需要更多数据，就不得不修改它。如果将对象传递给函数，大多数修改都将没有必要，因为你很可能只需（在函数内）增加一两条请求，就能得到更多数据。
+发散式变化（divergent change）
+某个类经常因为不同的原因在不同的方向上发生变化。
+霰弹式修改（shortgun surgery）
+如果每遇到某种变化，你都必须在许多不同的类内做出许多小修改。
+依恋情结（feature envy）
+函数对某个类的兴趣高过对自己所处类的兴趣，这种孺慕之情最通常的焦点便是数据。无数次经验里，我们看到某个函数为了计算某个值，从另一个对象那儿调用几乎半打的取值函数。
+数据泥团（Data Clumps）">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="读书笔记系列一:《重构-改善既有代码的设计》"/>
+<meta name="twitter:description" content="首先推荐下重构-改善既有代码的设计这本书，中文版翻译还可以，最近读了两遍，将其中的重点提取为读书笔记，关于其中每一项的详细解释和示例请参阅原书。
+什么是重构（refactoring） Link to heading 名词：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
+动词：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。
+重构的目的是使软件更容易被理解和修改。你可以在软件内部做很多修改，但必须对软件可观察的外部行为只造成很小变化，或甚至不造成变化。
+为什么重构 Link to heading 重构改进软件设计
+如果没有重构，程序的设计会逐渐腐败变质。重构很像是在整理代码，其改进设计的一个重要方向就是消除重复代码。
+重构使软件更容易理解
+除了计算机，我们编写的代码，更多的是给将来的程序员，甚至是我们自己看的。在重构上花一点时间，可以让代码更好地表达自己的意图。重构还可以帮助我们理解不熟悉的代码。
+重构帮助找到 bug
+对代码进行重构，可以加深对代码和程序结构的理解，有助于找到 bug。
+重构提高编程速度
+重构可以帮助改进软件设计，而良好的设计是快速开发的根本。
+何时重构 Link to heading 重构本来就不是一件应该特别拨出时间做的事情，重构应该随时随地进行。你不应该为重构而重构，你之所以重构，是因为你想做别的什么事，而重构可以帮助你把那些事做好。
+事不过三
+第一次做某件事时只管去做；第二次做类似的事会产生反感，但无论如何还是可以去做；第三次再做类似的事，你就应该重构。
+添加新功能时重构
+一个动机是重构可以帮助理解需要修改的代码；另一个动机是代码当前的设计无法帮助我轻松添加所需要的功能。
+修复错误时重构
+收到 bug 报告，就是需要重构的信号，因为代码没有清晰到可以一眼看出 bug 所在。
+代码评审（code review）时重构
+代码评审对于编写清晰代码很重要，也会让更多人有机会提出更多的建议。
+对于今天的工作，我了解得很充分；对于明天的工作，我了解得不够充分。但如果我纯粹只是为今天工作，明天我将完全无法工作。
+代码的坏味道 Link to heading 重复代码（Duplicated Code）
+如果你在一个以上的地点看到相同的程序结构，那么可以肯定：设法将它们合而为一，程序会变得更好。
+过长函数（Long Method）
+我们遵循这样一条原则：每当感觉需要以注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并以其用途（而非实现手法）命名。我们可以对一组甚至短短一行代码做这件事。哪怕替换后的函数调用动作比函数自身还长，只要函数名称能够解释其用途，我们也该毫不犹豫地那么做。关键不在于函数的长度，而在于函数“做什么”和“如何做”之间的语义距离。
+如何确定该提炼哪一段代码呢? 一个很好的技巧是：寻找注释。它们通常能指出代码用途和实现手法之间的语义距离。如果代码前方有一行注释，就是在提醒你：可以将这段代码替换成一个函数，而且可以在注释的基础上给这个函数命名。就算只有一行代码，如果它需要以注释来说明，那也值得将它提炼到独立函数去。
+过大的类（Long Class）
+如果想利用单个类做太多事情，其内往往就会出现太多实例变量。一旦如此，重复代码也就接踵而至了。
+过长参数列（Long Parameter List）
+太多参数会造成前后不一致、不易使用，而且一旦你需要更多数据，就不得不修改它。如果将对象传递给函数，大多数修改都将没有必要，因为你很可能只需（在函数内）增加一两条请求，就能得到更多数据。
+发散式变化（divergent change）
+某个类经常因为不同的原因在不同的方向上发生变化。
+霰弹式修改（shortgun surgery）
+如果每遇到某种变化，你都必须在许多不同的类内做出许多小修改。
+依恋情结（feature envy）
+函数对某个类的兴趣高过对自己所处类的兴趣，这种孺慕之情最通常的焦点便是数据。无数次经验里，我们看到某个函数为了计算某个值，从另一个对象那儿调用几乎半打的取值函数。
+数据泥团（Data Clumps）"/>
+
+<meta property="og:title" content="读书笔记系列一:《重构-改善既有代码的设计》" />
+<meta property="og:description" content="首先推荐下重构-改善既有代码的设计这本书，中文版翻译还可以，最近读了两遍，将其中的重点提取为读书笔记，关于其中每一项的详细解释和示例请参阅原书。
+什么是重构（refactoring） Link to heading 名词：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
+动词：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。
+重构的目的是使软件更容易被理解和修改。你可以在软件内部做很多修改，但必须对软件可观察的外部行为只造成很小变化，或甚至不造成变化。
+为什么重构 Link to heading 重构改进软件设计
+如果没有重构，程序的设计会逐渐腐败变质。重构很像是在整理代码，其改进设计的一个重要方向就是消除重复代码。
+重构使软件更容易理解
+除了计算机，我们编写的代码，更多的是给将来的程序员，甚至是我们自己看的。在重构上花一点时间，可以让代码更好地表达自己的意图。重构还可以帮助我们理解不熟悉的代码。
+重构帮助找到 bug
+对代码进行重构，可以加深对代码和程序结构的理解，有助于找到 bug。
+重构提高编程速度
+重构可以帮助改进软件设计，而良好的设计是快速开发的根本。
+何时重构 Link to heading 重构本来就不是一件应该特别拨出时间做的事情，重构应该随时随地进行。你不应该为重构而重构，你之所以重构，是因为你想做别的什么事，而重构可以帮助你把那些事做好。
+事不过三
+第一次做某件事时只管去做；第二次做类似的事会产生反感，但无论如何还是可以去做；第三次再做类似的事，你就应该重构。
+添加新功能时重构
+一个动机是重构可以帮助理解需要修改的代码；另一个动机是代码当前的设计无法帮助我轻松添加所需要的功能。
+修复错误时重构
+收到 bug 报告，就是需要重构的信号，因为代码没有清晰到可以一眼看出 bug 所在。
+代码评审（code review）时重构
+代码评审对于编写清晰代码很重要，也会让更多人有机会提出更多的建议。
+对于今天的工作，我了解得很充分；对于明天的工作，我了解得不够充分。但如果我纯粹只是为今天工作，明天我将完全无法工作。
+代码的坏味道 Link to heading 重复代码（Duplicated Code）
+如果你在一个以上的地点看到相同的程序结构，那么可以肯定：设法将它们合而为一，程序会变得更好。
+过长函数（Long Method）
+我们遵循这样一条原则：每当感觉需要以注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并以其用途（而非实现手法）命名。我们可以对一组甚至短短一行代码做这件事。哪怕替换后的函数调用动作比函数自身还长，只要函数名称能够解释其用途，我们也该毫不犹豫地那么做。关键不在于函数的长度，而在于函数“做什么”和“如何做”之间的语义距离。
+如何确定该提炼哪一段代码呢? 一个很好的技巧是：寻找注释。它们通常能指出代码用途和实现手法之间的语义距离。如果代码前方有一行注释，就是在提醒你：可以将这段代码替换成一个函数，而且可以在注释的基础上给这个函数命名。就算只有一行代码，如果它需要以注释来说明，那也值得将它提炼到独立函数去。
+过大的类（Long Class）
+如果想利用单个类做太多事情，其内往往就会出现太多实例变量。一旦如此，重复代码也就接踵而至了。
+过长参数列（Long Parameter List）
+太多参数会造成前后不一致、不易使用，而且一旦你需要更多数据，就不得不修改它。如果将对象传递给函数，大多数修改都将没有必要，因为你很可能只需（在函数内）增加一两条请求，就能得到更多数据。
+发散式变化（divergent change）
+某个类经常因为不同的原因在不同的方向上发生变化。
+霰弹式修改（shortgun surgery）
+如果每遇到某种变化，你都必须在许多不同的类内做出许多小修改。
+依恋情结（feature envy）
+函数对某个类的兴趣高过对自己所处类的兴趣，这种孺慕之情最通常的焦点便是数据。无数次经验里，我们看到某个函数为了计算某个值，从另一个对象那儿调用几乎半打的取值函数。
+数据泥团（Data Clumps）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/reading/refactor-reading-notes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-19T21:29:37+08:00" />
+<meta property="article:modified_time" content="2020-02-19T21:29:37+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/reading/refactor-reading-notes/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/reading/refactor-reading-notes/">
+              读书笔记系列一:《重构-改善既有代码的设计》
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-19T21:29:37&#43;08:00">
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/reading/">reading</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>首先推荐下<a href="https://book.douban.com/subject/4262627/"  class="external-link" target="_blank" rel="noopener">重构-改善既有代码的设计</a>这本书，中文版翻译还可以，最近读了两遍，将其中的重点提取为读书笔记，关于其中每一项的详细解释和示例请参阅原书。</p>
+<h2 id="什么是重构refactoring">
+  什么是重构（refactoring）
+  <a class="heading-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e9%87%8d%e6%9e%84refactoring">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><strong>名词</strong>：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
+<p><strong>动词</strong>：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。</p>
+<p>重构的目的是使软件更容易被理解和修改。你可以在软件内部做很多修改，但必须对软件可观察的外部行为只造成很小变化，或甚至不造成变化。</p>
+<h2 id="为什么重构">
+  为什么重构
+  <a class="heading-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%87%8d%e6%9e%84">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><code>重构改进软件设计</code></p>
+<p>如果没有重构，程序的设计会逐渐腐败变质。重构很像是在整理代码，其改进设计的一个重要方向就是消除重复代码。</p>
+<p><code>重构使软件更容易理解</code></p>
+<p>除了计算机，我们编写的代码，更多的是给将来的程序员，甚至是我们自己看的。在重构上花一点时间，可以让代码更好地表达自己的意图。重构还可以帮助我们理解不熟悉的代码。</p>
+<p><code>重构帮助找到 bug</code></p>
+<p>对代码进行重构，可以加深对代码和程序结构的理解，有助于找到 bug。</p>
+<p><code>重构提高编程速度</code></p>
+<p>重构可以帮助改进软件设计，而良好的设计是快速开发的根本。</p>
+<h2 id="何时重构">
+  何时重构
+  <a class="heading-link" href="#%e4%bd%95%e6%97%b6%e9%87%8d%e6%9e%84">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>重构本来就不是一件应该特别拨出时间做的事情，重构应该随时随地进行。你不应该为重构而重构，你之所以重构，是因为你想做别的什么事，而重构可以帮助你把那些事做好。</p>
+<p><code>事不过三</code></p>
+<p>第一次做某件事时只管去做；第二次做类似的事会产生反感，但无论如何还是可以去做；第三次再做类似的事，你就应该重构。</p>
+<p><code>添加新功能时重构</code></p>
+<p>一个动机是重构可以帮助理解需要修改的代码；另一个动机是代码当前的设计无法帮助我轻松添加所需要的功能。</p>
+<p><code>修复错误时重构</code></p>
+<p>收到 bug 报告，就是需要重构的信号，因为代码没有清晰到可以一眼看出 bug 所在。</p>
+<p><code>代码评审（code review）时重构</code></p>
+<p>代码评审对于编写清晰代码很重要，也会让更多人有机会提出更多的建议。</p>
+<blockquote>
+<p>对于今天的工作，我了解得很充分；对于明天的工作，我了解得不够充分。但如果我纯粹只是为今天工作，明天我将完全无法工作。</p>
+</blockquote>
+<h2 id="代码的坏味道">
+  代码的坏味道
+  <a class="heading-link" href="#%e4%bb%a3%e7%a0%81%e7%9a%84%e5%9d%8f%e5%91%b3%e9%81%93">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><code>重复代码（Duplicated Code）</code></p>
+<p>如果你在一个以上的地点看到相同的程序结构，那么可以肯定：设法将它们合而为一，程序会变得更好。</p>
+<p><code>过长函数（Long Method）</code></p>
+<p>我们遵循这样一条原则：每当感觉需要以注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并以其用途（而非实现手法）命名。我们可以对一组甚至短短一行代码做这件事。哪怕替换后的函数调用动作比函数自身还长，只要函数名称能够解释其用途，我们也该毫不犹豫地那么做。关键不在于函数的长度，而在于函数“做什么”和“如何做”之间的语义距离。</p>
+<p>如何确定该提炼哪一段代码呢? 一个很好的技巧是：寻找注释。它们通常能指出代码用途和实现手法之间的语义距离。如果代码前方有一行注释，就是在提醒你：可以将这段代码替换成一个函数，而且可以在注释的基础上给这个函数命名。就算只有一行代码，如果它需要以注释来说明，那也值得将它提炼到独立函数去。</p>
+<p><code>过大的类（Long Class）</code></p>
+<p>如果想利用单个类做太多事情，其内往往就会出现太多实例变量。一旦如此，重复代码也就接踵而至了。</p>
+<p><code>过长参数列（Long Parameter List）</code></p>
+<p>太多参数会造成前后不一致、不易使用，而且一旦你需要更多数据，就不得不修改它。如果将对象传递给函数，大多数修改都将没有必要，因为你很可能只需（在函数内）增加一两条请求，就能得到更多数据。</p>
+<p><code>发散式变化（divergent change）</code></p>
+<p>某个类经常因为不同的原因在不同的方向上发生变化。</p>
+<p><code>霰弹式修改（shortgun surgery）</code></p>
+<p>如果每遇到某种变化，你都必须在许多不同的类内做出许多小修改。</p>
+<p><code>依恋情结（feature envy）</code></p>
+<p>函数对某个类的兴趣高过对自己所处类的兴趣，这种孺慕之情最通常的焦点便是数据。无数次经验里，我们看到某个函数为了计算某个值，从另一个对象那儿调用几乎半打的取值函数。</p>
+<p><code>数据泥团（Data Clumps）</code></p>
+<p>两个类中相同的字段，许多函数签名中相同的参数，这些总是绑在一起出现的数据应该有自己的对象。</p>
+<p><code>基本类型偏执（primitive obsession）</code></p>
+<p>在小任务上运用小对象，比如：结合数值和币种的 money 类、由一个起始值和一个结束值组成的 range 类、电话号码或邮政编码（ZIP）等的特殊字符串。</p>
+<p><code>switch语句</code></p>
+<p>大多数时候，一看到 switch 语句，你就应该考虑以多态来替换它。</p>
+<p><code>冗赘类（Lazy Class）</code></p>
+<p>对于没有必要存在的类，让它消失。</p>
+<p><code>夸夸其谈未来型（speculative generality）</code></p>
+<p>为了未来的可能性处理一些非必要的情况，往往造成系统难以理解和维护。</p>
+<p><code>中间人（Middle Man）</code></p>
+<p>如果某个类接口有一半的函数都委托给其它类，就属于过度委托。</p>
+<p><code>不适当的亲密（Inappropriate Intimacy）</code></p>
+<p>两个类关系过于亲密，花费太多时间去探究彼此的 private 成分，此时建议要么拆算，要么将共同点提取到一个新类。</p>
+<p><code>过多的注释（Comments）</code></p>
+<p>一段代码有长长的注释，这些注释之所以存在往往是因为代码很糟糕。当你感觉需要撰写注释时，请先尝试重构，试着让所有注释都变得多余。</p>
+<h2 id="主要的重构列表">
+  主要的重构列表
+  <a class="heading-link" href="#%e4%b8%bb%e8%a6%81%e7%9a%84%e9%87%8d%e6%9e%84%e5%88%97%e8%a1%a8">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="重新组织函数">
+  重新组织函数
+  <a class="heading-link" href="#%e9%87%8d%e6%96%b0%e7%bb%84%e7%bb%87%e5%87%bd%e6%95%b0">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>提炼函数（Extract Method）</code></p>
+<p>如果有一个过长的函数，或者一段需要注释才能理解的代码，将其中一段代码提取到一个独立函数中，并让函数名称解释该函数的用途。</p>
+<p>简短而命名良好的函数更容易被复用，而且高层函数读起来就像一系列注释。</p>
+<p><code>内联函数（Inline Method）</code></p>
+<p>如果一个函数的名称和函数体一样清晰易懂，则去掉函数调用，在调用点直接使用函数体。</p>
+<p>另一种场景是，有一群组织不合理的函数，可以先将它们内联到一个大函数中，然后再提炼出组织合理的小函数。</p>
+<p><code>内联临时变量（Inline Tmep）</code></p>
+<p>如果一个临时变量，只被一个简单表达式赋值一次，而它妨碍了其他重构手法。将所有对该变量的引用替换为对应的赋值表达式。</p>
+<p><code>以查询取代临时变量（Replace Temp With Query）</code></p>
+<p>如果一个临时变量保存了一个表达式的运算结果，将这个表达式提取到一个函数中，将对这个临时变量的所有引用替换为对新函数的调用。该新函数也可以被其它函数调用，即提高了复用性。</p>
+<p><code>引入解释型变量（Introduce Explaining Variable）</code></p>
+<p>如果有一个复杂的表达式，将该复杂表达式（或一部分）赋值给一个临时变量，用变量的名称来解释表达式的意图。（用提炼函数（Extract Method）方法也可以，看哪种更合适）</p>
+<p><code>分解临时变量（Split Temporary Variable）</code></p>
+<p>如果一个临时变量被多次赋值，但它既不是循环变量，也不是用于收集计算结果，说明它承担了多个责任，有多个含义，则应该在每次赋值的时候使用单独的临时变量，用良好的命名表达意图。</p>
+<p><code>移除对参数的赋值（Remove Assignments to Parameters）</code></p>
+<p>如果需要在函数内对参数赋值，请使用一个临时变量取代参数。</p>
+<p><code>Replace Method with Method Object（以函数对象取代函数）</code></p>
+<p>你有一个大型函数，其中对局部变量的使用使你无法采用 <code>提取函数（Extract Method）</code>。 将这个函数放进一个单独对象中，如此一来局部变量就成了对象内的字段。然后你可以在同一个对象中将这个大型函数分解为多个小型函数。</p>
+<p><code>替换算法（Substitute Algorithm）</code></p>
+<p>用一个更好的算法直接替换原有的算法。</p>
+<h3 id="在对象间搬移特性">
+  在对象间搬移特性
+  <a class="heading-link" href="#%e5%9c%a8%e5%af%b9%e8%b1%a1%e9%97%b4%e6%90%ac%e7%a7%bb%e7%89%b9%e6%80%a7">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>搬移函数（Move Method）</code></p>
+<p>如果一个函数与另一个类的交流比所在类更多，应该考虑将该函数搬移到另一个类。如果一个类有太多行为，或一个类与另一个类有太多合作而形成高度耦合，就应该考虑是否可以通过搬移函数进行重构。</p>
+<p><code>搬移字段（Move Field）</code></p>
+<p>如果一个类中的字段，被另一个类更多地用到，应该考虑将该字段搬移到另一个类中。</p>
+<p><code>提炼类（Extract Class）</code></p>
+<p>如果某个类做了两个或多个事情，应该将相应的数据和函数提炼到新的类中。如果类很大，做的事情很多，很多数据和函数总是一起出现或一起变化，就可以考虑提炼新类了。</p>
+<p><code>内联类（Inline Class）</code></p>
+<p>如果某个类没有承担什么责任，不再有单独存在的理由，将这个类的所有特性内联到另一个类中，将原类移除。</p>
+<p><code>隐藏委托关系（Hide Deleage）</code></p>
+<p>通过封装，对外部客户隐藏内部的委托细节，避免内部的委托发生变化波及客户。</p>
+<p>如果某个客户先通过服务对象的字段得到另一个对象，然后调用后者的函数，那么客户就必须知晓这一层委托关系。万一委托关系发生变化，客户也得相应变化。你可以在服务对象上放置一个简单的委托函数，将委托关系隐藏起来，从而去除这种依赖。这么一来，即便将来发生委托关系上的变化，变化也将被限制在服务对象中，不会波及客户。</p>
+<p><code>移除中间人（Remove Middle Man）</code></p>
+<p>如果服务类做了太多的简单委托，移除服务类，让客户直接调用委托类。</p>
+<p>该重构手法与*隐藏委托关系（Hide Deleage）*刚好相反，所以很难说什么程度的隐藏和封装是合适的，这是随着系统的变化而变化的，根据具体的场景使用合适的方法即可。</p>
+<p><code>引入外部函数（Introduce Foreign Method）</code></p>
+<p>如果客户类需要的少数几个功能，服务类不能提供，而且不能修改服务类源码，则可以在客户类创建函数提供所需的功能。</p>
+<p><code>引入本地扩展（Introduce Local Extension）</code></p>
+<p>在*引入外部函数（Introduce Foreign Method）*的基础上，如果需要在客户类建立大量的外部函数，则应该考虑将这些函数组织到新的类中，该新类应该是源类的子类，即本地扩展。</p>
+<h3 id="重新组织数据">
+  重新组织数据
+  <a class="heading-link" href="#%e9%87%8d%e6%96%b0%e7%bb%84%e7%bb%87%e6%95%b0%e6%8d%ae">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>Self Encapsulate Field（自封装字段）</code></p>
+<p>对于类的字段，可以直接访问，也可以通过取值函数/设值函数（get/set)去访问。在一个类中，可以直接访问，如果为了在子类中改变获取数据的方式（如延迟获取）等，则可以通过取值函数/设置函数访问。</p>
+<p><code>Replace Data Value with Object（以对象取代数据值）</code></p>
+<p>如果一个数据项，需要与其它的数据与行为放在一起才有意义，将数据项变成对象。</p>
+<p><code>Replace Array with Object（以对象取代数组）</code></p>
+<p>有一个数组，其中每个元素代表都是不同的东西，建议以对象代替数组，将数组中的每个元素作为对象的字段。</p>
+<p><code>Duplicate Observed Data（复制“被监视数据”）</code></p>
+<p>一个分层良好的系统，应该将处理用户界面和处理业务逻辑的代码分开。之所以这样做，原因有以下几点：(1)你可能需要使用不同的用户界面来表现相同的业务逻辑，如果同时承担两种责任，用户界面会变得过分复杂；(2)与 GUI 隔离之后，领域对象的维护和演化都会更容易，你甚至可以让不同的开发者负责不同部分的开发。</p>
+<p><code>以字面常量取代魔法数（Replace Magic Number with Symbolic Constant）</code></p>
+<p>如果有一个字面数值，带有特殊含义，将其替换为有意义的常量，通过命名表达其含义。</p>
+<p><code>封装字段（Encapsulate Field）</code></p>
+<p>如果有<em>public</em>的字段，将其改为<em>private</em>，并提供相应的访问函数。</p>
+<p><code>Encapsulate Collection（封装集合）</code></p>
+<p>如果一个函数返回一个集合，建议返回该集合的一个只读副本。而且，不要提供对集合的设值（set）函数，应该提供给集合添加/删除元素的函数。</p>
+<p><code>以类取代类型码（Replace Type Code With Class）</code></p>
+<p>如果类中有一个数值类型码，但并不影响类的行为，以一个新的类替换类型码。</p>
+<p><code>以字段取代子类（Replace Subclass with Fields）</code></p>
+<p>如果各个子类的唯一差别是返回常量值的函数上，建议在父类中添加表示该常量值的字段，并通过函数返回，然后移除所有的子类。</p>
+<h3 id="简化条件表达式">
+  简化条件表达式
+  <a class="heading-link" href="#%e7%ae%80%e5%8c%96%e6%9d%a1%e4%bb%b6%e8%a1%a8%e8%be%be%e5%bc%8f">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>分解条件表达式（Decompose Conditional)</code></p>
+<p>如果有一个复杂的条件表达式(if-else)，将每部分都提炼成单独的函数。</p>
+<p><code>合并条件表达式（Consolidate Conditional Expression）</code></p>
+<p>如果多个条件表达式返回同样的结果，建议试用&amp;或||将它们合并，并将条件判断提取为独立的函数。但是如果这些条件表达式的检查彼此独立，不应该放到一起去检查，则不要试用本项重构。</p>
+<p><code>合并重复的条件片段（Consolidate Duplicate Conditional Fragments）</code></p>
+<p>如果在条件表达式的每个分支上都有相同的代码，则应该将重复代码移到条件表达式之外。</p>
+<p><code>移除控制标记（Remove Control Flag）</code></p>
+<p>控制标记：在一系列布尔表达式中，可能会根据不同的条件给布尔变量赋予不同的值。建议试用break或return语句替换控制标记，提前返回或退出。</p>
+<p><code>以卫语句取代嵌套条件表达式（Replace Nested Conditional with Guard Clauses）</code></p>
+<p>卫语句：单独检查条件表达式的某个分支，如果条件满足，则直接返回。如果条件表达式中，有些分支是特殊情况，建议试用卫语句提前返回。</p>
+<p><code>以多态取代条件表达式（Replace Conditional with Polymorphism）</code></p>
+<p>如果有个条件表达式（如switch语句）根据对象类型的不同执行不同的行为，建议使用多态替换：为每一个不同类型建立一个子类，将分支中的内容放到子类的覆写方法中。</p>
+<p><code>引入Null对象（Introduce Null Object）</code></p>
+<p>如果总是需要检查对象是否为null，可以考虑引入null对象。null对象是正常对象的一个子类，覆写的方法使用空实现，一般是单例，不可变。</p>
+<p><code>引入断言（Introduce Assertion）</code></p>
+<p>如果某一段代码需要对程序状态做出某种假设，以断言明确表明这种假设。断言应该总是为真，如果它失败，表明程序员犯了错误，应该抛出异常。断言的主要作用：一是帮助程序的读者更好地理解代码所做的假设；二是可以在距离bug最近的地方捕获之。不要滥用断言，断言只用于检查<strong>一定必须为真</strong>的条件，而不是用于检查<strong>你认为应该为真</strong>的条件。实际上，最后生产环境的代码应该将断言全部都删掉。</p>
+<h3 id="简化函数调用">
+  简化函数调用
+  <a class="heading-link" href="#%e7%ae%80%e5%8c%96%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>函数改名（Rename Method）</code></p>
+<p>将复杂的处理过程分解成小函数，可以增加程序的可读性，其中的关键是给函数命名。函数名应该准确表达它的用途，可以先考虑如何添加注释，然后将注释转换成函数名称。</p>
+<p><code>添加参数（Add Parameter）</code></p>
+<p>如果函数需要额外的信息，可以考虑给函数添加新的参数。添加新参数之前考虑：现有参数是否无法满足需要？是否可以通过其它函数调用获得需要的数据？</p>
+<p><code>移除参数（Remove Parameter）</code></p>
+<p>如果函数不再需要某个参数，将其移除。</p>
+<p><code>将查询函数和修改函数分离（Separate Query from Modifier）</code></p>
+<p>如果某个函数既返回对象状态，又修改对象状态，建议分离成查询和修改两个独立的函数。任何有返回值的函数，都不应该有看得到的副作用。</p>
+<p><code>令函数携带参数（Parameterize Method）</code></p>
+<p>如果两个函数做着类似的工作，但因少数几个值导致行为略有不同，可以考虑合并为一个函数，通过参数处理变化的部分，这样可以去除重复的代码，提高灵活性。</p>
+<p><code>以明确函数取代参数（Replace Parameter with Explicit Methods）</code></p>
+<p>如果一个函数，根据参数的值不同采取不同的行为，建议针对每一个参数值，建立独立的函数，调用方可以直接调用对应的函数，就可以避免条件表达式。注意与<code>令函数携带参数（Parameterize Method）</code>区分开来。</p>
+<p><code>保持对象完整（Preserve Whole Object）</code></p>
+<p>如果将一个对象的若干数据作为参数传给一个函数，可以考虑直接将该对象作为参数传递。需要注意：1. 如果传递对象会导致依赖关系恶化，则不要使用本项重构。2. 如果调用函数使用了对象的很多项数据，需要考虑该函数是否应该被移到对象中去。</p>
+<p><code>以函数取代参数（Replace Parameter with Methods）</code></p>
+<p>如果函数可以通过其它途径（如调用其它的函数）获得参数值，就应该去掉参数值，缩短参数列的长度。</p>
+<p><code>引入参数对象（Introduce Parameter Object）</code></p>
+<p>如果特定的一组参数总是同时出现在不同的函数参数列表，建议使用一个对象将这些数据组织到一起，可以缩短参数列的长度，提高了代码的一致性。</p>
+<p><code>移除设值函数（Remove Setting Method）</code></p>
+<p>如果类中的某个字段在对象创建后不应该改变，去掉该字段的设值函数。</p>
+<p><code>隐藏函数（Hide Method）</code></p>
+<p>如果某个函数没有被外部类使用到，将该函数设置为<em>private</em>。</p>
+<p><code>以工厂函数取代构造函数（Replace Constructor with Factory Method）</code></p>
+<p>如果在创建对象时还需要执行一些额外的操作，建议将构造函数替换为工厂函数。</p>
+<p><code>封装向下转型（Encapsulate Downcast）</code></p>
+<p>如果函数的返回值需要调用者进行向下转型(downcast)，建议在该函数内执行向下转型，返回调用者需要的类型。</p>
+<p><code>以异常取代错误码（Replace Error Code with Exception）</code></p>
+<p>如果某个函数返回特定的错误码表示某种异常情况，建议直接抛出异常。</p>
+<p><code>以测试取代异常（Replace Exception with Test）</code></p>
+<p>面对调用者可以预先检查的条件，调用者应该先检查该条件，不要通过捕获异常去处理可以预见的逻辑。不要滥用异常，异常应该只用于异常的、罕见的行为。</p>
+<h3 id="处理概括关系">
+  处理概括关系
+  <a class="heading-link" href="#%e5%a4%84%e7%90%86%e6%a6%82%e6%8b%ac%e5%85%b3%e7%b3%bb">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>字段上移（Pull Up Field）</code></p>
+<p>两个子类有相同的字段，将该字段移到超类中去。</p>
+<p><code>函数上移（Pull Up Method）</code></p>
+<p>有些函数，在各个子类中产生完全相同的结果，将该函数移到超类。</p>
+<p><code>构造函数本体上移（Pull Up Constructor Body）</code></p>
+<p>如果各个子类中都有一些构造函数，它们的函数体几乎完全一致，应该在超类中新建一个构造函数，并在各个子类的构造函数中调用它。</p>
+<p><code>函数下移（Push Down Method）</code></p>
+<p>如果超类中的某个函数只是被部分子类用到，将这个函数移到需要它的子类中去。</p>
+<p><code>字段下移（Push Down Field）</code></p>
+<p>如果超类中的某个字段只是被部分子类用到，将这个字段移到需要它的子类中去。</p>
+<p><code>提炼子类（Extract Subclass）</code></p>
+<p>如果类的某些特性只被某些（不是全部）实例用到，新建一个子类，将特定的属性移到子类中去。</p>
+<p><code>提炼超类（Extract Superclass）</code></p>
+<p>如果两个类有相似特性，建立一个超类，将相同的特性移到超类。</p>
+<p><code>折叠继承体系（Collapse Hierarchy）</code></p>
+<p>如果子类和超类并无太大区别，将它们合并。</p>
+<p><code>塑造模板函数（Form Template Method）</code></p>
+<p>如果有一些子类，其中的某个函数以相同顺序执行大致相近的操作，但是各操作不完全相同。将这些操作分别放进独立函数中，并保持它们都有相同的签名，然后将原函数上移至超类，子类重写实现不同的逻辑。</p>
+<p><code>以委托取代继承（Replace Inheritance with Delegation）</code></p>
+<p>如果子类只使用了超类接口中的一部分，或者子类从超类继承了一大堆并不需要的数据，建议将继承改为委托。</p>
+<p><code>以继承取代委托（Replace Delegation with Inheritance）</code></p>
+<p>如果某个类使用了委托类中的所有函数，需要编写所有简单的委托函数，建议将委托改为继承。</p>
+<ul>
+<li>参考：<a href="https://book.douban.com/subject/4262627/"  class="external-link" target="_blank" rel="noopener">重构-改善既有代码的设计</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

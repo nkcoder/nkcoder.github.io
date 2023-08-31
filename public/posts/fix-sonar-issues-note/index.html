@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  记录一次修复SonarCube issue的过程 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="本地配置了Jacoco的覆盖率：行覆盖率为 0.8，但是排除了一些特殊的包和类。
+接入SonarCube后，显示的指标惨不忍睹：
+Bugs: 44 Vulnerability: 54 Bad Smell: 531 Debt: 7 days Coverage: 4.4% Duplicated Blocks: 19 于是开始着手修复。
+Bugs Link to heading 这个分类里只有两种问题，第一种问题是缺少构造函数。
+Add a constructor to the class. 被标记为缺少构造函数的 class 都是使用了 lombok 的@Builder注解，比如：
+@Getter @Builder public class Book implements Serializable { private static final long serialVersionUID = -812324454545L; private String id; private String remarks; // other fields } @Builder默认会创建一个全参的私有构造函数，所以其实不需要额外定义构造函数，估计 Sonar 无法处理这种情况，我们没有权限从 sonar 层面解决问题，只能去适应这个规则。为了解决这个问题，可以显式定义一个私有的全参构造函数，可以使用 lombok 注解，如：
+@Getter @Builder @AllArgsConstructor(access = AccessLevel.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记录一次修复SonarCube issue的过程"/>
+<meta name="twitter:description" content="本地配置了Jacoco的覆盖率：行覆盖率为 0.8，但是排除了一些特殊的包和类。
+接入SonarCube后，显示的指标惨不忍睹：
+Bugs: 44 Vulnerability: 54 Bad Smell: 531 Debt: 7 days Coverage: 4.4% Duplicated Blocks: 19 于是开始着手修复。
+Bugs Link to heading 这个分类里只有两种问题，第一种问题是缺少构造函数。
+Add a constructor to the class. 被标记为缺少构造函数的 class 都是使用了 lombok 的@Builder注解，比如：
+@Getter @Builder public class Book implements Serializable { private static final long serialVersionUID = -812324454545L; private String id; private String remarks; // other fields } @Builder默认会创建一个全参的私有构造函数，所以其实不需要额外定义构造函数，估计 Sonar 无法处理这种情况，我们没有权限从 sonar 层面解决问题，只能去适应这个规则。为了解决这个问题，可以显式定义一个私有的全参构造函数，可以使用 lombok 注解，如：
+@Getter @Builder @AllArgsConstructor(access = AccessLevel."/>
+
+<meta property="og:title" content="记录一次修复SonarCube issue的过程" />
+<meta property="og:description" content="本地配置了Jacoco的覆盖率：行覆盖率为 0.8，但是排除了一些特殊的包和类。
+接入SonarCube后，显示的指标惨不忍睹：
+Bugs: 44 Vulnerability: 54 Bad Smell: 531 Debt: 7 days Coverage: 4.4% Duplicated Blocks: 19 于是开始着手修复。
+Bugs Link to heading 这个分类里只有两种问题，第一种问题是缺少构造函数。
+Add a constructor to the class. 被标记为缺少构造函数的 class 都是使用了 lombok 的@Builder注解，比如：
+@Getter @Builder public class Book implements Serializable { private static final long serialVersionUID = -812324454545L; private String id; private String remarks; // other fields } @Builder默认会创建一个全参的私有构造函数，所以其实不需要额外定义构造函数，估计 Sonar 无法处理这种情况，我们没有权限从 sonar 层面解决问题，只能去适应这个规则。为了解决这个问题，可以显式定义一个私有的全参构造函数，可以使用 lombok 注解，如：
+@Getter @Builder @AllArgsConstructor(access = AccessLevel." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/fix-sonar-issues-note/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-19T23:28:25+08:00" />
+<meta property="article:modified_time" content="2020-02-19T23:28:25+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/fix-sonar-issues-note/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/fix-sonar-issues-note/">
+              记录一次修复SonarCube issue的过程
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-19T23:28:25&#43;08:00">
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="https://nkcoder.github.io/tags/sonar/">sonar</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>本地配置了<a href="https://www.eclemma.org/jacoco/"  class="external-link" target="_blank" rel="noopener">Jacoco</a>的覆盖率：行覆盖率为 0.8，但是排除了一些特殊的包和类。</p>
+<p>接入<a href="https://www.sonarqube.org"  class="external-link" target="_blank" rel="noopener">SonarCube</a>后，显示的指标惨不忍睹：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Bugs: 44    Vulnerability: 54
+</span></span><span style="display:flex;"><span>Bad Smell: 531    Debt: 7 days
+</span></span><span style="display:flex;"><span>Coverage: 4.4%    Duplicated Blocks: 19
+</span></span></code></pre></div><p>于是开始着手修复。</p>
+<h2 id="bugs">
+  Bugs
+  <a class="heading-link" href="#bugs">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>这个分类里只有两种问题，第一种问题是缺少构造函数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Add a constructor to the class.
+</span></span></code></pre></div><p>被标记为缺少构造函数的 class 都是使用了 lombok 的<code>@Builder</code>注解，比如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Getter
+</span></span><span style="display:flex;"><span>@Builder
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Book</span> <span style="color:#8be9fd;font-style:italic">implements</span> Serializable <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">long</span> serialVersionUID <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>812324454545L<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> String id<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> String remarks<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// other fields
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p><code>@Builder</code>默认会创建一个全参的私有构造函数，所以其实不需要额外定义构造函数，估计 Sonar 无法处理这种情况，我们没有权限从 sonar 层面解决问题，只能去适应这个规则。为了解决这个问题，可以显式定义一个私有的全参构造函数，可以使用 lombok 注解，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Getter
+</span></span><span style="display:flex;"><span>@Builder
+</span></span><span style="display:flex;"><span>@AllArgsConstructor<span style="color:#ff79c6">(</span>access <span style="color:#ff79c6">=</span> AccessLevel<span style="color:#ff79c6">.</span><span style="color:#50fa7b">PRIVATE</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Book</span> <span style="color:#8be9fd;font-style:italic">implements</span> Serializable <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">long</span> serialVersionUID <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>812324454545L<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> String id<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> String remarks<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// other fields
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>另外一种问题是：如果类继承了<code>Serializable</code>接口，其中<code>value-based</code>类型的字段应该标记为 <code>transient</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Make this value-base field transient so that it is not included in the serialization of the class.
+</span></span></code></pre></div><p><code>value-based</code>的类主要是<code>java.time</code>包下除<code>Clock</code>类之外的所有类。</p>
+<p>这其实不能算是个 bug，根据具体情况讨论下：</p>
+<ul>
+<li>如果使用 JPA，且该日期类型的字段确实需要存入数据库中，将字段标记为<code>transient</code>显然是不行的。解决办法，如果有权限，可以修改 Sonar 的配置规则，如果无法修改 Sonar 配置规则，不得已的方法就是在需要的地方忽略。关于这个问题的讨论可以参考<a href="https://github.com/jhipster/generator-jhipster/issues/4553"  class="external-link" target="_blank" rel="noopener">Github 上的这个 issue</a>。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@SuppressWarnings<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;squid:S3437&#34;</span><span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><ul>
+<li>如果该类不会被序列化（比如只是用于微服务接口调用的数据传输），则该错误提示就是代码优化的信号。比如我们当前的场景，很多类似的类都只用于通过 HTTP 调用外部系统。解决方法，一种方式是该类不继承<code>Serializable</code>接口，另一种方式是将日期类型的字段标记为<code>transient</code>，我这里采用的是第二种方式，可能移植性会更好一点：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Getter
+</span></span><span style="display:flex;"><span>@Builder
+</span></span><span style="display:flex;"><span>@AllArgsConstructor<span style="color:#ff79c6">(</span>access <span style="color:#ff79c6">=</span> AccessLevel<span style="color:#ff79c6">.</span><span style="color:#50fa7b">PRIVATE</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">Book</span> <span style="color:#8be9fd;font-style:italic">implements</span> Serializable <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">final</span> <span style="color:#8be9fd">long</span> serialVersionUID <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>812324454545L<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> String id<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">transient</span> <span style="color:#8be9fd;font-style:italic">private</span> LocalDateTime createAt<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// other fields
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>这样修改完后，<code>Bug</code>类型的问题数量就为 0 了。</p>
+<h2 id="vulnerability">
+  Vulnerability
+  <a class="heading-link" href="#vulnerability">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>漏洞都是一个类型的问题：可变类型(数组、列表)的数据应该复制一份，而不应该直接返回或直接使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Store a copy of &#34;books&#34;
+</span></span></code></pre></div><p>如果一个对象拥有一个列表类型的数据，如果直接返回给调用者，因为是可变的，如果数据被修改，原对象中的数据也就被修改了，所以会有安全问题。</p>
+<p>这个问题比较好处理，在数据设值(构造函数或 Setter 方法)或取值(如 Getter 方法)时将其封装为不可变类型即可，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">private</span> List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> books<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setBooks</span><span style="color:#ff79c6">(</span>List<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> books<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">books</span> <span style="color:#ff79c6">=</span> Collections<span style="color:#ff79c6">.</span><span style="color:#50fa7b">unmodifiableList</span><span style="color:#ff79c6">(</span>books<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><blockquote>
+<p>注意：<code>Collections.unmodifiableList()</code>的参数不能为 null，所以需要根据自己的业务看是否需要提前判断或处理。</p>
+</blockquote>
+<p>只有这一个类型的问题，修复后，数量降为 0。</p>
+<h2 id="bad-smell">
+  Bad Smell
+  <a class="heading-link" href="#bad-smell">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>代码坏味道里有很多个来源，数量最多的一个来源是，<strong>请移除未被使用的私有字段</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Remove this unused &#34;userId&#34; private field
+</span></span></code></pre></div><p>Sonar 的意思是这个 private 字段没有被使用，应该被移除掉。怎么会没有使用呢，在 IDE 中可以查看到很多有效的引用。
+不过发现所有这些没被引用的字段，都是来自于被 lombok 的<code>@Getter</code>注解的类，难道是 Sonar 并没有完全识别并支持 lombok 的注解导致误报吗？
+搜索了下 Sonar 相关的配置，然后去 Pipeline 上 check 了下流程配置，果然有所发现。</p>
+<p>如果需要支持 lombok 等框架，需要将相关依赖配置在<code>sonar.java.libraries</code>参数下，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>sonar.java.libraries = build/libs/lombok-1.18.8.jar
+</span></span></code></pre></div><p>现在很多应用都是使用 SpringBoot，最后 build 出来的结果是一个可执行的 jar 包，依赖都在该 jar 包中，所以没法直接引用 jar 包中的依赖。</p>
+<p>一种简单的解决方法，可以在 build 工具，如 maven/gradle 中，定义一个 goal/task，将需要的依赖包拷贝到一个指定目录，然后就可以引用了。比如使用<code>maven-dependency-plugin</code>，配置如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;build&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;plugins&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;plugin&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;groupId&gt;</span>org.apache.maven.plugins<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;artifactId&gt;</span>maven-dependency-plugin<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;version&gt;</span>3.1.1<span style="color:#ff79c6">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;executions&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;execution&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;id&gt;</span>copy<span style="color:#ff79c6">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;phase&gt;</span>package<span style="color:#ff79c6">&lt;/phase&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;goals&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;goal&gt;</span>copy<span style="color:#ff79c6">&lt;/goal&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;/goals&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;configuration&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;artifactItems&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ff79c6">&lt;artifactItem&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;groupId&gt;</span>org.projectlombok<span style="color:#ff79c6">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;artifactId&gt;</span>lombok<span style="color:#ff79c6">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;overWrite&gt;</span>false<span style="color:#ff79c6">&lt;/overWrite&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">&lt;outputDirectory&gt;</span>${project.build.directory}/libs<span style="color:#ff79c6">&lt;/outputDirectory&gt;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ff79c6">&lt;/artifactItem&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;/artifactItems&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;outputDirectory&gt;</span>${project.build.directory}/libs<span style="color:#ff79c6">&lt;/outputDirectory&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;overWriteReleases&gt;</span>false<span style="color:#ff79c6">&lt;/overWriteReleases&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;overWriteSnapshots&gt;</span>true<span style="color:#ff79c6">&lt;/overWriteSnapshots&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">&lt;overWriteIfNewer&gt;</span>true<span style="color:#ff79c6">&lt;/overWriteIfNewer&gt;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">&lt;/configuration&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&lt;/execution&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;/executions&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;/plugin&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;/plugins&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/build&gt;</span>
+</span></span></code></pre></div><p>引用如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>sonar.java.libraries = target/libs/lombok-1.18.8.jar
+</span></span></code></pre></div><p>在 gradle 中配置如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>task <span style="color:#50fa7b">copyDependencies</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd;font-style:italic">type:</span> Copy<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//    from configurations.default
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    from configurations<span style="color:#ff79c6">.</span><span style="color:#50fa7b">default</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">filter</span> <span style="color:#ff79c6">{</span>it<span style="color:#ff79c6">.</span><span style="color:#50fa7b">name</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">startsWith</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;lombok&#34;</span><span style="color:#ff79c6">)}</span>
+</span></span><span style="display:flex;"><span>    into <span style="color:#f1fa8c">&#34;${project.buildDir}/libs&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>引用如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>sonar.java.libraries = build/libs/lombok-1.18.8.jar
+</span></span></code></pre></div><p>该配置生效后，坏味道降到了 59 个，差不多是原来的十分之一。</p>
+<p>Bad Smell 的第二个来源是，<strong>构造函数参数超过了允许的 7 个</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Constructor has 9 parameters, which is greater than 7 authorized.
+</span></span></code></pre></div><p>如果对领域对象有控制权，构造函数的参数太多，那就需要去确认下是否可以对领域对象进行合理拆分。但是在类似我们当前的场景下，这些数据对象是根据第三方服务的接口定义的，所以拆分就不太合理，这个 bad smell 就不打算修复了。</p>
+<p>Bad Smell 的第三个来源，也是最后一个来源，<strong>重复代码块</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1 duplicated blocks of code must be removed.
+</span></span></code></pre></div><p>一般情况下，如果出现代码重复，应该尽量提取公共代码，去除重复。</p>
+<p>但是如果重复代码块出现在不同的 Domain，按照 DDD 的原则，子域的交集部分应该放在共享内核中(Shared Kernel)，修改共享内核需要小心并注意沟通。</p>
+<p>这个项目里为了偷懒，也为了不至于将简单的项目复杂化，暂时忽略这个 bad smell 了。</p>
+<p>修复加忽略后，bad smell 的数量为 50，Debt 为 2 天。</p>
+<h2 id="coverage">
+  Coverage
+  <a class="heading-link" href="#coverage">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>覆盖率只有 4.4%，实在不能忍。分析了下，主要原因是我们在 jacoco 中配置了根据 package 进行忽略的规则，对于这些忽略的 package 中的类，Sonar 会直接忽略相关的测试，认为这些类的覆盖率为 0。</p>
+<p>Jacoco 中忽略的 package 主要有：<code>Constant</code>、<code>Exception</code>、<code>dto</code>, <code>util</code>, <code>config</code>以及<code>client</code>。这些 package 中的类都有对应的测试去覆盖，只是有些类的覆盖率不到配置的阀值 80%。</p>
+<p>将<code>Constant</code>、<code>Exception</code>、<code>dto</code>, <code>util</code>, <code>config</code>等包都从排除中去掉，然后大家一起补上相关的单元测试，最后的单元测试覆盖率为 88.2%。</p>
+<p>至于<code>client</code>包，根据小伙伴反馈，第三方提供的基于 socket 的示例代码不容易编写单元测试，可能需要先重构。这部分的测试暂时先忽略了。</p>
+<p>经过努力修复之后，结果目前还可以接收，Sonar 上的统计为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Bugs: 0    Vulnerability: 0
+</span></span><span style="display:flex;"><span>Bad Smell: 50    Debt: 2 days
+</span></span><span style="display:flex;"><span>Coverage: 88.2%    Unit Tests: 184
+</span></span></code></pre></div><h2 id="参考">
+  参考
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ol>
+<li><a href="https://maven.apache.org/plugins/maven-dependency-plugin/examples/copying-artifacts.html"  class="external-link" target="_blank" rel="noopener">Copying specific artifacts</a></li>
+<li><a href="https://maven.apache.org/plugins/maven-dependency-plugin/examples/copying-project-dependencies.html"  class="external-link" target="_blank" rel="noopener">Copying project dependencies</a></li>
+<li><a href="https://stackoverflow.com/questions/46362965/sonarqube-lombok-false-positives/46365394"  class="external-link" target="_blank" rel="noopener">sonarqube + lombok = false positives</a></li>
+<li><a href="https://stackoverflow.com/questions/26697999/gradle-equivalent-to-mavens-copy-dependencies"  class="external-link" target="_blank" rel="noopener">Gradle equivalent to Maven&rsquo;s “copy-dependencies”?</a></li>
+<li><a href="https://stackoverflow.com/questions/11297612/extract-specific-jars-from-dependencies"  class="external-link" target="_blank" rel="noopener">Extract specific JARs from dependencies</a></li>
+</ol>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My New Hugo Site</title>
+    <link>https://nkcoder.github.io/</link>
+    <description>Recent content on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 Aug 2023 21:55:36 +1000</lastBuildDate><atom:link href="https://nkcoder.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java refresh: main Features After Java8</title>
+      <link>https://nkcoder.github.io/posts/java/main-features-after-java8/</link>
+      <pubDate>Thu, 31 Aug 2023 21:55:36 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java/main-features-after-java8/</guid>
+      <description>1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &amp;lt;pre&amp;gt;{@code ...}&amp;lt;/pre&amp;gt; blocks.
+/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&amp;#34;v: &amp;#34; + v.get()); * } * } */ 2. JEP 400: UTF-8 by Default (@18) Link to heading Specify UTF-8 as the default charset of the standard Java APIs.</description>
+    </item>
+    
+    <item>
+      <title>The difference between call-by-value and call-by-name</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/call-by-value-vs-call-by-name/</link>
+      <pubDate>Sun, 19 Jun 2022 13:00:20 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/call-by-value-vs-call-by-name/</guid>
+      <description>We have two simple functions:
+def calledByValue(x: Long): Unit = { println(&amp;#34;call by value: &amp;#34; + x) println(&amp;#34;call by value: &amp;#34; + x) } def calledByName(x: =&amp;gt; Long): Unit = { println(&amp;#34;call by name: &amp;#34; + x) println(&amp;#34;call by name: &amp;#34; + x) } Let&amp;rsquo;s call the two functions with the same parameter:
+calledByValue(System.nanoTime()) calledByName(System.nanoTime()) The output is:
+call by value: 329019404609381 call by value: 329019404609381 call by name: 329019470999309 call by name: 329019472001451 We can see that the outputs in the first function are the same, but the outputs in the second function are different.</description>
+    </item>
+    
+    <item>
+      <title>Ruby in action: advanced</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/</link>
+      <pubDate>Sun, 06 Feb 2022 10:33:57 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/</guid>
+      <description>objects Link to heading ## objects are instances of classes puts &amp;#39;hello&amp;#39;.class puts &amp;#39;hello&amp;#39;.is_a?(String) ## output # String # true class instances Link to heading # frozen_string_literal: true ### A class is defined using the keyword class, a name, and the keyword end. # # Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case. # The method new is defined on every class, and returns a new instance of the class.</description>
+    </item>
+    
+    <item>
+      <title>Ruby in action: intermediate</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/</link>
+      <pubDate>Sat, 05 Feb 2022 15:04:15 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/</guid>
+      <description>arrays Link to heading require &amp;#39;../util&amp;#39; # frozen_string_literal: true ############# arrays ############### ## array can hold different data type data = [&amp;#39;Daniel&amp;#39;, &amp;#39;Michael&amp;#39;, 10, [1, 2, 3, 4], 11.4, true] # index start from zero, first element(s) puts &amp;#34;first item: #{data[0]}&amp;#34; puts &amp;#34;first item: #{data.first}&amp;#34; puts &amp;#34;first 2 items: #{data.first(2)}&amp;#34; # last element(s) puts &amp;#34;last element: #{data[data.length - 1]}&amp;#34; puts &amp;#34;last element: #{data.last}&amp;#34; puts &amp;#34;last 2 elements: #{data.last(2)}&amp;#34; # multiple array puts &amp;#34;multiple array item: #{data[3][0]}&amp;#34; puts &amp;#34;the length of the array is #{data.</description>
+    </item>
+    
+    <item>
+      <title>Ruby in action: basics</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/</link>
+      <pubDate>Fri, 04 Feb 2022 22:37:14 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/</guid>
+      <description>pring vs puts vs p Link to heading ## print: no new line at the end ## puts: new line at the end ## p: print the argument as it is and returns the argument print &amp;#39;Good morning.&amp;#39; puts &amp;#39;Hello World!&amp;#39; puts &amp;#39;Come on.&amp;#39; p &amp;#39;Hello World!&amp;#39; p [&amp;#39;one&amp;#39;, &amp;#39;two&amp;#39;, 3] ## output: # Good morning.Hello World! # Come on. # &amp;#34;Hello World!&amp;#34; # [&amp;#34;one&amp;#34;, &amp;#34;two&amp;#34;, 3] string Link to heading ## single quote vs double quote, single quote doesn&amp;#39;t support interpolation first_name = &amp;#39;Michael&amp;#39; last_name = &amp;#39;Dent&amp;#39; puts &amp;#34;first name is #{first_name}, last name is #{last_name}&amp;#34; puts &amp;#39;first name is #{first_name}, last name is #{last_name}&amp;#39; ## output # first name is Michael, last name is Dent # first name is #{first_name}, last name is #{last_name} ## the methods will return a new copy hello = &amp;#39;Hello World!</description>
+    </item>
+    
+    <item>
+      <title>Configure Ruby development</title>
+      <link>https://nkcoder.github.io/posts/ruby/configure-ruby-development/</link>
+      <pubDate>Sat, 28 Aug 2021 20:49:23 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/configure-ruby-development/</guid>
+      <description>rbenv Link to heading # install rbenv, will also install ruby-build $ brew install rbenv # upgrade rbenv and ruby-build $ brew upgrade rbenv ruby-build # add `eval &amp;#34;$(rbenv init -)&amp;#34;` to your profile $ echo &amp;#39;eval &amp;#34;$(rbenv init -)&amp;#34;&amp;#39; &amp;gt;&amp;gt; ~/.zshrc # also need to add rbenv to PATH, if you have separate homebrew $ echo &amp;#39;export PATH=~/homebrew/bin:$PATH&amp;#39; &amp;gt;&amp;gt; ~/.zshrc # list latest stable versions $ rbenv install -l # list all local versions $ rbenv install -L # install a Ruby version $ rbenv install 3.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to AWS IAM</title>
+      <link>https://nkcoder.github.io/posts/aws/iam-intro/</link>
+      <pubDate>Sat, 07 Aug 2021 17:22:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/aws/iam-intro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scala: Build-in Control Structures</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/</link>
+      <pubDate>Sun, 01 Aug 2021 08:20:47 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/</guid>
+      <description>If expressions Link to heading val fileName = if (!args.isEmpty) args(0) else &amp;#34;default.txt&amp;#34; Scala&amp;rsquo;s if is an expression that results in a value. The first advantage is that we use a val instead of var. Using a val is the functional style and it tells readers of the code that the variable will never change, saving them from scanning all code in the variable&amp;rsquo;s scope to see if it ever changes.</description>
+    </item>
+    
+    <item>
+      <title>Scala: Functional Objects</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/3-functional-objects/</link>
+      <pubDate>Sat, 31 Jul 2021 18:49:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/3-functional-objects/</guid>
+      <description>Constructing an object Link to heading class Rational(n: Int, d: Int) { println(&amp;#34;Created &amp;#34; + n + &amp;#34;/&amp;#34; + d) } If your class doesn&amp;rsquo;t have a body, you don&amp;rsquo;t need to specify empty curly braces. The identifiers n and d are called class parameters, the Scala compiler will create a primary constructor that takes these two parameters. The Scala compiler will compile any code you place in the class body, which isn&amp;rsquo;t part of a field or a method definition, into the primary constructor.</description>
+    </item>
+    
+    <item>
+      <title>Scala: Basic Types and Operations</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</link>
+      <pubDate>Sun, 18 Jul 2021 17:06:23 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</guid>
+      <description>Basic types Link to heading Basic types of Scala：
+Byte, Short, Int, Long, Char, String, Float, Double, Boolean scala&amp;gt; val aFloat = 1.2345F val aFloat: Float = 1.2345 scala&amp;gt; val aDouble = 3E5 val aDouble: Double = 300000.0 scala&amp;gt; val anotherDouble = 1.2345D val anotherDouble: Double = 1.2345 A string literal is a composed of characters surrounded by double quotes.
+A raw string starts and ends with three double quotation marks in a row(&amp;quot;&amp;quot;&amp;quot;).</description>
+    </item>
+    
+    <item>
+      <title>Scala: Basics of class and object</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</link>
+      <pubDate>Sun, 18 Jul 2021 08:22:29 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</guid>
+      <description>Classes, fields, and methods Link to heading Once you define a class, you can create objects with the keyword new.
+public is Scala&amp;rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0 acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&amp;rsquo;s state—the values of its instance variables—remains valid during its entire lifetime.</description>
+    </item>
+    
+    <item>
+      <title>Go的基本数据类型</title>
+      <link>https://nkcoder.github.io/posts/go/03-go-basic-data-types/</link>
+      <pubDate>Sun, 18 Apr 2021 22:36:16 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/03-go-basic-data-types/</guid>
+      <description>整数类型 Link to heading 整数区分有符号和无符号，且有四种大小：
+int8, int16, int32,	int64	// 有符号 uint8, uint16,	uint32,	uint64	// 无符号 其它类型说明：
+int和uint，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同
+rune类型是int32的同义词，表示该值是一个Unicode码点(code point)
+byte是uint8的同义词，表示该值是原始数据(raw data)
+uintptr也是一个整型类型，但大小不确定，主要用于低级编程（如调用C语言库）。
+int, uint, uintptr与带大小的类型如int32, uint64等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。
+r1, _ := utf8.DecodeRuneInString(&amp;#34;世&amp;#34;) fmt.Printf(&amp;#34;r1 = %c\n&amp;#34;, r1)	// 世 比较运算符：
+== !=	&amp;lt;	&amp;lt;= &amp;gt;	&amp;gt;= 所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。
+fmt.Printf(&amp;#34;%t\n&amp;#34;, 10 &amp;lt; 5)	// false fmt.Printf(&amp;#34;%t\n&amp;#34;, 10 &amp;lt; 20.1)	// true fmt.Printf(&amp;#34;%t\n&amp;#34;, &amp;#34;abc&amp;#34; &amp;gt;= &amp;#34;ab&amp;#34;)	// true 位运算符：
+&amp;amp;	位AND，位的交集 |	位OR，位的并集 ^	位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反 &amp;amp;^	位清空(AND NOT), z=x &amp;amp;^ y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同 &amp;lt;&amp;lt;	位左移 &amp;gt;&amp;gt;	位右移 // bit operation const b1 uint8 = 1 &amp;lt;&amp;lt; 1 | 1 &amp;lt;&amp;lt; 5	// set 1 and 5 bit const b2 uint8 = 1 &amp;lt;&amp;lt; 1 | 1 &amp;lt;&amp;lt; 2	// set 1 and 2 bit fmt.</description>
+    </item>
+    
+    <item>
+      <title>Git 提交或克隆代码失败（hung up unexpectedly)</title>
+      <link>https://nkcoder.github.io/posts/git-clone-or-push-hung-up/</link>
+      <pubDate>Sat, 06 Mar 2021 09:35:55 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/git-clone-or-push-hung-up/</guid>
+      <description>如果git提交 (push)或克隆 (clone)代码时，报如下的错误：
+可以尝试将http.postBuffer参数调大一点：
+git config --global http.postBuffer 10M 通过git config --help可以看到http.postBuffer相关的解释：
+http.postBuffer Maximum size in bytes of the buffer used by smart HTTP transports when POSTing data to the remote system. For requests larger than this buffer size, HTTP/1.1 and Transfer-Encoding: chunked is used to avoid creating a massive pack file locally. Default is 1 MiB, which is sufficient for most requests.
+即，http.postBuffer参数是HTTP与远程系统交互的缓冲区大小，默认为1MiB（=1.048576MB）。
+参考：
+The remote end hung up unexpectedly while git cloning </description>
+    </item>
+    
+    <item>
+      <title>Go的程序结构</title>
+      <link>https://nkcoder.github.io/posts/go/02-go-program-structure/</link>
+      <pubDate>Fri, 26 Feb 2021 09:46:31 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/02-go-program-structure/</guid>
+      <description>命名 (Names) Link to heading Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(_)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。
+Go的25个关键字不能作为名称：
+break	default	func	interface	select case	defer	go	map	struct chan	else	goto	package	switch const	fallthrough	if	range	type continue	for	import	return	var 还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：
+Constants	true	false	iota	nil Types	int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr float32	float64	complex128	complex64	bool	byte	rune	string	error Functions	make	len	cap	new	append	copy	close	delete	complex	real	imag	panic	recover 函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（package）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（exported），在包（package）外可见，如fmt包的Printf函数。包名总是全小写的。</description>
+    </item>
+    
+    <item>
+      <title>Mac中设置应用在TouchBar上默认显示F1～F12功能键</title>
+      <link>https://nkcoder.github.io/posts/mac-touchbar-functions-keys/</link>
+      <pubDate>Thu, 25 Feb 2021 20:44:51 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/mac-touchbar-functions-keys/</guid>
+      <description>在带TouchBar的Mac上，不同的app，TouchBar上的快捷功能是不同的。对于编程的同学来说，F1～F12的功能键太常用了，如果每次debug/run都需要同时按住fn去切换是极不方便的。
+Mac支持设置在某些app里，TouchBar默认显示F1～F12，System Preferene -&amp;gt; Keyboard -&amp;gt; Shortcuts：将对应的app添加到Function Keys中去即可：</description>
+    </item>
+    
+    <item>
+      <title>VIM中输入法自动切换的问题</title>
+      <link>https://nkcoder.github.io/posts/vim-input-methods-auto-switch/</link>
+      <pubDate>Wed, 24 Feb 2021 23:02:20 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/vim-input-methods-auto-switch/</guid>
+      <description>问题描述：
+在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。
+期望结果：
+插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。
+确定英文输入法 Link to heading 首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的U.S.，如下图所示：
+VSCode Vim中如何解决 Link to heading 首先需要安装im-select，参考最新的安装文档，如在macOS系统下，通过以下命令安装：
+curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh 获取当前输入法的ID，如果英文输入法为U.S.，则ID应该为com.apple.keylayout.US：
+➜ ~ im-select com.apple.keylayout.US 然后在VSCode的settings.json（通过 Open Settings (JSON) 命令可以直接打开）中添加如下配置：
+&amp;#34;vim.autoSwitchInputMethod.enable&amp;#34;: true, &amp;#34;vim.autoSwitchInputMethod.defaultIM&amp;#34;: &amp;#34;com.apple.keylayout.US&amp;#34;, &amp;#34;vim.autoSwitchInputMethod.obtainIMCmd&amp;#34;: &amp;#34;/usr/local/bin/im-select&amp;#34;, &amp;#34;vim.autoSwitchInputMethod.switchIMCmd&amp;#34;: &amp;#34;/usr/local/bin/im-select {im}&amp;#34; 测试下，应该可以了。
+iTerm2 Vim中如何解决 Link to heading 通过SmartIM解决，先参考官方文档安装，如通过Vundle安装：
+在~/.vimrc中添加配置：Plugin &#39;ybian/smartim&#39; 打开vim，执行命令：:PluginInstall 相关的.vimrc参考：
+set nocompatible &amp;#34; be iMproved, required filetype off &amp;#34; required &amp;#34; set the runtime path to include Vundle and initialize set rtp+=~/.</description>
+    </item>
+    
+    <item>
+      <title>Go语言入门</title>
+      <link>https://nkcoder.github.io/posts/go/01-go-introduction/</link>
+      <pubDate>Tue, 23 Feb 2021 20:28:08 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/01-go-introduction/</guid>
+      <description>跟着《The Go Programming Language》学习Go语言。
+在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。
+Hello World Link to heading helloworld.go
+package main import &amp;#34;fmt&amp;#34; func main() { fmt.Println(&amp;#34;hello, 世界&amp;#34;) } 直接运行：
+$ go run helloworld.go 编译再运行：
+$ go build helloworld.go $ ./helloworld Go是一门编译型语言，run命令执行编译、链接和运行，build命令执行编译和链接，并生成可执行程序。 Go也是以包（package）的方式组织代码。每个源文件都以package声明开头，表示该源文件所属的包， import用于导入程序依赖的包。main是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。 函数定义由func关键字、函数名称、参数列表、返回值构成。main是一个特殊的函数，表示程序的执行入口。 在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。 命令行参数 Link to heading os模块的Args变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数Args[0]表示程序的名称，Args[1:]表示程序执行所需的所有参数。
+echo1.go:
+// echo1 prints it&amp;#39;s command-line arguments package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) func main() { var s, sep string for i := 1; i &amp;lt; len(os.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：CyclicBarrier</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc10-cyclicbarrier/</link>
+      <pubDate>Fri, 23 Oct 2020 08:20:39 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc10-cyclicbarrier/</guid>
+      <description>CyclicBarrier可以称为循环栅栏，也是一个线程同步工具，在所有线程到达barrier之前，线程需要等待。
+CyclicBarrier的必需参数为parties，可以称为同伴（线程）的数量：
+CyclicBarrier cyclicBarrier = new CyclicBarrier(10);	当线程调用await()时，表示线程已到达，如果所有线程都已到达，则所有线程继续向后执行，否则线程等待，直到：
+最后一个线程到达 等待中的某个线程被中断 等待中的某个线程在等待的过程中超时 等待中的某个线程调用了CyclicBarrier的reset()方法 如果某个等待的线程被中断，则所有其它等待的线程都会抛出BrokenBarrierException。
+构造CyclicBarrier时还可以带第二个参数，是一个Runnable，即当所有线程都到达barrier时，需要执行的操作。
+CyclicBarrier cyclicBarrier = new CyclicBarrier(10, action); 该操作由最后一个到达barrier的线程会执行，当它执行完之后，其它等待的线程才被允许继续执行。
+CyclicBarrier被称为循环栅栏，是因为它是可以循环使用的。
+实现：
+使用两个变量parties和count保存barrier关联的线程数量，parties用于barrier重复利用时重置线程数，而count用于记录到达barrier的线程的数量，当线程调用await()时，count的值递减，当count的值为0时，表示barrier完成， 线程调用await()，需要加锁，使用ReentrantLock实现。count递减，并判断是否为0： 如果此时count为0，首先如果Runnable不为空，则在当前线程中执行。然后开始新的barrier循环（先将所有等待的线程唤醒，然后使用parties重置count。） 如果count不为0，当前线程等待。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：CountDownLatch</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc9-countdownlatch/</link>
+      <pubDate>Fri, 23 Oct 2020 08:19:55 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc9-countdownlatch/</guid>
+      <description>CountDownLatch可以被称为倒计数器，是一个线程协作工具，可以让一个（或一组线程）等待倒计数器（持有倒计数器的线程执行某项工作）结束，然后开始执行。
+CountDownLatch countDownLatch = new CountDownLatch(10); CountDownLatch的参数表示计数器的值，线程调用countdown()方法使计数器递减，调用await(方法进行等待，当计数器的值为0时，等待的线程继续执行。
+注意：
+线程调用countdown()后，并不会阻塞，而是会继续执行 线程调用await()后会一直阻塞直到计数器的值为0，或者线程被中断 CountDownLatch不能复用 实现：
+CountDownLatch内部有一个AQS（AbstractQueuedSynchronizer）的实现Sync，通过AQS的state参数保存计数器 await()函数，先检查线程是否已被中断，然后检查计数器（即state）是否为0，如果为0，则当前线程继续向后执行，如果不为0，则将当前线程加入到等待队列中 countdown()函数，将计数器的值减1，如果减1后，计数器的值为0，则释放所有等待的线程，如果在减1之前计数器的值已经为0，则什么都不做。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：读写锁ReadWriteLock</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc8-readwritelock/</link>
+      <pubDate>Fri, 23 Oct 2020 08:18:57 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc8-readwritelock/</guid>
+      <description>读写锁允许多个线程同时读，即线程的读读之间是不互斥的，只有线程的读写和写写之间才是互斥的。
+如果系统中数据量很大，读操作远大于写操作，使用读写锁比使用普通的互斥锁，可以更好地提升系统性能。
+ReadWriteLock readWriteLock = new ReentrantReadWriteLock(); 读写锁的默认实现是ReentrantReadWriteLock，有如下特性：
+公平性： 默认非公平锁，即读写锁的获取顺序不定，所以可能会有线程长时间无法获取到锁。非公平锁的吞吐率比公平锁更高。 公平锁，等待时间最长的线程优先获取锁。当锁被释放时，或者是等待时间最长的一个写线程获取到锁，或者是等待时间最长的一组读线程获取到锁。 可重入性：允许读线程/写线程以ReentrantLock的方式重新获取到读/写锁。写线程可以获取读锁，但是读线程不能获取写锁。 锁降级：可重入性允许写锁降级为读锁，即线程先获取写锁，然后获取读锁，然后释放写锁。但是读锁是不能升级为写锁的。 支持Condition：写锁可以像ReentrantLock一样使用ReentrantLock.newCondition，但是读锁不行。 该实现最大支持65535个递归的写锁和65536个读锁，超过限制会报错。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：Semaphore</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc7-semaphore/</link>
+      <pubDate>Fri, 23 Oct 2020 08:18:02 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc7-semaphore/</guid>
+      <description>synchronized和ReentrantLock，在任一时刻都只允许一个线程访问临界资源，而Semaphore可以允许多个线程同时访问临界资源。
+构造信号量时需要指定许可数，即允许同时访问的线程数量。
+private static final Semaphore SEMAPHORE = new Semaphore(5); 说明：构造函数的第二个参数表示是否公平，即根据先进先出的顺序获取许可。
+信号量的主要方法有：
+public void acquire();	// 获取许可，如果无法获取，则线程等待直到被中断或成功获取到许可 public void acquireUninterruptibly(); // 获取许可，如果无法获取，则线程等待直到成功获取到许可，不响应中断 public boolean tryAcquire();	// 尝试获取许可，成功则返回true，否则返回false public boolean tryAcquire(long timeout, TimeUnit unit); // 尝试获取许可，如果无法获取，等待指定时间 public void release();	// 释放一个许可 注意：tryAcquire()与ReentrantLock的tryLock()方法类似，无论锁是否公平，线程总是会立即获取可用的许可，而不论是否有其它线程在等待。
+try { SEMAPHORE.acquire(); TimeUnit.SECONDS.sleep(3); System.out.println(Thread.currentThread().getId() + &amp;#34;: I&amp;#39;m done.&amp;#34;); // System.out.println(&amp;#34;-------------------------------------------&amp;#34;); } catch (InterruptedException exception) { exception.printStackTrace(); } finally { SEMAPHORE.release(); } </description>
+    </item>
+    
+    <item>
+      <title>Java并发：可重入锁ReentrantLock</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/</link>
+      <pubDate>Fri, 23 Oct 2020 08:16:59 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/</guid>
+      <description>可重入性 Link to heading 可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出java.lang.IllegalMonitorStateException异常。
+LOCK.lock(); LOCK.lock(); try { i++; } finally { LOCK.unlock(); LOCK.unlock(); } 可中断 Link to heading 通过lock()方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。
+lockInterruptibly方法允许线程在等待锁的过程中被其它线程中断。
+try { lock.lockInterruptibly(); } catch (InterruptedException exception) { // log exception } finally { if (lock.isHeldByCurrentThread()) { lock.unlock(); } 限时等待 Link to heading tryLock()表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如tryLock(3, TimeUnit.SECONDS)等待3秒，超时则失败返回false。
+try { if (lock.tryLock(3, TimeUnit.SECONDS)) { TimeUnit.SECONDS.sleep(5); System.out.println(Thread.currentThread().getId() + &amp;#34;: my job done.&amp;#34;); } else { System.out.println(Thread.currentThread().getId() + &amp;#34;: get lock failed.&amp;#34;); } } catch (InterruptedException exception) { exception.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：volatile与synchronized</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc5-volatile-and-synchronized/</link>
+      <pubDate>Fri, 23 Oct 2020 08:15:01 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc5-volatile-and-synchronized/</guid>
+      <description>锁提供了两种主要特性：互斥和可见性。
+互斥：同一时刻只能一个线程持有某个特定的锁，并访问共享数据 可见性：一个线程在释放锁之前对共享数据的修改，对随后获得该锁的线程是可见的， synchronized是一种锁实现，因此具有互斥和可见性，可以保证线程安全。而volatile变量只能保证可见性，不能代替锁用于线程安全。
+synchronized通过加锁保证任何时刻只会有一个线程访问同步代码块。synchronized加锁主要有三种形式：
+在锁定对象上加锁：只有获得对象的锁才可以进入代码块
+synchronized (object) { ... } 在实例方法上加锁：只有获得当前实例对象的锁才可以进入代码块
+public synchronized void increase() { base++; } 在静态方法上加锁：只有获得类的锁才可以进入代码块
+public static synchronized void increase() { base++; } synchronized除了线程同步、保证线程安全外，还可以保证线程间的可见性和有序性。
+public class VolatileSynchronizedDemo { public static void main(String[] args) throws InterruptedException { CalculateRunnable calculateThread = new CalculateRunnable(); // they should reference the same runnable Thread t1 = new Thread(calculateThread); Thread t2 = new Thread(calculateThread); t1.start(); t2.start(); t1.join(); t2.join(); } public static class CalculateRunnable implements Runnable { private int base = 0; public synchronized void increase() { base++; } @Override public void run() { for (int i = 0; i &amp;lt; 100000; i++) { increase(); } System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：join和yield</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc4-join-and-yield/</link>
+      <pubDate>Fri, 23 Oct 2020 08:12:17 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc4-join-and-yield/</guid>
+      <description>调用线程的join()方法，表示等待该线程执行完后，当前线程再继续执行。
+从实现上看，join()就是调用当前线程的wait()方法进行有限或无限的等待，线程执行完后再调用notifyAll()方法将等待的线程唤醒。
+public final synchronized void join(long millis) throws InterruptedException { long base = System.currentTimeMillis(); long now = 0; if (millis &amp;lt; 0) { throw new IllegalArgumentException(&amp;#34;timeout value is negative&amp;#34;); } if (millis == 0) { while (isAlive()) { wait(0); } } else { while (isAlive()) { long delay = millis - now; if (delay &amp;lt;= 0) { break; } wait(delay); now = System.currentTimeMillis() - base; } } } 因为实现上调用的是当前线程的wait()和notifyAll()，所以应用程序不要直接使用线程的wait()和notifyAll()，以免影响API的使用。</description>
+    </item>
+    
+    <item>
+      <title>Java并发：wait和notify</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc3-wait-and-notify/</link>
+      <pubDate>Thu, 22 Oct 2020 23:42:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc3-wait-and-notify/</guid>
+      <description>wait()和notify()都是Object对象上的方法，因此可以在任何对象上调用。
+在一个对象上调用wait()方法后，线程就进入对象的等待队列，即线程在该对象上等待，直到其它线程调用了该对象的notify()或notifyAll()方法。
+一个对象的等待队列可能有多个线程，即多个线程都在等待这个对象。notify()会随机唤醒等待队列上的一个线程，而notifyAll()则会唤醒等待队列上的所有线程。
+必须在获得对象锁的前提下（即在synchronized语句中）才可以调用对象的wait()和notify()方法。
+wait()方法在执行前需先获得对象锁，执行后会自动释放对象锁；notify()方法在执行前需先获得对象锁，但并不会直接释放锁，而是正常执行。被唤醒的线程并不能立即继续执行，在执行前还是需要先获得对象锁。
+import java.util.concurrent.TimeUnit; public class WaitNotifyDemo { public static void main(String[] args) { final Object object = new Object(); Thread t1 = new Thread(&amp;#34;t1&amp;#34;) { @Override public void run() { synchronized (object) { System.out.println( Thread.currentThread().getName() + &amp;#34;, start at &amp;#34; + System.currentTimeMillis()); try { object.wait(); } catch (InterruptedException e) { System.out.println(e.getStackTrace()); } System.out .println(Thread.currentThread().getName() + &amp;#34;, end at &amp;#34; + System.currentTimeMillis()); } } }; Thread t2 = new Thread(&amp;#34;t2&amp;#34;) { @Override public void run() { synchronized (object) { System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：线程中断</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/</link>
+      <pubDate>Thu, 22 Oct 2020 23:34:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/</guid>
+      <description>如何让线程停止或退出呢？
+大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过while循环等）。
+Thread类中的suspend()方法和resume()方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被suspend()时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以resume()目标线程的线程在resume()目标线程之前尝试获取该关键资源的锁，此时死锁发生了。
+Thread类的stop()方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被stop()时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。
+停止线程更好的方式是使用中断interrupt()。
+线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。
+Thread类有三个方法与中断有关：
+Thread#isInterrupted()：实例方法，判断线程是否被中断，中断状态不变 Thread#interrupt()：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于wait(), sleep(), join()方法中，则线程会抛出InterruptedException异常，同时中断状态被清除 Thread.interrupted()：静态方法，判断当前线程是否被中断，同时中断状态被清除 public class InterruptDemo { public static void main(String[] args) throws InterruptedException { Thread t1 = new Thread(new MyRunnable()); t1.start(); Thread.sleep(3000); t1.interrupt(); } public static class MyRunnable implements Runnable { @Override public void run() { while (true) { // when current thread is interrupted, stop if (Thread.currentThread().isInterrupted()) { System.out.println(&amp;#34;I&amp;#39;m interrupted, exit.&amp;#34;); break; } try { Thread.sleep(2000); } catch (InterruptedException ex) { // when interrupt in sleep()|join()|wait(), the interrupt status is cleared System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：基本概念</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc1-basic-concepts/</link>
+      <pubDate>Thu, 22 Oct 2020 23:29:41 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc1-basic-concepts/</guid>
+      <description>同步与异步 Link to heading 同步：同步的方法调用，必须等到方法执行完毕返回后，调用方才会继续向后执行。 异步：异步的方法调用，立即返回，被调用的方法在独立的线程中执行，执行完后可以回调调用方，所以异步调用类似于消息通知。
+并发与并行 Link to heading 并发：多个任务交替执行，时间上还是顺序发生的。 并行：多个任务同时执行，时间上也是同时发生的。
+单CPU系统里的多进程或多线程实际上都是并发的，而不是并行的，只有在多CPU系统里才会有真正的并行。
+临界区 Link to heading 临界区表示一种公共资源或共享数据，可以被多个线程使用，但每一次只能被一个线程使用。如果已经有线程在使用临界区资源，其它线程只能等待。
+阻塞与非阻塞 Link to heading 阻塞与非阻塞通常用于形容线程间的相互影响。如果多个线程竞争临界资源，未获取到使用权的线程就会等待，线程挂起，处于阻塞状态。
+非阻塞表示没有线程会妨碍其它线程的执行，所有线程都会尝试不断向前执行。
+死锁、饥饿与活锁 Link to heading 死锁：多个线程，每一个线程既不放弃已占有的共享资源，同时尝试获取其它线程的资源，导致都无法向后执行。
+饥饿：一个或多个线程因为种种原因无法获得需要的资源，导致一直无法执行。常见情况：
+低优先级的线程由于一直被高优先级线程抢占导致无法获取所需的资源 某个线程一直占用关键资源不放，导致其它需要该资源的线程无法执行 活锁：相互协作的线程彼此响应从而修改自己的状态，导致都无法执行下去的情形。活锁中的资源在线程间不断跳跃，线程并未阻塞。常见的例子：电梯里外的两个人彼此礼貌左右避让，但每次都在同一侧相遇，导致一个没法进电梯，一个没法出电梯。</description>
+    </item>
+    
+    <item>
+      <title>Docker容器：查看容器状态</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-status/</link>
+      <pubDate>Thu, 09 Jul 2020 06:52:13 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-status/</guid>
+      <description>本文涉及到的主要命令如下：
+docker container inspect：查看容器的详细信息 docker container log：查看容器的日志 docker container stats：查看容器的实时统计 查看容器的详细信息 Link to heading docker container inspect或docker inspect命令会显示容器的详细信息，默认以JSON格式输出：
+➜ ~ docker container inspect 3f3c3d02c947 [ { &amp;#34;Id&amp;#34;: &amp;#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&amp;#34;, &amp;#34;Created&amp;#34;: &amp;#34;2020-06-01T22:58:05.916162Z&amp;#34;, &amp;#34;Path&amp;#34;: &amp;#34;/tini&amp;#34;, &amp;#34;Args&amp;#34;: [ &amp;#34;--&amp;#34;, &amp;#34;/usr/local/bin/docker-entrypoint.sh&amp;#34;, &amp;#34;eswrapper&amp;#34; ], ... } ... ] 默认的输出信息很多，可以通过-f, --format格式化输出：
+➜ ~ docker inspect --format=&amp;#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&amp;#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&amp;#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&amp;#39;{{.LogPath}}&amp;#39; 3f3c3d02c947 /var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log 如果只想查看某个子节点，比如NetworkSettings下的Ports，因为Ports本身是个对象，默认只会显示节点中值的集合，可以使用模版函数json，将对象以json格式输出：
+➜ ~ docker inspect --format=&amp;#39;{{json .</description>
+    </item>
+    
+    <item>
+      <title>Docker容器：查看、停止、删除容器</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/</link>
+      <pubDate>Thu, 09 Jul 2020 06:50:13 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/</guid>
+      <description>查看容器 Link to heading 列出容器的命令为：docker container ls，等价的别名为：
+docker container ps docker container list docker ps 常用的参数说明如下：
+-a, --all：列出所有的容器，包括停止运行的容器 -s, --size：显示容器的大小 -q, --quiet：仅显示容器ID -f, --filter：过滤器，支持key=value的格式进行过滤，多个过滤器使用-f &amp;quot;key=value&amp;quot; -f &amp;quot;key=value&amp;quot;格式 -a列出所有容器：
+➜ ~ docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 1c4bc2440cff docker.elastic.co/elasticsearch/elasticsearch:7.7.0 &amp;#34;/tini -- /usr/local…&amp;#34; 7 days ago Exited (130) 5 days ago sweet_lovelace da242f09324e mysql:8.0.19 &amp;#34;docker-entrypoint.s…&amp;#34; 7 weeks ago Up 15 minutes 0.0.0.0:3306-&amp;gt;3306/tcp, 33060/tcp freeimmi_mini_db_1 -s列出容器的大小：
+➜ ~ docker ps -s CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES SIZE da242f09324e mysql:8.</description>
+    </item>
+    
+    <item>
+      <title>Docker容器：运行容器</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-run/</link>
+      <pubDate>Thu, 09 Jul 2020 06:46:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-run/</guid>
+      <description>镜像拉取后，就可以基于镜像运行容器了。
+运行镜像的命令为docker container run ，等价命令为：docker run，命令的格式为：
+docker container run [OPTIONS] IMAGE [COMMAND] [ARG...] 该命令的参数很多，详细参数及说明可以通过help查看，这里根据使用场景介绍几个常用且重要的参数。
+创建交互式终端 Link to heading ➜ ~ docker run --name my_alpine -it alpine / # ls bin dev etc home lib media mnt opt proc root run sbin srv sys tmp usr var / # ps -ef PID USER TIME COMMAND 1 root 0:00 /bin/sh 7 root 0:00 ps -ef 上面的例子，运行一个容器，命名为my_alpine，并创建一个交互式的伪终端（tty），连接到容器。
+--name：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称 --interactive , -i：打开容器的stdin，即可以通过输入与容器交互 --tty , -t：分配一个伪终端连接到容器的stdin，-it一般同时使用，表示创建一个交互式终端，可以直接与容器交互 这里的-i和-t参数可能还是有点晕，我举个例子就明白了：如果只使用-i参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用-t参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果：</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：镜像分层</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-image-layers/</link>
+      <pubDate>Tue, 16 Jun 2020 06:41:46 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-image-layers/</guid>
+      <description>Docker镜像是由一系列的镜像层构成的。
+查看镜像层 Link to heading 有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：
+➜ ~ docker pull redis Using default tag: latest latest: Pulling from library/redis 54fec2fa59d0: Pull complete 9c94e11103d9: Pull complete 04ab1bfc453f: Pull complete a22fde870392: Pull complete def16cac9f02: Pull complete 1604f5999542: Pull complete Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9 Status: Downloaded newer image for redis:latest docker.io/library/redis:latest 以Pull complete结尾的每一行表示一个镜像分层，前面的def16cac9f02是镜像层的ID。
+如果镜像已经拉取了，可以通过docker inspect查看镜像分层：
+➜ ~ docker inspect redis [ { &amp;#34;Id&amp;#34;: &amp;#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&amp;#34;, &amp;#34;RepoTags&amp;#34;: [ &amp;#34;redis:latest&amp;#34; ], ... &amp;#34;RootFS&amp;#34;: { &amp;#34;Type&amp;#34;: &amp;#34;layers&amp;#34;, &amp;#34;Layers&amp;#34;: [ &amp;#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&amp;#34;, &amp;#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&amp;#34;, &amp;#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&amp;#34;, &amp;#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&amp;#34;, &amp;#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&amp;#34;, &amp;#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&amp;#34; ] }, } ] 其中Layers节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：删除镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-delete-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:40:26 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-delete-image/</guid>
+      <description>删除本地镜像命令为：docke image rm，等价的命令为：docker rmi和docker image remove。
+➜ ~ docker image rm --help Usage:	docker image rm [OPTIONS] IMAGE [IMAGE...] Remove one or more images Aliases: rm, rmi, remove Options: -f, --force Force removal of the image --no-prune Do not delete untagged parents 可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：
+➜ ~ docker rmi nkcoder/freeimmi_mini:4.12 ➜ ~ docker rmi 5ec653d76efc ➜ ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87 如果一个镜像关联了多个标签，是不能直接删除的：
+➜ ~ docker images alpine REPOSITORY TAG IMAGE ID CREATED SIZE alpine 950 f70734b6a266 2 weeks ago 5.</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：搜索镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-search-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:37:36 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-search-image/</guid>
+      <description>搜索Docker Hub中的镜像使用docker search命令：
+➜ ~ docker search --help Usage:	docker search [OPTIONS] TERM Search the Docker Hub for images Options: -f, --filter filter Filter output based on conditions provided --format string Pretty-print search using a Go template --limit int Max number of search results (default 25) --no-trunc Don&amp;#39;t truncate output 搜索包含关键字的镜像 Link to heading ➜ ~ docker search redis NAME DESCRIPTION STARS OFFICIAL AUTOMATED redis Redis is an open source key-value store that… 8140 [OK] bitnami/redis Bitnami Redis Docker Image 145 [OK] sameersbn/redis 80 [OK] .</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：查看本地镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-list-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:33:33 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-list-image/</guid>
+      <description>查看本地镜像，使用命令docker image ls：
+➜ ~ docker image ls --help Usage:	docker image ls [OPTIONS] [REPOSITORY[:TAG]] List images Aliases: ls, images, list Options: -a, --all Show all images (default hides intermediate images) --digests Show digests -f, --filter filter Filter output based on conditions provided --format string Pretty-print images using a Go template --no-trunc Don&amp;#39;t truncate output -q, --quiet Only show numeric IDs 该命令还有两个别名，即：docker images和docker image list。
+查看最近创建的镜像 Link to heading ➜ ~ docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE nkcoder/freeimmi_mini 4.</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：拉取镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-pull-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:25:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-pull-image/</guid>
+      <description>Docker的镜像存储在镜像注册中心（image registry）中，默认是Docker Hub，在拉取镜像的时候也可以指定其它注册中心。
+我们使用的大多数镜像都是在Docker Hub中已有镜像的基础上构建的。
+拉取镜像，使用docker image pull或docker pull命令。
+➜ ~ docker image pull --help Usage:	docker image pull [OPTIONS] NAME[:TAG|@DIGEST] Pull an image or a repository from a registry Options: -a, --all-tags Download all tagged images in the repository --disable-content-trust Skip image verification (default true) -q, --quiet Suppress verbose output 从Docker Hub拉取镜像 Link to heading 镜像的命名是：repo:tag，如果没有指定tag，则使用默认的latest标签。
+➜ ~ docker image pull alpine Using default tag: latest latest: Pulling from library/alpine cbdbe7a5bc2a: Pull complete Digest: sha256:9a839e63dad54c3a6d1834e29692c8492d93f90c59c978c1ed79109ea4fb9a54 Status: Downloaded newer image for alpine:latest docker.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在CentOS上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-centos/</link>
+      <pubDate>Sun, 07 Jun 2020 15:21:18 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-centos/</guid>
+      <description>在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 首先安装yum-utils，并设置使用stable仓库：
+$ sudo yum install -y yum-utils $ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo 安装最新版的Docker Engine和containerd：
+$ sudo yum install docker-ce docker-ce-cli containerd.io 确认GPG key的指纹为：060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35。
+如果希望安装特定的版本，首先搜索版本然后安装即可：
+$ yum list docker-ce --showduplicates | sort -r $ sudo yum install docker-ce-&amp;lt;VERSION_STRING&amp;gt; docker-ce-cli-&amp;lt;VERSION_STRING&amp;gt; containerd.io 启动Docker：
+$ sudo systemctl start docker 使用安装包安装 Link to heading 从CentOS-仓库中选择对应的CentOS版本，然后进入x86_64/stable/Packages/目录下载对应的rpm安装包，安装：
+$ sudo yum install /path/to/package.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在Ubunut上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/</link>
+      <pubDate>Sun, 07 Jun 2020 15:06:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/</guid>
+      <description>在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 更新apt，并安装可以使用HTTPS仓库的安装包：
+$ sudo apt-get update $ sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common 安装Docker官方的GPG密钥：
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 设置stable仓库：
+$ sudo add-apt-repository \ &amp;#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;#34; 最后，安装Docker Engine：
+$ sudo apt-get update $ sudo apt-get install docker-ce docker-ce-cli containerd.io 使用安装包安装 Link to heading 从ubuntu-仓库中选择对应的Ubuntu版本，然后进入/pool/stable目录下载对应的DEB安装包，安装：
+$ sudo dpkg -i /path/to/package.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在Mac上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-mac/</link>
+      <pubDate>Sun, 07 Jun 2020 14:11:43 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-mac/</guid>
+      <description>安装Docker Desktop Link to heading Docker提供了Mac版的安装包，在Docker 网站下载docker.dmg安装即可。
+Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。
+Mac版Docker主要用于开发和测试。
+安装之后，可以执行相关命令检查下：
+➜ ~ docker --version Docker version 19.03.8, build afacb8b ➜ ~ docker-compose --version docker-compose version 1.25.4, build 8d51620a 故障排除 Link to heading 如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的故障排除功能，点击Docker小鲸鱼后，选择Troubleshoot：
+可以进行诊断、重置磁盘等操作。
+Dashboard Link to heading Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：
+Kubernetes Link to heading Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。
+Enable Kubernetes：表示启用自带的Kubernetes Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器 首先使Kubernetes客户端kubectl连接本地的Kubernetes服务器：
+➜ ~ kubectl config get-contexts CURRENT NAME CLUSTER AUTHINFO NAMESPACE * docker-desktop docker-desktop docker-desktop docker-for-desktop docker-desktop docker-desktop ➜ ~ kubectl config use-context docker-desktop Switched to context &amp;#34;docker-desktop&amp;#34;.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列七：Spring Boot Admin</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/</link>
+      <pubDate>Sun, 29 Mar 2020 11:33:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/</guid>
+      <description>Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。
+server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。
+client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。
+server 端配置 Link to heading 首先需要添加spring-boot-admin-starter-server依赖，另外spring-boot-admin-server-ui提供友好的登入、登出界面：
+implementation &amp;#39;org.springframework.boot:spring-boot-starter-web&amp;#39; implementation &amp;#39;org.springframework.boot:spring-boot-starter-security&amp;#39; implementation &amp;#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&amp;#39; implementation &amp;#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&amp;#39; 然后在启动类（即使用@SpringBootApplication注解的类）上添加注解@EnableAdminServer即可。
+@SpringBootApplication @EnableAdminServer public class SpringAdminApplication { public static void main(String[] args) { SpringApplication.run(SpringAdminApplication.class, args); } } 如果需要增加安全控制，使用spring-boot-starter-security根据需要配置即可，示例如：
+@Override protected void configure(HttpSecurity http) throws Exception { String contextPath = adminServerProperties.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列六：Spring Boot Actuator</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/</link>
+      <pubDate>Sat, 28 Mar 2020 14:14:01 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/</guid>
+      <description>SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。
+默认的 Endpoint Link to heading 默认的 path 前缀为actuator，可以通过属性配置：
+management.endpoints.web.base-path: /admin 通过/actuator可以查看所有的 endpoints:
+$ http :8080/actuator 主要的endpoint有：
+/beans : Spring Context中的所有bean /env ： 所有属性信息 /health ：系统的健康信息 /httptrace ：http请求的trace信息 /info ：系统info /loggers ：日志信息 /metrics ：系统的度量，包括内存、cpu、http请求等 /mappings ：所有@RequestMapping映射信息 /threaddump ：线程dump信息 /heapdump ：生成一个hprof文件 大部分的 endpoint的http访问是禁用的，可以通过属性management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude进行配置，支持通配符‘*’表示所有：
+management: endpoints: web: base-path: /actuator exposure: include: &amp;#39;*&amp;#39; exclude: heapdump,threaddump /info Link to heading 为/info提供数据有多种方式，第一种是静态的，在配置文件中定义以info为前缀的属性，如：
+info: contact: email: myeamil@example.com phone: +86-17100000000 另一种是动态的，即实现InfoContributor接口，实现contribute()方法即可，代码参考MyInfoContributor.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列五：用scala开发</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/</link>
+      <pubDate>Sun, 15 Mar 2020 14:33:17 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/</guid>
+      <description>Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。
+SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。
+本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。
+添加Scala依赖 Link to heading implementation &amp;#39;org.scala-lang:scala-library:2.13.1&amp;#39; implementation &amp;#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&amp;#39; implementation &amp;#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&amp;#39; testImplementation &amp;#39;org.scalatest:scalatest_2.13:3.1.0&amp;#39; 定义实体类 Link to heading 首先定义JPA需要的实体类：
+import java.lang.Long import java.time.LocalDateTime import javax.persistence._ import org.nkcoder.scala.api.Article import scala.annotation.meta.field import scala.beans.BeanProperty @Entity @Table(name = &amp;#34;article&amp;#34;) class ArticleEntity(@BeanProperty var subject: String, @BeanProperty var content: String, @BeanProperty var updatedAt: LocalDateTime, @BeanProperty var createdBy: Long) { @(Id @field) @BeanProperty @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _ // for jpa private def this() = this(null, null, null, null) } 其中，</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列三：Spring Boot MyBatis</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-3-mybatis/</link>
+      <pubDate>Sat, 22 Feb 2020 14:34:41 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-3-mybatis/</guid>
+      <description>在SpringBoot集成MyBatis，需要的依赖为：
+implementation(&amp;#34;org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1&amp;#34;) 该依赖会：
+自动检测已有的DataSource 使用DataSource创建并注册一个SqlSessionFactory实例 从SqlSessionFactory中获取并注册一个SqlSessionTemplate的实例 自动扫描mapper，与SqlSessionTemplate连接并注入到Spring context中 基于注解 Link to heading 只需定义一个普通接口，并使用@Mapper注解，然后通过@Insert, @Delete, @Update, @Select等MyBatis提供的注解完成增删改查等操作：
+@Mapper public interface PlayerMapper { @Insert(&amp;#34;insert into player(name, team, join_at) values (#{name}, #{team}, #{joinAt})&amp;#34;) @Options(useGeneratedKeys = true, keyProperty = &amp;#34;id&amp;#34;) int insert(Player player); @Delete(&amp;#34;delete from player where id = #{id}&amp;#34;) int delete(@Param(&amp;#34;id&amp;#34;) Integer id); @Update(&amp;#34;update player set name = #{name}, team = #{team}, join_at = #{joinAt} where id = #{id}&amp;#34;) int update(Player player); @Select(&amp;#34;select id, name, team, join_at from player where id = #{id}&amp;#34;) Player findById(@Param(&amp;#34;id&amp;#34;) Integer id); } 注意：insert的时候希望能返回自动生成的主键ID，需要使用@Options(useGeneratedKeys = true, keyProperty = &amp;quot;id&amp;quot;)，其中，keyProperty表示数据库对应实体的ID属性。</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列二：Spring Boot Data JPA</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-2-data-jpa/</link>
+      <pubDate>Fri, 21 Feb 2020 09:52:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-2-data-jpa/</guid>
+      <description>Spring Boot Data JPA的依赖为：
+dependencies { implementation(&amp;#34;org.springframework.boot:spring-boot-starter-data-jpa&amp;#34;) } 关于JPA的实现 Link to heading 默认的实现是Hibernate，也可以使用其它实现，如eclipselink，依赖如下：
+dependencies { implementation(&amp;#34;org.springframework.boot:spring-boot-starter-data-jpa&amp;#34;) { exclude group: &amp;#34;org.hibernate&amp;#34;, module: &amp;#34;hibernate-entitymanager&amp;#34; } implementation &amp;#34;org.eclipse.persistence:eclipselink:2.7.4&amp;#34; } 关于实体类（Entity） Link to heading 数据库的表（table）和JPA的实体类（entity）一一对应，并且实体类需要添加一些注解：
+@Getter @Entity @Table(name = &amp;#34;player&amp;#34;) @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) @RequiredArgsConstructor public class PlayerEntity { @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer id; private final String name; // other fields } 注解说明如下：
+@Entity：声明这个类为JPA的实体，并且需要一个@Id注解的字段作为主键 @Table(name = &amp;quot;player&amp;quot;): 表示该entity对应的表，name属性是表名，默认是entity的名称 @NoArgsConstructor(access = AccessLevel.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列一：Spring Boot Devtools</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/</link>
+      <pubDate>Thu, 20 Feb 2020 08:17:39 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/</guid>
+      <description>spring-boot-devtools提供了一些辅助开发的功能，比如：
+自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志 自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用 LiveReload 自动触发浏览器的刷新（资源发生变化时） 全局配置：提供全局配置文件，对所有包含 devtools 的应用生效 在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。
+添加依赖 Link to heading maven 配置：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-devtools&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; gradle 配置：
+configurations { developmentOnly runtimeClasspath { extendsFrom developmentOnly } } dependencies { developmentOnly(&amp;#34;org.springframework.boot:spring-boot-devtools&amp;#34;) } 在依赖配置中，如 maven 中添加optional标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。 在生产环境下，devtool会自动禁用，通过java -jar启动应用被认为是生产环境。 自动重启 Link to heading 如果 classpath 上的文件发生了变化，应用会自动重启。
+自动重启的触发：
+在 Eclipse 中，被修改的文件保存时会触发重启 在 Intellij Idea 中，使用Build -&amp;gt; Build Project (CMD+F9)手动触发 在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效： 1.</description>
+    </item>
+    
+    <item>
+      <title>记录一次修复SonarCube issue的过程</title>
+      <link>https://nkcoder.github.io/posts/fix-sonar-issues-note/</link>
+      <pubDate>Wed, 19 Feb 2020 23:28:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/fix-sonar-issues-note/</guid>
+      <description>本地配置了Jacoco的覆盖率：行覆盖率为 0.8，但是排除了一些特殊的包和类。
+接入SonarCube后，显示的指标惨不忍睹：
+Bugs: 44 Vulnerability: 54 Bad Smell: 531 Debt: 7 days Coverage: 4.4% Duplicated Blocks: 19 于是开始着手修复。
+Bugs Link to heading 这个分类里只有两种问题，第一种问题是缺少构造函数。
+Add a constructor to the class. 被标记为缺少构造函数的 class 都是使用了 lombok 的@Builder注解，比如：
+@Getter @Builder public class Book implements Serializable { private static final long serialVersionUID = -812324454545L; private String id; private String remarks; // other fields } @Builder默认会创建一个全参的私有构造函数，所以其实不需要额外定义构造函数，估计 Sonar 无法处理这种情况，我们没有权限从 sonar 层面解决问题，只能去适应这个规则。为了解决这个问题，可以显式定义一个私有的全参构造函数，可以使用 lombok 注解，如：
+@Getter @Builder @AllArgsConstructor(access = AccessLevel.</description>
+    </item>
+    
+    <item>
+      <title>HTTPie用法介绍</title>
+      <link>https://nkcoder.github.io/posts/httpie-tutorial/</link>
+      <pubDate>Wed, 19 Feb 2020 23:26:04 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/httpie-tutorial/</guid>
+      <description>HTTPie是基于命令行的 HTTP 客户端，功能与CURL类似，但更简单、易用。
+但是如果对用法不熟悉，经常容易混淆，比如查询参数用==还是=，请求体的数据用=还是:=等，这里记录日常开发中的常见用法作为备忘。
+以下示例大多来自HTTPie 官方文档，如果有不清楚的地方，请移步参考。
+语法 Link to heading http [flags][method] URL [ITEM [ITEM]] 默认请求方法 Link to heading 如果[METHOD]被忽略，没有请求数据，则默认为GET，如果有请求数据，则默认为POST：
+$ http localhost:8080/books $ http localhost:8080/books id:=1 name=&amp;#39;Spring in action&amp;#39; localhost 可忽略 Link to heading 默认协议为 http，所以http://可以忽略，如果 URL 是localhost，也可以忽略，如：
+$ http :8080/books HTTP headers Link to heading 格式为：header-name:header-value
+$ http get :8080/books/1 Authorization:my-auth-token 请求数据默认会被序列化为 json，同时，HTTPie 默认设置以下 header：
+Content-Type: application/json Accept: application/json, */* URL 请求参数 Link to heading 当然可以将请求参数追加在 URL 后面，但是使用param==value的方式可以不用关心特殊字符的转义：</description>
+    </item>
+    
+    <item>
+      <title>Junit5 用法介绍</title>
+      <link>https://nkcoder.github.io/posts/junit5-tutorial/</link>
+      <pubDate>Wed, 19 Feb 2020 23:23:29 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/junit5-tutorial/</guid>
+      <description>Junit 5 简介 Link to heading Junit 5 由三个子项目构成：
+JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage JUnit Platform：在 JVM 上启动测试框架的基础 JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型 JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试 Junit 5 需要 Java 8 以上版本。
+如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) 如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) testImplementation(&#39;org.junit.vintage:junit-vintage-engine:5.4.1&#39;) testImplementation(&#39;junit:junit:4.12&#39;) 常用注解汇总 Link to heading 注解 说明 @Test 表明这是一个测试方法，类比于 JUnit 4 的@Test但是不支持任何参数 @ParameterizedTest 带参数的测试 @RepeatedTest 使测试重复执行 @TestFactory 该方法是一个支持动态测试的测试工厂 @TestTemplate 该方法是一个测试模板，支持在不同的测试场景下的多次调用 @TestMethodOrder 配置测试方法的执行顺序 @TestInstance 配置测试实例的生命周期 @DisplayName 自定义显示名称 @DisplayNameGeneration 自定义显示名称生成器 @BeforeEach 该方法会在当前类的每一个测试方法之前执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@Before 类似 @AfterEach 该方法会在当前类的每一个测试方法之后执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@After 类似 @BeforeAll 该方法在当前类的所有测试方法之前执行，类似于 JUnit 4 的@BeforeClass @AfterAll 该方法在当前类的所有测试方法之后执行，类似于 JUnit 4 的@AfterClass @Tag 用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group @Disabled 禁用当前测试，类比于 JUnit 4 的@Ignore @TempDir 通过字段注入或参数注入提供一个临时目录 自定义注解 Link to heading 比如我们要给一个类的所有测试方法加上一个@Tag(&amp;quot;fast&amp;quot;)，我们可以定义一个新的注解，然后用@FastTest替换@Test:</description>
+    </item>
+    
+    <item>
+      <title>Intellij Idea在VIM模式下，Shift&#43;方向键无法选中</title>
+      <link>https://nkcoder.github.io/posts/vim-shift-arrow-not-work/</link>
+      <pubDate>Wed, 19 Feb 2020 23:20:51 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/vim-shift-arrow-not-work/</guid>
+      <description>正常情况下，Intellij Idea 中使用Shift+方向键是可以选中内容的，但是如果启用VIM 插件，无论在哪种模式下，Shift+方向键无法选中内容，而是在单词之间移动。
+查看 Intellij Idea 的 Perference -&amp;gt; KeyMap，通过快捷键搜索，发现该快捷键组合只赋给了Selection，并没有冲突。
+这是 VIM 插件的一个 bug，ticket 在这里，正式版本还未修复，EAP 版本已经修复了。
+在正式版本下，也可以通过添加配置文件~/.ideavimrc启用 Shift+方向键的选中功能，内容如下：
+nnoremap &amp;lt;S-Left&amp;gt; :action EditorLeftWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Right&amp;gt; :action EditorRightWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Up&amp;gt; :action EditorUpWithSelection&amp;lt;CR&amp;gt; nnoremap &amp;lt;S-Down&amp;gt; :action EditorDownWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Left&amp;gt; &amp;lt;C-O&amp;gt;:action EditorLeftWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Right&amp;gt; &amp;lt;C-O&amp;gt;:action EditorRightWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Up&amp;gt; &amp;lt;C-O&amp;gt;:action EditorUpWithSelection&amp;lt;CR&amp;gt; inoremap &amp;lt;S-Down&amp;gt; &amp;lt;C-O&amp;gt;:action EditorDownWithSelection&amp;lt;CR&amp;gt; 参考:
+Using PhpStorm IdeaVim, I can&amp;rsquo;t use shift+arrow keys to select words Possible to enable shift+arrows selection mode? </description>
+    </item>
+    
+    <item>
+      <title>读书笔记系列一:《重构-改善既有代码的设计》</title>
+      <link>https://nkcoder.github.io/posts/reading/refactor-reading-notes/</link>
+      <pubDate>Wed, 19 Feb 2020 21:29:37 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/reading/refactor-reading-notes/</guid>
+      <description>首先推荐下重构-改善既有代码的设计这本书，中文版翻译还可以，最近读了两遍，将其中的重点提取为读书笔记，关于其中每一项的详细解释和示例请参阅原书。
+什么是重构（refactoring） Link to heading 名词：对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。
+动词：使用一系列重构手法，在不改变软件可观察行为的前提下，调整其结构。
+重构的目的是使软件更容易被理解和修改。你可以在软件内部做很多修改，但必须对软件可观察的外部行为只造成很小变化，或甚至不造成变化。
+为什么重构 Link to heading 重构改进软件设计
+如果没有重构，程序的设计会逐渐腐败变质。重构很像是在整理代码，其改进设计的一个重要方向就是消除重复代码。
+重构使软件更容易理解
+除了计算机，我们编写的代码，更多的是给将来的程序员，甚至是我们自己看的。在重构上花一点时间，可以让代码更好地表达自己的意图。重构还可以帮助我们理解不熟悉的代码。
+重构帮助找到 bug
+对代码进行重构，可以加深对代码和程序结构的理解，有助于找到 bug。
+重构提高编程速度
+重构可以帮助改进软件设计，而良好的设计是快速开发的根本。
+何时重构 Link to heading 重构本来就不是一件应该特别拨出时间做的事情，重构应该随时随地进行。你不应该为重构而重构，你之所以重构，是因为你想做别的什么事，而重构可以帮助你把那些事做好。
+事不过三
+第一次做某件事时只管去做；第二次做类似的事会产生反感，但无论如何还是可以去做；第三次再做类似的事，你就应该重构。
+添加新功能时重构
+一个动机是重构可以帮助理解需要修改的代码；另一个动机是代码当前的设计无法帮助我轻松添加所需要的功能。
+修复错误时重构
+收到 bug 报告，就是需要重构的信号，因为代码没有清晰到可以一眼看出 bug 所在。
+代码评审（code review）时重构
+代码评审对于编写清晰代码很重要，也会让更多人有机会提出更多的建议。
+对于今天的工作，我了解得很充分；对于明天的工作，我了解得不够充分。但如果我纯粹只是为今天工作，明天我将完全无法工作。
+代码的坏味道 Link to heading 重复代码（Duplicated Code）
+如果你在一个以上的地点看到相同的程序结构，那么可以肯定：设法将它们合而为一，程序会变得更好。
+过长函数（Long Method）
+我们遵循这样一条原则：每当感觉需要以注释来说明点什么的时候，我们就把需要说明的东西写进一个独立函数中，并以其用途（而非实现手法）命名。我们可以对一组甚至短短一行代码做这件事。哪怕替换后的函数调用动作比函数自身还长，只要函数名称能够解释其用途，我们也该毫不犹豫地那么做。关键不在于函数的长度，而在于函数“做什么”和“如何做”之间的语义距离。
+如何确定该提炼哪一段代码呢? 一个很好的技巧是：寻找注释。它们通常能指出代码用途和实现手法之间的语义距离。如果代码前方有一行注释，就是在提醒你：可以将这段代码替换成一个函数，而且可以在注释的基础上给这个函数命名。就算只有一行代码，如果它需要以注释来说明，那也值得将它提炼到独立函数去。
+过大的类（Long Class）
+如果想利用单个类做太多事情，其内往往就会出现太多实例变量。一旦如此，重复代码也就接踵而至了。
+过长参数列（Long Parameter List）
+太多参数会造成前后不一致、不易使用，而且一旦你需要更多数据，就不得不修改它。如果将对象传递给函数，大多数修改都将没有必要，因为你很可能只需（在函数内）增加一两条请求，就能得到更多数据。
+发散式变化（divergent change）
+某个类经常因为不同的原因在不同的方向上发生变化。
+霰弹式修改（shortgun surgery）
+如果每遇到某种变化，你都必须在许多不同的类内做出许多小修改。
+依恋情结（feature envy）
+函数对某个类的兴趣高过对自己所处类的兴趣，这种孺慕之情最通常的焦点便是数据。无数次经验里，我们看到某个函数为了计算某个值，从另一个对象那儿调用几乎半打的取值函数。
+数据泥团（Data Clumps）</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列九：Job Stores</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/</link>
+      <pubDate>Wed, 19 Feb 2020 21:12:59 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/</guid>
+      <description>JobStore 主要是追踪 scheduler 中的&amp;quot;工作数据&amp;quot;: jobs, triggers, calendars 等。为 scheduler 选择合适的 JobStore 是很重要的一步。如果你理解了它们之间的区别，选择就很简单了。在 SchedulerFactory 使用的配置文件（或对象）中声明 scheduler 的 JobStore（通过配置）。
+不要在代码中直接声明 JobStore 实例。由于某些原因，很多人尝试这样做。JobStore 是 Quartz 幕后使用的。你只需要通过配置告诉 Quartz 使用哪个 JobStore，然后在代码中使用 Scheduler 接口即可。
+RAMJobStore Link to heading RAMJobStore 是最容易使用的 JobStore，也是性能最好的（从 CPU 角度来看）。从名字就可以看出来：它将所有数据存在 RAM 中。这也是它如此快、如此易配置的原因。缺点是：当应用停止（或崩溃）时，所有的调度信息都将丢失 - 这也意味着 RAMJobStore 并不支持 jobs 和 triggers 的“持久性”。对有些应用来说这是可接受的 - 甚至是期望的，但是对于其它的应用，这可能是灾难性的。
+配置 Quartz 使用 RAMJobStore
+org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore 没有其它的配置了。
+JDBCJobStore Link to heading JDBCJobStore - 将所有的数据通过 JDBC 保存在数据库中。正因如此，它比 RAMJobStore 的配置要复杂一些，也没那么快。但是，它的性能缺陷并没有那么不堪，尤其是当你在数据库的主键上都创建了索引。在目前主流的机器上，在局域网（scheduler 和 databasae 之间）环境下，接收和更新一个 trigger 的时间一般小于 10 毫秒。</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列八：SchedulerListener</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-8-scheduler-listener/</link>
+      <pubDate>Wed, 19 Feb 2020 21:11:38 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-8-scheduler-listener/</guid>
+      <description>SchedulerListener与TriggerListener、JobListener类似，但它仅接收来自Scheduler自身的消息，而不一定是某个具体的trigger或job的消息。
+scheduler相关的消息包括：job/trigger的增加、job/trigger的删除、scheduler内部发生的严重错误以及scheduler关闭的消息等；
+org.quartz.SchedulerListener接口：
+public interface SchedulerListener { public void jobScheduled(Trigger trigger); public void jobUnscheduled(String triggerName, String triggerGroup); public void triggerFinalized(Trigger trigger); public void triggersPaused(String triggerName, String triggerGroup); public void triggersResumed(String triggerName, String triggerGroup); public void jobsPaused(String jobName, String jobGroup); public void jobsResumed(String jobName, String jobGroup); public void schedulerError(String msg, SchedulerException cause); public void schedulerStarted(); public void schedulerInStandbyMode(); public void schedulerShutdown(); public void schedulingDataCleared(); } SchedulerListener也是注册到scheduler的ListenerManager上的，任何实现了org.quartz.SchedulerListener接口的对象都可以是SchedulerListener。
+添加一个SchedulerListener：
+scheduler.getListenerManager().addSchedulerListener(mySchedListener); 删除一个SchedulerListener：
+scheduler.getListenerManager().removeSchedulerListener(mySchedListener); 参考链接：Lesson 8: SchedulerListeners 有兴趣的朋友可以参考我在github上的项目：quartz源码注释 </description>
+    </item>
+    
+    <item>
+      <title>Quartz系列七：TriggerListeners与JobListeners</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/</link>
+      <pubDate>Wed, 19 Feb 2020 21:11:02 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-7-job-listener/</guid>
+      <description>listener是一个对象，用于监听scheduler中发生的事件，然后执行相应的操作；你可能已经猜到了，TriggerListeners接受与trigger相关的事件，JobListeners接受与jobs相关的事件。
+trigger相关的事件包括：trigger的触发、trigger错过触发(mis-fire)以及trigger的完成(即trigger触发的job执行完成)。
+org.quartz.TriggerListener接口:
+public interface TriggerListener { public String getName(); public void triggerFired(Trigger trigger, JobExecutionContext context); public boolean vetoJobExecution(Trigger trigger, JobExecutionContext context); public void triggerMisfired(Trigger trigger); public void triggerComplete(Trigger trigger, JobExecutionContext context, int triggerInstructionCode); } job相关的事件包括：job即将执行的通知以及job执行完毕的通知。
+org.quartz.JobListener接口：
+public interface JobListener { public String getName(); public void jobToBeExecuted(JobExecutionContext context); public void jobExecutionVetoed(JobExecutionContext context); public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException); } 使用自定义的listener Link to heading 创建一个listener，只需要实现org.quartz.TriggerListener接口或者org.quartz.JobListener 接口即可；然后在运行时将listener注册到scheduler上，并且需要给listener取个名称(因为listener需要通过其getName()方法广播它的名称)。
+我们可以实现上面提到的接口，但更方便的方式是继承JobListenerSupport类或者TriggerListenerSupport类，只需重写需要的方法即可。
+listener是注册到scheduler的ListenerManager上的，与listener一同注册的还有一个Matcher对象，该对象用于描述listener期望接收事件的job或trigger。
+listener是在运行的时候注册到scheduler上的，而且不会与job和trigger一样保存在JobStore中。因为listener一般是应用的一个集成点(integration point)，因此，应用每次运行的时候，listener都应该重新注册到scheduler上。 给一个job添加JobListener：</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列六：CronTrigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-6-cron-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:10:24 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-6-cron-trigger/</guid>
+      <description>如果你需要的是基于日历表示法的调度，而不是基于指定间隔的简单调度，那么CronTrigger比SimpleTrigger更合适。
+使用CronTrigger，你可以配置这样的调度：“每周五的中午”，或者“每个工作日的上午9:30”，或者“在一月的每个周一、周三和周五的上午9点到10点之间每隔5分钟”。
+与SimpleTrigger一样，CronTrigger需要设置startTime属性，表示调度生效的时间，以及(可选的)endTime属性，表示调度的结束时间。
+Cron表达式 Link to heading Cron表达式用于配置CronTrigger的实例，它由7个字段组成，字段之间由空格分开，它们表示的含义如下：
+1. 秒 (Seconds) 2. 分钟 (Minutes) 3. 小时 (Hours) 4. 日(一个月的一天) (Day-of-Month) 5. 月份 (Month) 6. 周(一周的一天) (Day-of-Week) 7. 年份(可选的) (Year) 一个完整的Cron表达式的例子如字符串：”0 0 12 ? * WED” - 表示“每周三的中午12:00:00”；
+每一个字段可以包含范围或者列举。比如，上例中的周字段(即”WED“)可以被替换为：”MON-FRI”, “MON,WED,FRI”, 或者”MON-WED,SAT”。
+通配符()表示该字段上每一个可取的值。因此，上例中月字段上的表示“每个月”。周字段上的*表示“一周的每一天”。
+所有的字段都有一些可取的值的集合。有些就很明显 - 比如，秒和分钟字段可以取0到59的整数，小时字段可以取0到23的整数，日字段(Day-of-Month)可以取1到31的整数，不过你需要注意指定的月份到底有多少天。月字段可以取0到11之间的整数，或者使用字符串表示：JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV 和 DEC。周字段(Days-of-Week)可以取的值为1到7(1表示Sunday)，或者使用字符串表示：SUN, MON, TUE, WED, THU, FRI and SAT。
+字符‘/’表示增量。比如，分钟字段使用”0/15“，表示”在这个小时内，从0分钟开始，每隔15分钟“；如果分钟字段使用”3/20“，则表示”在这个小时内，从第3分钟开始，每隔20分钟“，这与在分钟字段使用“3,23,43”表示的含义是一样的。注意一个细节，“/35”的含义并不是“每隔35分钟”，而是“在这个小时内，从第0分钟开始，每隔35分钟”。
+字符’?’可以用于日字段和周字段，表示“没有具体的值“。它主要用于在这两个字段的某一个中指定某个值，更好的理解请参考下面的示例（以及CrontTrigger的JavaDoc）。
+字符’L’可以用于日字段和周字段，它是last的缩写，但是用于这两个字段时，含义并不相同。比如，“L”用于日子段，表示“这个月的最后一天” - 即一月的第31天，非闰年二月的第28天。如果‘L’单独用于周字段，它的含义就是“7”或者“SAT”。但是，如果‘L’用于周字段时，前面还有一个值，则表示“这个月的最后一个周××” - 比如，“6L”或“FRIL”表示“这个月的最后一个周五”。我们也可以指定与这个月最后一天的偏移量，比如“L-3”表示与这个月的最后一天相差3天。需要注意的是，如果使用选项‘L’，则不要使用列举和范围，否则结果将是不可预料的。</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列五：SimpleTrigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:09:37 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-5-simple-trigger/</guid>
+      <description>SimpleTrigger可以满足的调度需求是：在具体的时间点执行一次，或者在具体的时间点执行，并且以指定的间隔重复执行若干次。比如，你有一个trigger，你可以设置它在2015年1月13日的上午11:23:54准时触发，或者在这个时间点触发，并且每隔2秒触发一次，一共重复5次。
+根据描述，你可能已经发现了，SimpleTrigger的属性包括：开始时间、结束时间、重复次数以及重复的间隔。这些属性的含义与你所期望的是一致的，只是关于结束时间有一些地方需要注意。
+重复次数，可以是0、正整数，以及常量SimpleTrigger.REPEAT_INDEFINITELY。重复的间隔，必须是0，或者long型的正数，表示毫秒。注意，如果重复间隔为0，trigger将会以重复次数并发执行(或者以scheduler可以处理的近似并发数)。
+如果你还不熟悉DateBuilder，了解后你会发现使用它可以非常方便地构造基于开始时间(或终止时间)的调度策略。
+endTime属性的值会覆盖设置重复次数的属性值；比如，你可以创建一个trigger，在终止时间之前每隔10秒执行一次，你不需要去计算在开始时间和终止时间之间的重复次数，只需要设置终止时间并将重复次数设置为REPEAT_INDEFINITELY(当然，你也可以将重复次数设置为一个很大的值，并保证该值比trigger在终止时间之前实际触发的次数要大即可)。
+SimpleTrigger实例通过TriggerBuilder设置主要的属性，通过SimpleScheduleBuilder设置与SimpleTrigger相关的属性。要使用这些builder的静态方法，需要静态导入：
+import static org.quartz.TriggerBuilder.*; import static org.quartz.SimpleScheduleBuilder.*; import static org.quartz.DateBuilder.*: 下面的例子，是基于简单调度(simple schedule)创建的trigger。建议都看一下，因为每个例子都包含一个不同的实现点：
+指定时间开始触发，不重复：
+SimpleTrigger trigger = (SimpleTrigger) newTrigger() .withIdentity(&amp;#34;trigger1&amp;#34;, &amp;#34;group1&amp;#34;) .startAt(myStartTime) // some Date .forJob(&amp;#34;job1&amp;#34;, &amp;#34;group1&amp;#34;) // identify job with name, group strings .build(); 指定时间触发，每隔10秒执行一次，重复10次：
+trigger = newTrigger() .withIdentity(&amp;#34;trigger3&amp;#34;, &amp;#34;group1&amp;#34;) .startAt(myTimeToStartFiring) // if a start time is not given (if this line were omitted), &amp;#34;now&amp;#34; is implied .withSchedule(simpleSchedule() .withIntervalInSeconds(10) .withRepeatCount(10)) // note that 10 repeats will give a total of 11 firings .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列四：Trigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-4-more-on-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:08:49 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-4-more-on-trigger/</guid>
+      <description>与job一样，trigger也很容易使用，但是还有一些扩展选项需要理解，以便更好地使用quartz。trigger也有很多类型，可以根据实际需要来选择。
+最常用的两种trigger会分别在教程五：SimpleTrigger和教程六：CronTrigger中讲到；
+Trigger的公共属性 Link to heading 所有类型的trigger都有TriggerKey这个属性，表示trigger的身份；除此之外，trigger还有很多其它的公共属性。这些属性，在构建trigger的时候可以通过TriggerBuilder设置。
+trigger的公共属性有：
+jobKey属性：当trigger触发时被执行的job的身份； startTime属性：设置trigger第一次触发的时间；该属性的值是java.util.Date类型，表示某个指定的时间点；有些类型的trigger，会在设置的startTime时立即触发，有些类型的trigger，表示其触发是在startTime之后开始生效。比如，现在是1月份，你设置了一个trigger–“在每个月的第5天执行”，然后你将startTime属性设置为4月1号，则该trigger第一次触发会是在几个月以后了(即4月5号)。 endTime属性：表示trigger失效的时间点。比如，”每月第5天执行”的trigger，如果其endTime是7月1号，则其最后一次执行时间是6月5号。 其它的属性，会在下面的小节中解释。 优先级(priority) Link to heading 如果你的trigger很多(或者Quartz线程池的工作线程太少)，Quartz可能没有足够的资源同时触发所有的trigger；这种情况下，你可能希望控制哪些trigger优先使用Quartz的工作线程，要达到该目的，可以在trigger上设置priority属性。比如，你有N个trigger需要同时触发，但只有Z个工作线程，优先级最高的Z个trigger会被首先触发。如果没有为trigger设置优先级，trigger使用默认优先级，值为5；priority属性的值可以是任意整数，正数、负数都可以。
+注意：只有同时触发的trigger之间才会比较优先级。10:59触发的trigger总是在11:00触发的trigger之前执行。
+注意：如果trigger是可恢复的，在恢复后再调度时，优先级与原trigger是一样的。
+错过触发(misfire) Link to heading trigger还有一个重要的属性misfire；如果scheduler关闭了，或者Quartz线程池中没有可用的线程来执行job，此时持久性的trigger就会错过(miss)其触发时间，即错过触发(misfire)。不同类型的trigger，有不同的misfire机制。它们默认都使用“智能机制(smart policy)”，即根据trigger的类型和配置动态调整行为。当scheduler启动的时候，查询所有错过触发(misfire)的持久性trigger。然后根据它们各自的misfire机制更新trigger的信息。当你在项目中使用Quartz时，你应该对各种类型的trigger的misfire机制都比较熟悉，这些misfire机制在JavaDoc中有说明。关于misfire机制的细节，会在讲到具体的trigger时作介绍。
+日历(calendar) Link to heading Quartz的Calendar对象(不是java.util.Calendar对象)可以在定义和存储trigger的时候与trigger进行关联。Calendar用于从trigger的调度计划中排除时间段。比如，可以创建一个trigger，每个工作日的上午9:30执行，然后增加一个Calendar，排除掉所有的商业节日。
+任何实现了Calendar接口的可序列化对象都可以作为Calendar对象，Calendar接口如下：
+package org.quartz; public interface Calendar { public boolean isTimeIncluded(long timeStamp); public long getNextIncludedTime(long timeStamp); } 注意到这些方法的参数类型为long。你也许猜到了，他们就是毫秒单位的时间戳。即Calendar排除时间段的单位可以精确到毫秒。你也许对“排除一整天”的Calendar比较感兴趣。Quartz提供的org.quartz.impl.HolidayCalendar类可以很方便地实现。
+Calendar必须先实例化，然后通过addCalendar()方法注册到scheduler。如果使用HolidayCalendar，实例化后，需要调用addExcludedDate(Date date)方法从调度计划中排除时间段。以下示例是将同一个Calendar实例用于多个trigger：
+HolidayCalendar cal = new HolidayCalendar(); cal.addExcludedDate( someDate ); cal.addExcludedDate( someOtherDate ); sched.addCalendar(&amp;#34;myHolidays&amp;#34;, cal, false); Trigger t = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;) .forJob(&amp;#34;myJob&amp;#34;) .withSchedule(dailyAtHourAndMinute(9, 30)) // execute job daily at 9:30 .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列三：使用Job和JobDetail</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-3-job-detail/</link>
+      <pubDate>Wed, 19 Feb 2020 21:08:06 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-3-job-detail/</guid>
+      <description>正如在教程二中讲到的，Job实现起来很容易，该接口只有一个“execute”方法。本节主要关注：Job的特点、Job接口的execute方法以及JobDetail。
+你定义了一个实现Job接口的类，这个类仅仅表明该job需要完成什么类型的任务，除此之外，Quartz还需要知道该Job实例所包含的属性；这将由JobDetail类来完成。
+JobDetail实例是通过JobBuilder类创建的，导入该类下的所有静态方法，会让你编码时有DSL的感觉：
+import static org.quartz.JobBuilder.*; 让我们先看看Job的特征（nature）以及Job实例的生命期。不妨先回头看看教程一中的代码片段：
+// define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) // name &amp;#34;myJob&amp;#34;, group &amp;#34;group1&amp;#34; .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .startNow() .withSchedule(simpleSchedule() .withIntervalInSeconds(40) .repeatForever()) .build(); // Tell quartz to schedule the job using our trigger sched.scheduleJob(job, trigger); “HelloJob”类可以如下定义：
+public class HelloJob implements Job { public HelloJob() { } public void execute(JobExecutionContext context) throws JobExecutionException { System.</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列二：API, Job和Trigger</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/</link>
+      <pubDate>Wed, 19 Feb 2020 21:07:06 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-2-job-and-trigger/</guid>
+      <description>Quartz API Link to heading Quartz API核心接口有：
+Scheduler – 与scheduler交互的主要API； Job – 你通过scheduler执行任务，你的任务类需要实现的接口； JobDetail – 定义Job的实例； Trigger – 触发Job的执行； JobBuilder – 定义和创建JobDetail实例的接口; TriggerBuilder – 定义和创建Trigger实例的接口； Scheduler的生命期，从SchedulerFactory创建它时开始，到Scheduler调用shutdown()方法时结束；Scheduler被创建后，可以增加、删除和列举Job和Trigger，以及执行其它与调度相关的操作（如暂停Trigger）。但是，Scheduler只有在调用start()方法后，才会真正地触发trigger（即执行job），见教程一。
+Quartz提供的“builder”类，可以认为是一种领域特定语言（DSL，Domain Specific Language)。教程一中有相关示例，这里是其中的代码片段：（校对注：这种级联的API非常方便用户使用，大家以后写对外接口时也可以使用这种方式）
+// define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) // name &amp;#34;myJob&amp;#34;, group &amp;#34;group1&amp;#34; .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .</description>
+    </item>
+    
+    <item>
+      <title>Quartz系列一：使用Quartz</title>
+      <link>https://nkcoder.github.io/posts/quartz/quartz-tutorial-1-using-quartz/</link>
+      <pubDate>Wed, 19 Feb 2020 21:04:43 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/quartz/quartz-tutorial-1-using-quartz/</guid>
+      <description>Scheduler在使用之前需要实例化。一般通过SchedulerFactory来创建一个实例。有些用户将factory的实例保存在JNDI中，但直接初始化，然后使用该实例也许更简单（见下面的示例）。
+scheduler实例化后，可以启动(start)、暂停(stand-by)、停止(shutdown)。注意：scheduler被停止后，除非重新实例化，否则不能重新启动；只有当scheduler启动后，即使处于暂停状态也不行，trigger才会被触发（job才会被执行）。
+下面的代码片段，实例化并启动一个scheduler，调度执行一个job：
+SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory(); Scheduler sched = schedFact.getScheduler(); sched.start(); // define the job and tie it to our HelloJob class JobDetail job = newJob(HelloJob.class) .withIdentity(&amp;#34;myJob&amp;#34;, &amp;#34;group1&amp;#34;) .build(); // Trigger the job to run now, and then every 40 seconds Trigger trigger = newTrigger() .withIdentity(&amp;#34;myTrigger&amp;#34;, &amp;#34;group1&amp;#34;) .startNow() .withSchedule(simpleSchedule() .withIntervalInSeconds(40) .repeatForever()) .build(); // Tell quartz to schedule the job using our trigger sched.scheduleJob(job, trigger); 你看到了，quartz的使用并不难。教程二会简要地介绍job和trigger，以及quartz的API，然后你会更好地理解该示例。
+原文链接：Lesson 1: Using Quartz 有兴趣的朋友可以参考我在github上的项目：quartz源码注释 </description>
+    </item>
+    
+    <item>
+      <title>非root用户运行docker命令</title>
+      <link>https://nkcoder.github.io/posts/run-docker-as-non-root-user/</link>
+      <pubDate>Sat, 15 Feb 2020 22:38:37 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/run-docker-as-non-root-user/</guid>
+      <description>在Linux上安装Docker后，如果当前登陆用户不是root（一般建议使用普通用户），运行docker命令会报错：
+[ec2-user@ip ~]$ docker ps Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/json: dial unix /var/run/docker.sock: connect: permission denied 如果希望以非root用户运行docker命令，需要将用户添加到docker用户组中。
+在安装docker的时候，一般已经默认创建了docker用户组。可以先判断下docker用户组是否存在：
+$ [ec2-user@ip ~]$ cat /etc/group | grep docker docker:x:993:ec2-user 如果docker用户组不存在，先创建：
+$ sudo groupadd docker 然后将当前用户添加到docker用户组：
+[ec2-user@ip ~]$ sudo usermod -aG docker ${USER} 然后注销重登陆使用户组生效，或者使用以下命令直接登陆到docker组中：
+[ec2-user@ip ~]$ newgrp docker 最后检查下，普通用户是否可以使用docker命令：
+[ec2-user@ip ~]$ docker ps CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 参考：</description>
+    </item>
+    
+    <item>
+      <title>MySQL常用的DDL操作</title>
+      <link>https://nkcoder.github.io/posts/mysql-migration-examples/</link>
+      <pubDate>Sat, 15 Feb 2020 13:36:04 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/mysql-migration-examples/</guid>
+      <description>在web应用中，由于需求的变更或者当初设计的不合理，数据库设计难免需要同步变更。比如，在SpringBoot中，一般用Flyway或者Liquibase做数据库的迁移和版本控制，在Play中使用Evolution做数据库迁移。
+这里将常用的MySQL的DDL操作总结录下，主要用于备查。
+1. create table Link to heading USE `freeimmi`; CREATE TABLE IF NOT EXISTS `user` ( `id` BIGINT NOT NULL AUTO_INCREMENT, `name` VARCHAR(32) NOT NULL, `email` VARCHAR(32) NOT NULL, `password` VARCHAR(128) NOT NULL, `status` VARCHAR(16) NOT NULL, `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `idx_email` (`email`), KEY `idx_status` (`status`) ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci; 2. add column Link to heading USE `freeimmi`; ALTER TABLE `topic` ADD COLUMN `logo_url` VARCHAR(64) NULL AFTER `name`, ADD COLUMN `description` VARCHAR(64) DEFAULT &amp;#39;&amp;#39; AFTER `logo_url`; 3.</description>
+    </item>
+    
+  </channel>
+</rss>

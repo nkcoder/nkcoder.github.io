@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker安装：在Mac上安装 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="安装Docker Desktop Link to heading Docker提供了Mac版的安装包，在Docker 网站下载docker.dmg安装即可。
+Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。
+Mac版Docker主要用于开发和测试。
+安装之后，可以执行相关命令检查下：
+➜ ~ docker --version Docker version 19.03.8, build afacb8b ➜ ~ docker-compose --version docker-compose version 1.25.4, build 8d51620a 故障排除 Link to heading 如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的故障排除功能，点击Docker小鲸鱼后，选择Troubleshoot：
+可以进行诊断、重置磁盘等操作。
+Dashboard Link to heading Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：
+Kubernetes Link to heading Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。
+Enable Kubernetes：表示启用自带的Kubernetes Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器 首先使Kubernetes客户端kubectl连接本地的Kubernetes服务器：
+➜ ~ kubectl config get-contexts CURRENT NAME CLUSTER AUTHINFO NAMESPACE * docker-desktop docker-desktop docker-desktop docker-for-desktop docker-desktop docker-desktop ➜ ~ kubectl config use-context docker-desktop Switched to context &#34;docker-desktop&#34;.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker安装：在Mac上安装"/>
+<meta name="twitter:description" content="安装Docker Desktop Link to heading Docker提供了Mac版的安装包，在Docker 网站下载docker.dmg安装即可。
+Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。
+Mac版Docker主要用于开发和测试。
+安装之后，可以执行相关命令检查下：
+➜ ~ docker --version Docker version 19.03.8, build afacb8b ➜ ~ docker-compose --version docker-compose version 1.25.4, build 8d51620a 故障排除 Link to heading 如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的故障排除功能，点击Docker小鲸鱼后，选择Troubleshoot：
+可以进行诊断、重置磁盘等操作。
+Dashboard Link to heading Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：
+Kubernetes Link to heading Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。
+Enable Kubernetes：表示启用自带的Kubernetes Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器 首先使Kubernetes客户端kubectl连接本地的Kubernetes服务器：
+➜ ~ kubectl config get-contexts CURRENT NAME CLUSTER AUTHINFO NAMESPACE * docker-desktop docker-desktop docker-desktop docker-for-desktop docker-desktop docker-desktop ➜ ~ kubectl config use-context docker-desktop Switched to context &#34;docker-desktop&#34;."/>
+
+<meta property="og:title" content="Docker安装：在Mac上安装" />
+<meta property="og:description" content="安装Docker Desktop Link to heading Docker提供了Mac版的安装包，在Docker 网站下载docker.dmg安装即可。
+Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。
+Mac版Docker主要用于开发和测试。
+安装之后，可以执行相关命令检查下：
+➜ ~ docker --version Docker version 19.03.8, build afacb8b ➜ ~ docker-compose --version docker-compose version 1.25.4, build 8d51620a 故障排除 Link to heading 如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的故障排除功能，点击Docker小鲸鱼后，选择Troubleshoot：
+可以进行诊断、重置磁盘等操作。
+Dashboard Link to heading Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：
+Kubernetes Link to heading Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。
+Enable Kubernetes：表示启用自带的Kubernetes Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器 首先使Kubernetes客户端kubectl连接本地的Kubernetes服务器：
+➜ ~ kubectl config get-contexts CURRENT NAME CLUSTER AUTHINFO NAMESPACE * docker-desktop docker-desktop docker-desktop docker-for-desktop docker-desktop docker-desktop ➜ ~ kubectl config use-context docker-desktop Switched to context &#34;docker-desktop&#34;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/install-docker-on-mac/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-07T14:11:43+08:00" />
+<meta property="article:modified_time" content="2020-06-07T14:11:43+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/install-docker-on-mac/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/install-docker-on-mac/">
+              Docker安装：在Mac上安装
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-06-07T14:11:43&#43;08:00">
+                June 7, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="安装docker-desktop">
+  安装Docker Desktop
+  <a class="heading-link" href="#%e5%ae%89%e8%a3%85docker-desktop">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Docker提供了Mac版的安装包，在<a href="https://www.docker.com/products/docker-desktop"  class="external-link" target="_blank" rel="noopener">Docker 网站</a>下载<code>docker.dmg</code>安装即可。</p>
+<p>Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。</p>
+<p>Mac版Docker主要用于开发和测试。</p>
+<p>安装之后，可以执行相关命令检查下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker --version
+</span></span><span style="display:flex;"><span>Docker version 19.03.8, build afacb8b
+</span></span><span style="display:flex;"><span>➜  ~ docker-compose --version
+</span></span><span style="display:flex;"><span>docker-compose version 1.25.4, build 8d51620a
+</span></span></code></pre></div><h2 id="故障排除">
+  故障排除
+  <a class="heading-link" href="#%e6%95%85%e9%9a%9c%e6%8e%92%e9%99%a4">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的<code>故障排除</code>功能，点击Docker小鲸鱼后，选择<code>Troubleshoot</code>：</p>
+<p><img src="https://nkcoder.github.io/images/docker/docker-troubleshoot.png" alt="docker-troubleshoot"></p>
+<p>可以进行诊断、重置磁盘等操作。</p>
+<h2 id="dashboard">
+  Dashboard
+  <a class="heading-link" href="#dashboard">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：</p>
+<p><img src="https://nkcoder.github.io/images/docker/docker-dashboard.png" alt="docker-dashboard"></p>
+<p><img src="https://nkcoder.github.io/images/docker/docker-dashboard-log.png" alt="docker-dashboard-log"></p>
+<h2 id="kubernetes">
+  Kubernetes
+  <a class="heading-link" href="#kubernetes">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。</p>
+<p><img src="https://nkcoder.github.io/images/docker/docker-kubernetes.png" alt="docker-kubernetes"></p>
+<ul>
+<li>Enable Kubernetes：表示启用自带的Kubernetes</li>
+<li>Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器</li>
+</ul>
+<p>首先使Kubernetes客户端<code>kubectl</code>连接本地的Kubernetes服务器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ kubectl config get-contexts
+</span></span><span style="display:flex;"><span>CURRENT   NAME                 CLUSTER          AUTHINFO         NAMESPACE
+</span></span><span style="display:flex;"><span>*         docker-desktop       docker-desktop   docker-desktop
+</span></span><span style="display:flex;"><span>          docker-for-desktop   docker-desktop   docker-desktop
+</span></span><span style="display:flex;"><span>➜  ~ kubectl config use-context docker-desktop
+</span></span><span style="display:flex;"><span>Switched to context <span style="color:#f1fa8c">&#34;docker-desktop&#34;</span>.
+</span></span></code></pre></div><h3 id="references">
+  references
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/docker-for-mac/"  class="external-link" target="_blank" rel="noopener">docker-for-mac</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

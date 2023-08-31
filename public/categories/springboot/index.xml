@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SpringBoot on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/springboot/</link>
+    <description>Recent content in SpringBoot on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 Mar 2020 11:33:44 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/springboot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SpringBoot系列七：Spring Boot Admin</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/</link>
+      <pubDate>Sun, 29 Mar 2020 11:33:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-tutorial7-admin/</guid>
+      <description>Spring Boot Admin 将Spring Boot Actuator暴露的接口以友好的GUI展示。包括 client 和 server，每一个 Spring Boot 项目都可以是 client，建议部署一个单独的 Spring Boot 项目作为 server。
+server 将所有 client 的数据收集起来，并提供基于 Actuator 接口的操作。
+client 要注册到 server，有两种方式，第一种是每一个 client 配置 sever 的地址，主动注册，另一种是 server 通过 Eureka 服务注册去发现 client。
+server 端配置 Link to heading 首先需要添加spring-boot-admin-starter-server依赖，另外spring-boot-admin-server-ui提供友好的登入、登出界面：
+implementation &amp;#39;org.springframework.boot:spring-boot-starter-web&amp;#39; implementation &amp;#39;org.springframework.boot:spring-boot-starter-security&amp;#39; implementation &amp;#39;de.codecentric:spring-boot-admin-starter-server:2.2.2&amp;#39; implementation &amp;#39;de.codecentric:spring-boot-admin-server-ui:2.2.2&amp;#39; 然后在启动类（即使用@SpringBootApplication注解的类）上添加注解@EnableAdminServer即可。
+@SpringBootApplication @EnableAdminServer public class SpringAdminApplication { public static void main(String[] args) { SpringApplication.run(SpringAdminApplication.class, args); } } 如果需要增加安全控制，使用spring-boot-starter-security根据需要配置即可，示例如：
+@Override protected void configure(HttpSecurity http) throws Exception { String contextPath = adminServerProperties.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列六：Spring Boot Actuator</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/</link>
+      <pubDate>Sat, 28 Mar 2020 14:14:01 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/</guid>
+      <description>SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。
+默认的 Endpoint Link to heading 默认的 path 前缀为actuator，可以通过属性配置：
+management.endpoints.web.base-path: /admin 通过/actuator可以查看所有的 endpoints:
+$ http :8080/actuator 主要的endpoint有：
+/beans : Spring Context中的所有bean /env ： 所有属性信息 /health ：系统的健康信息 /httptrace ：http请求的trace信息 /info ：系统info /loggers ：日志信息 /metrics ：系统的度量，包括内存、cpu、http请求等 /mappings ：所有@RequestMapping映射信息 /threaddump ：线程dump信息 /heapdump ：生成一个hprof文件 大部分的 endpoint的http访问是禁用的，可以通过属性management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude进行配置，支持通配符‘*’表示所有：
+management: endpoints: web: base-path: /actuator exposure: include: &amp;#39;*&amp;#39; exclude: heapdump,threaddump /info Link to heading 为/info提供数据有多种方式，第一种是静态的，在配置文件中定义以info为前缀的属性，如：
+info: contact: email: myeamil@example.com phone: +86-17100000000 另一种是动态的，即实现InfoContributor接口，实现contribute()方法即可，代码参考MyInfoContributor.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列五：用scala开发</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/</link>
+      <pubDate>Sun, 15 Mar 2020 14:33:17 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-sample5-scala/</guid>
+      <description>Scala是一门面向对象和函数式语言，主要基于JVM平台，因此可以与Java互操作。与Java相比，Scala表达力更强，代码更简洁。
+SpringBoot是Java生态最流行的Web框架，其实我们完全可以使用Scala在SpringBoot框架中开发。
+本示例用到的主要技术栈为：SpringBoot、Scala、JPA、MySQL。
+添加Scala依赖 Link to heading implementation &amp;#39;org.scala-lang:scala-library:2.13.1&amp;#39; implementation &amp;#39;com.typesafe.scala-logging:scala-logging_2.13:3.9.2&amp;#39; implementation &amp;#39;com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.2&amp;#39; testImplementation &amp;#39;org.scalatest:scalatest_2.13:3.1.0&amp;#39; 定义实体类 Link to heading 首先定义JPA需要的实体类：
+import java.lang.Long import java.time.LocalDateTime import javax.persistence._ import org.nkcoder.scala.api.Article import scala.annotation.meta.field import scala.beans.BeanProperty @Entity @Table(name = &amp;#34;article&amp;#34;) class ArticleEntity(@BeanProperty var subject: String, @BeanProperty var content: String, @BeanProperty var updatedAt: LocalDateTime, @BeanProperty var createdBy: Long) { @(Id @field) @BeanProperty @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = _ // for jpa private def this() = this(null, null, null, null) } 其中，</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列三：Spring Boot MyBatis</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-3-mybatis/</link>
+      <pubDate>Sat, 22 Feb 2020 14:34:41 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-3-mybatis/</guid>
+      <description>在SpringBoot集成MyBatis，需要的依赖为：
+implementation(&amp;#34;org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1&amp;#34;) 该依赖会：
+自动检测已有的DataSource 使用DataSource创建并注册一个SqlSessionFactory实例 从SqlSessionFactory中获取并注册一个SqlSessionTemplate的实例 自动扫描mapper，与SqlSessionTemplate连接并注入到Spring context中 基于注解 Link to heading 只需定义一个普通接口，并使用@Mapper注解，然后通过@Insert, @Delete, @Update, @Select等MyBatis提供的注解完成增删改查等操作：
+@Mapper public interface PlayerMapper { @Insert(&amp;#34;insert into player(name, team, join_at) values (#{name}, #{team}, #{joinAt})&amp;#34;) @Options(useGeneratedKeys = true, keyProperty = &amp;#34;id&amp;#34;) int insert(Player player); @Delete(&amp;#34;delete from player where id = #{id}&amp;#34;) int delete(@Param(&amp;#34;id&amp;#34;) Integer id); @Update(&amp;#34;update player set name = #{name}, team = #{team}, join_at = #{joinAt} where id = #{id}&amp;#34;) int update(Player player); @Select(&amp;#34;select id, name, team, join_at from player where id = #{id}&amp;#34;) Player findById(@Param(&amp;#34;id&amp;#34;) Integer id); } 注意：insert的时候希望能返回自动生成的主键ID，需要使用@Options(useGeneratedKeys = true, keyProperty = &amp;quot;id&amp;quot;)，其中，keyProperty表示数据库对应实体的ID属性。</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列二：Spring Boot Data JPA</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-2-data-jpa/</link>
+      <pubDate>Fri, 21 Feb 2020 09:52:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-2-data-jpa/</guid>
+      <description>Spring Boot Data JPA的依赖为：
+dependencies { implementation(&amp;#34;org.springframework.boot:spring-boot-starter-data-jpa&amp;#34;) } 关于JPA的实现 Link to heading 默认的实现是Hibernate，也可以使用其它实现，如eclipselink，依赖如下：
+dependencies { implementation(&amp;#34;org.springframework.boot:spring-boot-starter-data-jpa&amp;#34;) { exclude group: &amp;#34;org.hibernate&amp;#34;, module: &amp;#34;hibernate-entitymanager&amp;#34; } implementation &amp;#34;org.eclipse.persistence:eclipselink:2.7.4&amp;#34; } 关于实体类（Entity） Link to heading 数据库的表（table）和JPA的实体类（entity）一一对应，并且实体类需要添加一些注解：
+@Getter @Entity @Table(name = &amp;#34;player&amp;#34;) @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) @RequiredArgsConstructor public class PlayerEntity { @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Integer id; private final String name; // other fields } 注解说明如下：
+@Entity：声明这个类为JPA的实体，并且需要一个@Id注解的字段作为主键 @Table(name = &amp;quot;player&amp;quot;): 表示该entity对应的表，name属性是表名，默认是entity的名称 @NoArgsConstructor(access = AccessLevel.</description>
+    </item>
+    
+    <item>
+      <title>SpringBoot系列一：Spring Boot Devtools</title>
+      <link>https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/</link>
+      <pubDate>Thu, 20 Feb 2020 08:17:39 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/</guid>
+      <description>spring-boot-devtools提供了一些辅助开发的功能，比如：
+自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志 自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用 LiveReload 自动触发浏览器的刷新（资源发生变化时） 全局配置：提供全局配置文件，对所有包含 devtools 的应用生效 在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。
+添加依赖 Link to heading maven 配置：
+&amp;lt;dependency&amp;gt; &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt; &amp;lt;artifactId&amp;gt;spring-boot-devtools&amp;lt;/artifactId&amp;gt; &amp;lt;optional&amp;gt;true&amp;lt;/optional&amp;gt; &amp;lt;/dependency&amp;gt; gradle 配置：
+configurations { developmentOnly runtimeClasspath { extendsFrom developmentOnly } } dependencies { developmentOnly(&amp;#34;org.springframework.boot:spring-boot-devtools&amp;#34;) } 在依赖配置中，如 maven 中添加optional标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。 在生产环境下，devtool会自动禁用，通过java -jar启动应用被认为是生产环境。 自动重启 Link to heading 如果 classpath 上的文件发生了变化，应用会自动重启。
+自动重启的触发：
+在 Eclipse 中，被修改的文件保存时会触发重启 在 Intellij Idea 中，使用Build -&amp;gt; Build Project (CMD+F9)手动触发 在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效： 1.</description>
+    </item>
+    
+  </channel>
+</rss>

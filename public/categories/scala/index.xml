@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Scala on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/scala/</link>
+    <description>Recent content in Scala on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Jun 2022 13:00:20 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/scala/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The difference between call-by-value and call-by-name</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/call-by-value-vs-call-by-name/</link>
+      <pubDate>Sun, 19 Jun 2022 13:00:20 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/call-by-value-vs-call-by-name/</guid>
+      <description>We have two simple functions:
+def calledByValue(x: Long): Unit = { println(&amp;#34;call by value: &amp;#34; + x) println(&amp;#34;call by value: &amp;#34; + x) } def calledByName(x: =&amp;gt; Long): Unit = { println(&amp;#34;call by name: &amp;#34; + x) println(&amp;#34;call by name: &amp;#34; + x) } Let&amp;rsquo;s call the two functions with the same parameter:
+calledByValue(System.nanoTime()) calledByName(System.nanoTime()) The output is:
+call by value: 329019404609381 call by value: 329019404609381 call by name: 329019470999309 call by name: 329019472001451 We can see that the outputs in the first function are the same, but the outputs in the second function are different.</description>
+    </item>
+    
+    <item>
+      <title>Scala: Build-in Control Structures</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/</link>
+      <pubDate>Sun, 01 Aug 2021 08:20:47 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/</guid>
+      <description>If expressions Link to heading val fileName = if (!args.isEmpty) args(0) else &amp;#34;default.txt&amp;#34; Scala&amp;rsquo;s if is an expression that results in a value. The first advantage is that we use a val instead of var. Using a val is the functional style and it tells readers of the code that the variable will never change, saving them from scanning all code in the variable&amp;rsquo;s scope to see if it ever changes.</description>
+    </item>
+    
+    <item>
+      <title>Scala: Functional Objects</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/3-functional-objects/</link>
+      <pubDate>Sat, 31 Jul 2021 18:49:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/3-functional-objects/</guid>
+      <description>Constructing an object Link to heading class Rational(n: Int, d: Int) { println(&amp;#34;Created &amp;#34; + n + &amp;#34;/&amp;#34; + d) } If your class doesn&amp;rsquo;t have a body, you don&amp;rsquo;t need to specify empty curly braces. The identifiers n and d are called class parameters, the Scala compiler will create a primary constructor that takes these two parameters. The Scala compiler will compile any code you place in the class body, which isn&amp;rsquo;t part of a field or a method definition, into the primary constructor.</description>
+    </item>
+    
+    <item>
+      <title>Scala: Basic Types and Operations</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</link>
+      <pubDate>Sun, 18 Jul 2021 17:06:23 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/2-basic-types-and-operations/</guid>
+      <description>Basic types Link to heading Basic types of Scala：
+Byte, Short, Int, Long, Char, String, Float, Double, Boolean scala&amp;gt; val aFloat = 1.2345F val aFloat: Float = 1.2345 scala&amp;gt; val aDouble = 3E5 val aDouble: Double = 300000.0 scala&amp;gt; val anotherDouble = 1.2345D val anotherDouble: Double = 1.2345 A string literal is a composed of characters surrounded by double quotes.
+A raw string starts and ends with three double quotation marks in a row(&amp;quot;&amp;quot;&amp;quot;).</description>
+    </item>
+    
+    <item>
+      <title>Scala: Basics of class and object</title>
+      <link>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</link>
+      <pubDate>Sun, 18 Jul 2021 08:22:29 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/scala-programming/1-basic-of-class-and-object/</guid>
+      <description>Classes, fields, and methods Link to heading Once you define a class, you can create objects with the keyword new.
+public is Scala&amp;rsquo;s default access level.
+class Accumulator { var sum = 0 } val acc = new Accumulator println(acc.sum)	// 0 acc.sum = 10 println(acc.sum)	// 10 One important way to pursue robustness of an object is to ensure that the object&amp;rsquo;s state—the values of its instance variables—remains valid during its entire lifetime.</description>
+    </item>
+    
+  </channel>
+</rss>

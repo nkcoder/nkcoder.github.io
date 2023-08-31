@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  SpringBoot系列一：Spring Boot Devtools · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="spring-boot-devtools提供了一些辅助开发的功能，比如：
+自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志 自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用 LiveReload 自动触发浏览器的刷新（资源发生变化时） 全局配置：提供全局配置文件，对所有包含 devtools 的应用生效 在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。
+添加依赖 Link to heading maven 配置：
+&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt; &lt;optional&gt;true&lt;/optional&gt; &lt;/dependency&gt; gradle 配置：
+configurations { developmentOnly runtimeClasspath { extendsFrom developmentOnly } } dependencies { developmentOnly(&#34;org.springframework.boot:spring-boot-devtools&#34;) } 在依赖配置中，如 maven 中添加optional标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。 在生产环境下，devtool会自动禁用，通过java -jar启动应用被认为是生产环境。 自动重启 Link to heading 如果 classpath 上的文件发生了变化，应用会自动重启。
+自动重启的触发：
+在 Eclipse 中，被修改的文件保存时会触发重启 在 Intellij Idea 中，使用Build -&gt; Build Project (CMD&#43;F9)手动触发 在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效： 1.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SpringBoot系列一：Spring Boot Devtools"/>
+<meta name="twitter:description" content="spring-boot-devtools提供了一些辅助开发的功能，比如：
+自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志 自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用 LiveReload 自动触发浏览器的刷新（资源发生变化时） 全局配置：提供全局配置文件，对所有包含 devtools 的应用生效 在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。
+添加依赖 Link to heading maven 配置：
+&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt; &lt;optional&gt;true&lt;/optional&gt; &lt;/dependency&gt; gradle 配置：
+configurations { developmentOnly runtimeClasspath { extendsFrom developmentOnly } } dependencies { developmentOnly(&#34;org.springframework.boot:spring-boot-devtools&#34;) } 在依赖配置中，如 maven 中添加optional标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。 在生产环境下，devtool会自动禁用，通过java -jar启动应用被认为是生产环境。 自动重启 Link to heading 如果 classpath 上的文件发生了变化，应用会自动重启。
+自动重启的触发：
+在 Eclipse 中，被修改的文件保存时会触发重启 在 Intellij Idea 中，使用Build -&gt; Build Project (CMD&#43;F9)手动触发 在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效： 1."/>
+
+<meta property="og:title" content="SpringBoot系列一：Spring Boot Devtools" />
+<meta property="og:description" content="spring-boot-devtools提供了一些辅助开发的功能，比如：
+自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志 自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用 LiveReload 自动触发浏览器的刷新（资源发生变化时） 全局配置：提供全局配置文件，对所有包含 devtools 的应用生效 在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。
+添加依赖 Link to heading maven 配置：
+&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt; &lt;optional&gt;true&lt;/optional&gt; &lt;/dependency&gt; gradle 配置：
+configurations { developmentOnly runtimeClasspath { extendsFrom developmentOnly } } dependencies { developmentOnly(&#34;org.springframework.boot:spring-boot-devtools&#34;) } 在依赖配置中，如 maven 中添加optional标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。 在生产环境下，devtool会自动禁用，通过java -jar启动应用被认为是生产环境。 自动重启 Link to heading 如果 classpath 上的文件发生了变化，应用会自动重启。
+自动重启的触发：
+在 Eclipse 中，被修改的文件保存时会触发重启 在 Intellij Idea 中，使用Build -&gt; Build Project (CMD&#43;F9)手动触发 在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效： 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-20T08:17:39+08:00" />
+<meta property="article:modified_time" content="2020-02-20T08:17:39+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/springboot/springboot-1-use-devtools/">
+              SpringBoot系列一：Spring Boot Devtools
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-20T08:17:39&#43;08:00">
+                February 20, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/springboot/">SpringBoot</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><code>spring-boot-devtools</code>提供了一些辅助开发的功能，比如：</p>
+<ul>
+<li>自动禁用依赖库或模板的缓存，启动 web 模块的 debug 日志</li>
+<li>自动重启：保存文件（Eclipse）或者 Build（Intellij Idea）时自动重启应用</li>
+<li>LiveReload 自动触发浏览器的刷新（资源发生变化时）</li>
+<li>全局配置：提供全局配置文件，对所有包含 devtools 的应用生效</li>
+</ul>
+<p>在实际开发中，自动重启功能比较有用，所以这里主要介绍自动重启的配置与使用。</p>
+<h2 id="添加依赖">
+  添加依赖
+  <a class="heading-link" href="#%e6%b7%bb%e5%8a%a0%e4%be%9d%e8%b5%96">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>maven 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;dependency&gt;
+</span></span><span style="display:flex;"><span>  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+</span></span><span style="display:flex;"><span>  &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+</span></span><span style="display:flex;"><span>  &lt;optional&gt;true&lt;/optional&gt;
+</span></span><span style="display:flex;"><span>&lt;/dependency&gt;
+</span></span></code></pre></div><p>gradle 配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>configurations <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  developmentOnly
+</span></span><span style="display:flex;"><span>  runtimeClasspath <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    extendsFrom developmentOnly
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>dependencies <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  developmentOnly<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;org.springframework.boot:spring-boot-devtools&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>在依赖配置中，如 maven 中添加<code>optional</code>标记，在 gradle 中使用自定义的 developmentOnly，表示该依赖不会被传递。</li>
+<li>在生产环境下，<code>devtool</code>会自动禁用，通过<code>java -jar</code>启动应用被认为是生产环境。</li>
+</ul>
+<h2 id="自动重启">
+  自动重启
+  <a class="heading-link" href="#%e8%87%aa%e5%8a%a8%e9%87%8d%e5%90%af">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>如果 <code>classpath</code> 上的文件发生了变化，应用会自动重启。</p>
+<p>自动重启的触发：</p>
+<ul>
+<li>在 Eclipse 中，被修改的文件保存时会触发重启</li>
+<li>在 Intellij Idea 中，使用<code>Build -&gt; Build Project (CMD+F9)</code>手动触发</li>
+</ul>
+<blockquote>
+<p>在 Intellij Idea 中也可以配置在文件保存时触发重启，但需要使以下两项配置生效：
+<code>1. Preference -&gt; compiler -&gt; 选中 Build project automatically</code>
+<code>2. Help -&gt; Find action(Shift + CMD + A) -&gt; 选中 compiler.automake.allow.when.app.running</code></p>
+</blockquote>
+<p>自动重启原理：Spring Boot 会使用两个 <code>classloader</code>，不会发生变化的类（主要是第三方依赖库）会被加载到 <code>base classloader</code> 中，开发过程中使用的类会被加载到 <code>restart classloader</code>，应用重启时，只有 <code>restart classloader</code> 会重启，而 <code>base classloader</code> 不变，所以重启速度会更快一些。另一方面，如果依赖发生了变化，则需要手动重启。</p>
+<h3 id="扩展自动重启监视的目录">
+  扩展自动重启监视的目录
+  <a class="heading-link" href="#%e6%89%a9%e5%b1%95%e8%87%aa%e5%8a%a8%e9%87%8d%e5%90%af%e7%9b%91%e8%a7%86%e7%9a%84%e7%9b%ae%e5%bd%95">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>spring.devtools.restart.exclude=static/**,public/**
+</span></span><span style="display:flex;"><span>spring.devtools.restart.additional-paths=mypackage/**
+</span></span></code></pre></div><h3 id="禁用自动重启">
+  禁用自动重启：
+  <a class="heading-link" href="#%e7%a6%81%e7%94%a8%e8%87%aa%e5%8a%a8%e9%87%8d%e5%90%af">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>可以有两种方式：</p>
+<p>在 application.properties 中配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>spring.devtools.restart.enabled=false
+</span></span></code></pre></div><p>或者在调用<code>SpringApplication.run()</code>之前调用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>System.setProperty(&#34;spring.devtools.restart.enabled&#34;, &#34;false&#34;);
+</span></span></code></pre></div><blockquote>
+<p>完整的示例代码见: <a href="https://github.com/nkcoder/springboot-samples/tree/master/springboot-devtools"  class="external-link" target="_blank" rel="noopener">github-springboot-devtools</a>.</p>
+</blockquote>
+<h2 id="参考">
+  参考
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ul>
+<li><a href="https://www.manning.com/books/spring-in-action-fifth-edition"  class="external-link" target="_blank" rel="noopener">Spring in Action, Fifth Edition</a></li>
+<li><a href="https://dev.to/suin/spring-boot-developer-tools-how-to-enable-automatic-restart-in-intellij-idea-1c6i"  class="external-link" target="_blank" rel="noopener">Spring Boot Developer Tools: How to enable automatic restart in IntelliJ IDEA</a></li>
+<li><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-devtools.html"  class="external-link" target="_blank" rel="noopener">Developer Tools</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

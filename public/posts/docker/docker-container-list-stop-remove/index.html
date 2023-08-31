@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker容器：查看、停止、删除容器 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="查看容器 Link to heading 列出容器的命令为：docker container ls，等价的别名为：
+docker container ps docker container list docker ps 常用的参数说明如下：
+-a, --all：列出所有的容器，包括停止运行的容器 -s, --size：显示容器的大小 -q, --quiet：仅显示容器ID -f, --filter：过滤器，支持key=value的格式进行过滤，多个过滤器使用-f &quot;key=value&quot; -f &quot;key=value&quot;格式 -a列出所有容器：
+➜ ~ docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 1c4bc2440cff docker.elastic.co/elasticsearch/elasticsearch:7.7.0 &#34;/tini -- /usr/local…&#34; 7 days ago Exited (130) 5 days ago sweet_lovelace da242f09324e mysql:8.0.19 &#34;docker-entrypoint.s…&#34; 7 weeks ago Up 15 minutes 0.0.0.0:3306-&gt;3306/tcp, 33060/tcp freeimmi_mini_db_1 -s列出容器的大小：
+➜ ~ docker ps -s CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES SIZE da242f09324e mysql:8.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker容器：查看、停止、删除容器"/>
+<meta name="twitter:description" content="查看容器 Link to heading 列出容器的命令为：docker container ls，等价的别名为：
+docker container ps docker container list docker ps 常用的参数说明如下：
+-a, --all：列出所有的容器，包括停止运行的容器 -s, --size：显示容器的大小 -q, --quiet：仅显示容器ID -f, --filter：过滤器，支持key=value的格式进行过滤，多个过滤器使用-f &quot;key=value&quot; -f &quot;key=value&quot;格式 -a列出所有容器：
+➜ ~ docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 1c4bc2440cff docker.elastic.co/elasticsearch/elasticsearch:7.7.0 &#34;/tini -- /usr/local…&#34; 7 days ago Exited (130) 5 days ago sweet_lovelace da242f09324e mysql:8.0.19 &#34;docker-entrypoint.s…&#34; 7 weeks ago Up 15 minutes 0.0.0.0:3306-&gt;3306/tcp, 33060/tcp freeimmi_mini_db_1 -s列出容器的大小：
+➜ ~ docker ps -s CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES SIZE da242f09324e mysql:8."/>
+
+<meta property="og:title" content="Docker容器：查看、停止、删除容器" />
+<meta property="og:description" content="查看容器 Link to heading 列出容器的命令为：docker container ls，等价的别名为：
+docker container ps docker container list docker ps 常用的参数说明如下：
+-a, --all：列出所有的容器，包括停止运行的容器 -s, --size：显示容器的大小 -q, --quiet：仅显示容器ID -f, --filter：过滤器，支持key=value的格式进行过滤，多个过滤器使用-f &quot;key=value&quot; -f &quot;key=value&quot;格式 -a列出所有容器：
+➜ ~ docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 1c4bc2440cff docker.elastic.co/elasticsearch/elasticsearch:7.7.0 &#34;/tini -- /usr/local…&#34; 7 days ago Exited (130) 5 days ago sweet_lovelace da242f09324e mysql:8.0.19 &#34;docker-entrypoint.s…&#34; 7 weeks ago Up 15 minutes 0.0.0.0:3306-&gt;3306/tcp, 33060/tcp freeimmi_mini_db_1 -s列出容器的大小：
+➜ ~ docker ps -s CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES SIZE da242f09324e mysql:8." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-07-09T06:50:13+08:00" />
+<meta property="article:modified_time" content="2020-07-09T06:50:13+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/">
+              Docker容器：查看、停止、删除容器
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-07-09T06:50:13&#43;08:00">
+                July 9, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              3-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="查看容器">
+  查看容器
+  <a class="heading-link" href="#%e6%9f%a5%e7%9c%8b%e5%ae%b9%e5%99%a8">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>列出容器的命令为：<code>docker container ls</code>，等价的别名为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker container ps
+</span></span><span style="display:flex;"><span>docker container list
+</span></span><span style="display:flex;"><span>docker ps
+</span></span></code></pre></div><p>常用的参数说明如下：</p>
+<ul>
+<li><code>-a, --all</code>：列出所有的容器，包括停止运行的容器</li>
+<li><code>-s, --size</code>：显示容器的大小</li>
+<li><code>-q, --quiet</code>：仅显示容器ID</li>
+<li><code>-f, --filter</code>：过滤器，支持<code>key=value</code>的格式进行过滤，多个过滤器使用<code>-f &quot;key=value&quot; -f &quot;key=value&quot;</code>格式</li>
+</ul>
+<p><code>-a</code>列出所有容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS                    PORTS                               NAMES
+</span></span><span style="display:flex;"><span>1c4bc2440cff        docker.elastic.co/elasticsearch/elasticsearch:7.7.0   <span style="color:#f1fa8c">&#34;/tini -- /usr/local…&#34;</span>   <span style="color:#bd93f9">7</span> days ago          Exited <span style="color:#ff79c6">(</span>130<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">5</span> days ago                                       sweet_lovelace
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19                                          <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Up <span style="color:#bd93f9">15</span> minutes             0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   freeimmi_mini_db_1
+</span></span></code></pre></div><p><code>-s</code>列出容器的大小：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps -s
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES                SIZE
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19        <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Up <span style="color:#bd93f9">16</span> minutes       0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   freeimmi_mini_db_1   105B <span style="color:#ff79c6">(</span>virtual 547MB<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><blockquote>
+<p><code>SIZE</code>列显示的是容器的<strong>可写层</strong>占用的空间，括号中的virtual表示容器镜像的<strong>只读层</strong>和容器的<strong>可写层</strong>总共占用的空间。</p>
+</blockquote>
+<p><code>-q</code>仅显示容器ID：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps -q
+</span></span><span style="display:flex;"><span>da242f09324e
+</span></span><span style="display:flex;"><span>➜  ~ docker stop <span style="color:#ff79c6">$(</span>docker ps -a -q<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>1c4bc2440cff
+</span></span><span style="display:flex;"><span>da242f09324e
+</span></span></code></pre></div><p><code>-f</code>可以通过容器名称（name）、退出状态（exited）、容器状态（status）、创建时间（before|since|after）等进行过滤：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps -f <span style="color:#f1fa8c">&#39;name=freeimmi_mini_db_1&#39;</span>
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19        <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Up <span style="color:#bd93f9">12</span> seconds       0.0.0.0:3306-&gt;3306/tcp, 33060/tcp   freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker stop freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>➜  ~ docker ps -a -f <span style="color:#f1fa8c">&#39;exited=0&#39;</span>
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19        <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Exited <span style="color:#ff79c6">(</span>0<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">48</span> seconds ago                       freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker start freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>➜  ~ docker <span style="color:#8be9fd;font-style:italic">kill</span> freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>➜  ~ docker ps -a -f <span style="color:#f1fa8c">&#39;exited=137&#39;</span>
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS               NAMES
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19        <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Exited <span style="color:#ff79c6">(</span>137<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">5</span> seconds ago                       freeimmi_mini_db_1
+</span></span></code></pre></div><h2 id="停止容器">
+  停止容器
+  <a class="heading-link" href="#%e5%81%9c%e6%ad%a2%e5%ae%b9%e5%99%a8">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>停止容器使用<code>docker container stop</code>或者<code>docker stop</code>命令，该命令会向容器内的主进程发送<code>SIGTERM</code>信号，等待一段时间后，再发送<code>SIGKILL</code>命令。</p>
+<p>可以使用<code>-t, --time</code>设置kill之前的等待时间，默认是10s：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>➜  ~ docker container start freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>➜  ~ docker stop -t 20 freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>freeimmi_mini_db_1
+</span></span></code></pre></div><h2 id="删除容器">
+  删除容器
+  <a class="heading-link" href="#%e5%88%a0%e9%99%a4%e5%ae%b9%e5%99%a8">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>删除容器使用<code>docker container rm</code>或者<code>docker rm</code>命令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS                     PORTS               NAMES
+</span></span><span style="display:flex;"><span>58a0b9865684        alpine                                                <span style="color:#f1fa8c">&#34;/bin/sh&#34;</span>                <span style="color:#bd93f9">44</span> seconds ago      Up <span style="color:#bd93f9">43</span> seconds                                  my_alpine3
+</span></span><span style="display:flex;"><span>1c4bc2440cff        docker.elastic.co/elasticsearch/elasticsearch:7.7.0   <span style="color:#f1fa8c">&#34;/tini -- /usr/local…&#34;</span>   <span style="color:#bd93f9">7</span> days ago          Exited <span style="color:#ff79c6">(</span>130<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">5</span> days ago                        sweet_lovelace
+</span></span><span style="display:flex;"><span>da242f09324e        mysql:8.0.19                                          <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> weeks ago         Exited <span style="color:#ff79c6">(</span>0<span style="color:#ff79c6">)</span> <span style="color:#bd93f9">8</span> minutes ago                       freeimmi_mini_db_1
+</span></span><span style="display:flex;"><span>➜  ~ docker rm 1c4bc2440cff
+</span></span><span style="display:flex;"><span>1c4bc2440cff
+</span></span></code></pre></div><p><code>docker rm</code>不能直接删除运行中的容器，可是使用<code>-f, --force</code>参数，表示强制删除，即直接向容器中的主进程发送<code>SIGKILL</code>信号，一般不推荐这么做，建议先使用<code>docker stop</code>停止容器，然后再使用<code>docker rm</code>删除容器，给容器留出一些时间进行清理等工作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker ps
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>58a0b9865684        alpine              <span style="color:#f1fa8c">&#34;/bin/sh&#34;</span>           <span style="color:#bd93f9">2</span> minutes ago       Up <span style="color:#bd93f9">2</span> minutes                            my_alpine3
+</span></span><span style="display:flex;"><span>➜  ~ docker rm -f 58a0b9865684
+</span></span><span style="display:flex;"><span>58a0b9865684
+</span></span></code></pre></div><p>删除所有停止的容器：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker rm <span style="color:#ff79c6">$(</span>docker ps -a -q<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>da242f09324e
+</span></span></code></pre></div><p><code>-v</code>参数表示删除与容器关联的所有匿名的卷：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker create -v awesome:/foo -v /bar --name hell-redis redis
+</span></span><span style="display:flex;"><span>7da82099f278dd15c6ee16ea5a1e347feb1f3f45b9c8890c830cd7f095e1c63f
+</span></span><span style="display:flex;"><span>➜  ~ docker ps  -a
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>7da82099f278        redis               <span style="color:#f1fa8c">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#bd93f9">7</span> seconds ago       Created                                 hell-redis
+</span></span><span style="display:flex;"><span>➜  ~ docker rm -v hell-redis
+</span></span><span style="display:flex;"><span>hell-redis
+</span></span><span style="display:flex;"><span>➜  ~ docker volume ls | grep awesome
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">local</span>               awesome
+</span></span></code></pre></div><p>删除容器，还可以使用<code>docker container prune</code>，表示删除所有停止的容器，<code>-f, --force</code>参数表示不需要交互式确认：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker container prune -f
+</span></span><span style="display:flex;"><span>Deleted Containers:
+</span></span><span style="display:flex;"><span>72a9df4be93f1fa11dc61d73ef48211b507949a1aaa0231a5ef0383cd61c4d45
+</span></span><span style="display:flex;"><span>73d22e04a8ae342174e0069029066d4f03f3a94b373b6d0c253654ee926592fb
+</span></span><span style="display:flex;"><span>44c829e75011bb913c7af9bf095ccec865084db1905a80dfacbb3e4b47209b17
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total reclaimed space: 0B
+</span></span></code></pre></div><p><code>--filter</code>支持过滤，目前支持的过滤器有：<code>unitl(删除指定时间之前的容器)</code>和<code>label(删除指定标签的容器)</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>➜  ~ docker container prune -f --filter &#34;until=1m&#34;
+</span></span><span style="display:flex;"><span>Deleted Containers:
+</span></span><span style="display:flex;"><span>633cb0d9b525e7e595442e8545ef6458c9dbf342fd12c00616acd63ee73bcafb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total reclaimed space: 0B
+</span></span></code></pre></div><h3 id="reference-docs">
+  reference docs:
+  <a class="heading-link" href="#reference-docs">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/commandline/ps/"  class="external-link" target="_blank" rel="noopener">docker ps</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/stop/"  class="external-link" target="_blank" rel="noopener">docker stop</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/rm/"  class="external-link" target="_blank" rel="noopener">docker rm</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/container_prune/"  class="external-link" target="_blank" rel="noopener">docker container prune</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

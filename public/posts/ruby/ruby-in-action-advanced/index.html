@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Ruby in action: advanced · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="objects Link to heading ## objects are instances of classes puts &#39;hello&#39;.class puts &#39;hello&#39;.is_a?(String) ## output # String # true class instances Link to heading # frozen_string_literal: true ### A class is defined using the keyword class, a name, and the keyword end. # # Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case. # The method new is defined on every class, and returns a new instance of the class.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ruby in action: advanced"/>
+<meta name="twitter:description" content="objects Link to heading ## objects are instances of classes puts &#39;hello&#39;.class puts &#39;hello&#39;.is_a?(String) ## output # String # true class instances Link to heading # frozen_string_literal: true ### A class is defined using the keyword class, a name, and the keyword end. # # Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case. # The method new is defined on every class, and returns a new instance of the class."/>
+
+<meta property="og:title" content="Ruby in action: advanced" />
+<meta property="og:description" content="objects Link to heading ## objects are instances of classes puts &#39;hello&#39;.class puts &#39;hello&#39;.is_a?(String) ## output # String # true class instances Link to heading # frozen_string_literal: true ### A class is defined using the keyword class, a name, and the keyword end. # # Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case. # The method new is defined on every class, and returns a new instance of the class." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-06T10:33:57+08:00" />
+<meta property="article:modified_time" content="2022-02-06T10:33:57+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/">
+              Ruby in action: advanced
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-02-06T10:33:57&#43;08:00">
+                February 6, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/ruby/">ruby</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="objects">
+  objects
+  <a class="heading-link" href="#objects">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">## objects are instances of classes</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;hello&#39;</span><span style="color:#ff79c6">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;hello&#39;</span><span style="color:#ff79c6">.</span>is_a?(<span style="color:#8be9fd;font-style:italic">String</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># String</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span></code></pre></div><h2 id="class-instances">
+  class instances
+  <a class="heading-link" href="#class-instances">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4"># frozen_string_literal: true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### A class is defined using the keyword class, a name, and the keyword end.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The method new is defined on every class, and returns a new instance of the class.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Person</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>person <span style="color:#ff79c6">=</span> Person<span style="color:#ff79c6">.</span>new
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> person
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> person<span style="color:#ff79c6">.</span>is_a?(Person)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># #&lt;Person:0x00007fb5de100f18&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### instance methods</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Methods that are available on classes are called class methods, for example,`Person.new`,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># and methods that are available on instances are called instance methods, for example, `person.is_a?`.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Instance methods are defined inside the class body.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># `initialize` is a special instance method, which is called under the hood when the object is created using the class</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># method `new`, and all the arguments that you pass to `new` will be passed to `initialize`.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># `self` is a keyword that means the object itself</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Dog</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">initialize</span>(<span style="color:#8be9fd;font-style:italic">name</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">bark</span>(times)
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#39;bark, &#39;</span> <span style="color:#ff79c6">*</span> times
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">bark_3_times</span>
+</span></span><span style="display:flex;"><span>    bark <span style="color:#ff79c6">=</span> bark(<span style="color:#bd93f9">3</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">puts</span> bark
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#8be9fd;font-style:italic">self</span><span style="color:#ff79c6">.</span>bark(<span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> Dog<span style="color:#ff79c6">.</span>new(<span style="color:#f1fa8c">&#39;Kate&#39;</span>)<span style="color:#ff79c6">.</span>bark(<span style="color:#bd93f9">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> Dog<span style="color:#ff79c6">.</span>new(<span style="color:#f1fa8c">&#39;Helen&#39;</span>)<span style="color:#ff79c6">.</span>bark_3_times
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># bark, bark, bark,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># bark, bark, bark,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># bark, bark,</span>
+</span></span></code></pre></div><h2 id="class-attributes">
+  class attributes
+  <a class="heading-link" href="#class-attributes">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">############# class: getter/setter/to_s ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## method `initialize` will be called when you create a new instance of the class by `.new()`</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## `@` means it is an instance variable</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Hat</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">initialize</span>(color)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@color</span> <span style="color:#ff79c6">=</span> color
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">## getter</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">color</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@color</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">## setter, the convention is append `=` to the variable name</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">color</span><span style="color:#ff79c6">=</span>(new_color)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@color</span> <span style="color:#ff79c6">=</span> new_color
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">## override the default to_s method</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">to_s</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;This is a hat and the color is: </span><span style="color:#f1fa8c">#{</span>color<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hat <span style="color:#ff79c6">=</span> Hat<span style="color:#ff79c6">.</span>new(<span style="color:#f1fa8c">&#39;red&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat<span style="color:#ff79c6">.</span>inspect
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat<span style="color:#ff79c6">.</span>color
+</span></span><span style="display:flex;"><span>hat<span style="color:#ff79c6">.</span>color <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;green&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat<span style="color:#ff79c6">.</span>color
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># This is a hat and the color is: red</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># #&lt;Hat:0x00007f9e0d0708e8 @color=&#34;red&#34;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># red</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># green</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# class: attr_accessor ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## attr_reader: only getter</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## attr_writer: only setter</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## attr_accessor: both getter and setter</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Hat2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">attr_accessor</span> <span style="color:#f1fa8c">:color</span>, <span style="color:#f1fa8c">:size</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">initialize</span>(color, size)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@color</span> <span style="color:#ff79c6">=</span> color
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@size</span> <span style="color:#ff79c6">=</span> size
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">to_s</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;This is a hat and the color is: </span><span style="color:#f1fa8c">#{</span><span style="color:#8be9fd;font-style:italic">@color</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, the size is </span><span style="color:#f1fa8c">#{</span>size<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hat2 <span style="color:#ff79c6">=</span> Hat2<span style="color:#ff79c6">.</span>new(<span style="color:#f1fa8c">&#39;blue&#39;</span>, <span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat2
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat2<span style="color:#ff79c6">.</span>to_s
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat2<span style="color:#ff79c6">.</span>color
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> hat2<span style="color:#ff79c6">.</span>size
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># This is a hat and the color is: blue, the size is 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># This is a hat and the color is: blue, the size is 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># blue</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 10</span>
+</span></span></code></pre></div><h2 id="require-a-library">
+  require a library
+  <a class="heading-link" href="#require-a-library">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">### we use the method `require` to load libraries manually.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Normally require statements should be placed at the very top of the file, so it is easy to see what libraries a</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># particular piece of code (class) uses.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;digest&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">RequireDemo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">encrypt</span>(password)
+</span></span><span style="display:flex;"><span>    Digest<span style="color:#ff79c6">::</span>SHA2<span style="color:#ff79c6">.</span>hexdigest(password)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> RequireDemo<span style="color:#ff79c6">.</span>new<span style="color:#ff79c6">.</span>encrypt(<span style="color:#f1fa8c">&#34;my-password&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 6fa2288c361becce3e30ba4c41be7d8ba01e3580566f7acc76a7f99994474c46</span>
+</span></span></code></pre></div><h2 id="modules">
+  modules
+  <a class="heading-link" href="#modules">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">### modules vs classes</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># modules are similar to classes: can hold methods, but:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># modules don&#39;t have a `new` method, so they cannot be instantiated, which means we cannot create objects from a module.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># modules are used to share methods between classes: you can `include` modules into classes and this makes the methods of</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># modules available to the class.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">module</span> Encryption
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;digest&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">encrypt</span>(password)
+</span></span><span style="display:flex;"><span>    Digest<span style="color:#ff79c6">::</span>SHA2<span style="color:#ff79c6">.</span>hexdigest(password)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Account</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">include</span> Encryption
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">initialize</span>(<span style="color:#8be9fd;font-style:italic">name</span>, password)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@name</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">@password</span> <span style="color:#ff79c6">=</span> password
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">attr_reader</span> <span style="color:#f1fa8c">:name</span>, <span style="color:#f1fa8c">:password</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">to_s</span>
+</span></span><span style="display:flex;"><span>    encrypted_password <span style="color:#ff79c6">=</span> encrypt(<span style="color:#8be9fd;font-style:italic">@password</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;name is </span><span style="color:#f1fa8c">#{</span><span style="color:#8be9fd;font-style:italic">@name</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, password is: </span><span style="color:#f1fa8c">#{</span>encrypted_password<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>account <span style="color:#ff79c6">=</span> Account<span style="color:#ff79c6">.</span>new(<span style="color:#f1fa8c">&#39;Jack&#39;</span>, <span style="color:#f1fa8c">&#39;password1&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> account
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># name is Jack, password is: 0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e</span>
+</span></span></code></pre></div><h2 id="private-methods">
+  private methods
+  <a class="heading-link" href="#private-methods">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">### The keyword `private` tells Ruby that all methods defind from now on are supposed to be private.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Private methods can only be called inside the object.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">PrivateDemo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">greet</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#39;Hello, world!&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">public</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">say_hi</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#39;Hi, how are you?&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> PrivateDemo<span style="color:#ff79c6">.</span>new<span style="color:#ff79c6">.</span>say_hi
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> PrivateDemo<span style="color:#ff79c6">.</span>new<span style="color:#ff79c6">.</span>greet
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hi, how are you?</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># private method `greet&#39; called for #&lt;PrivateDemo:0x00007fa035844fb8&gt; (NoMethodError)</span>
+</span></span></code></pre></div><h3 id="references">
+  References
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="http://ruby-for-beginners.rubymonstas.org/objects/classes.html"  class="external-link" target="_blank" rel="noopener">ruby-for-beginners</a></li>
+<li><a href="" >The Complete Ruby on Rails Developer Course</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

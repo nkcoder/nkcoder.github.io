@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Go的程序结构 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="命名 (Names) Link to heading Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(_)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。
+Go的25个关键字不能作为名称：
+break	default	func	interface	select case	defer	go	map	struct chan	else	goto	package	switch const	fallthrough	if	range	type continue	for	import	return	var 还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：
+Constants	true	false	iota	nil Types	int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr float32	float64	complex128	complex64	bool	byte	rune	string	error Functions	make	len	cap	new	append	copy	close	delete	complex	real	imag	panic	recover 函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（package）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（exported），在包（package）外可见，如fmt包的Printf函数。包名总是全小写的。">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go的程序结构"/>
+<meta name="twitter:description" content="命名 (Names) Link to heading Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(_)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。
+Go的25个关键字不能作为名称：
+break	default	func	interface	select case	defer	go	map	struct chan	else	goto	package	switch const	fallthrough	if	range	type continue	for	import	return	var 还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：
+Constants	true	false	iota	nil Types	int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr float32	float64	complex128	complex64	bool	byte	rune	string	error Functions	make	len	cap	new	append	copy	close	delete	complex	real	imag	panic	recover 函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（package）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（exported），在包（package）外可见，如fmt包的Printf函数。包名总是全小写的。"/>
+
+<meta property="og:title" content="Go的程序结构" />
+<meta property="og:description" content="命名 (Names) Link to heading Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(_)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。
+Go的25个关键字不能作为名称：
+break	default	func	interface	select case	defer	go	map	struct chan	else	goto	package	switch const	fallthrough	if	range	type continue	for	import	return	var 还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：
+Constants	true	false	iota	nil Types	int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr float32	float64	complex128	complex64	bool	byte	rune	string	error Functions	make	len	cap	new	append	copy	close	delete	complex	real	imag	panic	recover 函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（package）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（exported），在包（package）外可见，如fmt包的Printf函数。包名总是全小写的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/go/02-go-program-structure/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-26T09:46:31+08:00" />
+<meta property="article:modified_time" content="2021-02-26T09:46:31+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/go/02-go-program-structure/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/go/02-go-program-structure/">
+              Go的程序结构
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-02-26T09:46:31&#43;08:00">
+                February 26, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">Go程序设计</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h3 id="命名-names">
+  命名 (Names)
+  <a class="heading-link" href="#%e5%91%bd%e5%90%8d-names">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(<code>_</code>)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。</p>
+<p>Go的<strong>25</strong>个关键字不能作为名称：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>break			default				func		interface		select
+</span></span><span style="display:flex;"><span>case			defer					go			map					struct
+</span></span><span style="display:flex;"><span>chan			else					goto		package			switch
+</span></span><span style="display:flex;"><span>const			fallthrough		if			range				type
+</span></span><span style="display:flex;"><span>continue	for						import	return			var
+</span></span></code></pre></div><p>还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span>Constants		true	false	iota	nil
+</span></span><span style="display:flex;"><span>Types				int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr
+</span></span><span style="display:flex;"><span>						float32	float64	complex128	complex64		bool	byte	rune	string	error
+</span></span><span style="display:flex;"><span>Functions		make	len	cap	new	append	copy	close	delete	complex	real	
+</span></span><span style="display:flex;"><span>						imag	panic	recover
+</span></span></code></pre></div><p>函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（<em>package</em>）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（<em>exported</em>），在包（<em>package</em>）外可见，如<code>fmt</code>包的<code>Printf</code>函数。包名总是全小写的。</p>
+<p>对名称的长度没有限制，但Go倾向于短名称，尤其是在较小的作用域中。一般来讲，作用域越大，名称应该越长、越有意义。</p>
+<p>如果名称包含多个单词，使用驼峰方式，即将内部单词的首字母大写，而不是用下划线连接，如<code>parseRequestLine</code>。</p>
+<h3 id="声明-declarations">
+  声明 (Declarations)
+  <a class="heading-link" href="#%e5%a3%b0%e6%98%8e-declarations">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>主要有4种声明：<code>var</code>, <code>const</code>, <code>type</code>, <code>func</code>。</p>
+<p>一个标准的Go源文件，首先是<code>packge</code>声明，然后是<code>import</code>声明，最后是变量、常量、类型和函数等包级别的声明。</p>
+<h3 id="变量">
+  变量
+  <a class="heading-link" href="#%e5%8f%98%e9%87%8f">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>变量声明的通用形式为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> name <span style="color:#8be9fd;font-style:italic">type</span> = expression
+</span></span></code></pre></div><p><code>type</code>和<code>= expression</code>是可选的，但不能同时省略。</p>
+<ul>
+<li>如果<code>type</code>省略，通过表达式推断类型</li>
+<li>如果<code>= expression</code>省略，则使用类型的零值（<em>zero value</em>）：数值类型为<em>0</em>，布尔类型为<em>false</em>，字符串类型为*&quot;&quot;<em>，接口或引用类型（如</em>slice*, <em>pointer</em>, <em>map</em>, <em>channel</em>, <em>function</em>）为<em>nil</em>，数组或<em>struct</em>类型的所有字段使用对应类型的零值。</li>
+</ul>
+<p>在Go里，没有<em>未初始化的变量</em>这一说法，所有变量都有合理的默认值，这样可以简化代码以及一些边界场景。</p>
+<p>可以一次声明多个变量，如果忽略类型，可以定义多个不同类型的变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> i, j, k <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> b, f, s = <span style="color:#ff79c6">true</span>, <span style="color:#bd93f9">2.3</span>, <span style="color:#f1fa8c">&#34;four&#34;</span>
+</span></span></code></pre></div><hr>
+<p><strong>简短变量声明</strong>的形式为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>name <span style="color:#ff79c6">:=</span> expression
+</span></span></code></pre></div><p>因为这种方式的简洁性和灵活性，大多数局部变量的声明都会使用这种形式。在以下两种场景下使用<em>var</em>定义局部变量：</p>
+<ul>
+<li>根据变量的初始值推断的类型与变量的类型不同，如：<code>var boiling float64 = 100</code></li>
+<li>变量的初始值缺失或不重要，如：<code>var names []string</code></li>
+</ul>
+<p>简短变量声明方式也可以同时声明多个变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>i, j <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>
+</span></span></code></pre></div><p>但是这种方式应该仅在有助于提高代码可读性时使用，比如<code>for</code>循环的初始化。</p>
+<p><strong>注意</strong>：<code>:=</code>是变量声明，而<code>=</code>是赋值，所以不要把多个变量的简短声明与元组赋值项混淆。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>i, j = <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>
+</span></span></code></pre></div><p>与<em>var</em>声明一样，<code>:=</code>也可以直接用于函数调用返回多个值的场景：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>f, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Open</span>(fileName)
+</span></span></code></pre></div><p>还有一点需要注意的是，<code>:=</code>必须至少声明一个新变量，即<code>:=</code>左侧的变量必须至少有一个是新声明的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>in, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Open</span>(infile)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>out, err :os.<span style="color:#50fa7b">Open</span>(outfile)	<span style="color:#6272a4">// 正确：out是新变量
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>file, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Open</span>(infile)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>file, err :os.<span style="color:#50fa7b">Open</span>(outfile)	<span style="color:#6272a4">// 编译错误：没有声明新变量
+</span></span></span></code></pre></div><hr>
+<p><strong>指针（pointer）</strong>：就是变量的地址，每个变量都有地址。可以通过指针间接地更新变量的值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>x <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>x
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">*</span>p = <span style="color:#bd93f9">2</span>
+</span></span></code></pre></div><p><code>&amp;x</code>表示获取变量<em>x</em>的地址，创建一个<em>指针</em>指向该整型变量，<em>指针</em>的类型是<code>*int</code>，我们称为<code>p指向x</code>，或者<code>p包含x的地址</code>；<code>*p</code>表示<em>p</em>指向的变量，当<code>*p</code>出现在<code>=</code>的右边，表示获取指针<em>p</em>指向的变量的值，当<code>*p</code>出现在<code>=</code>的左边时，表示更新<em>p</em>指向的变量。</p>
+<p>指针的零值（<em>zero value</em>）是<code>nil</code>。指针是可以比较的，当且仅当两个指针指向同一个变量或两个指针都为<code>nil</code>，它们才相等。如果<em>p</em>指向某个变量，则<code>p != nil</code>是<em>true</em>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> i, j <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#ff79c6">&amp;</span>i <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">&amp;</span>i, <span style="color:#ff79c6">&amp;</span>i <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">&amp;</span>j, <span style="color:#ff79c6">&amp;</span>i <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">nil</span>) <span style="color:#6272a4">// true false false
+</span></span></span></code></pre></div><p>将函数中局部变量的地址返回完全是安全的，指针仍然指向之前的变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">f</span>() <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	v <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>v
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p1 <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">f</span>()
+</span></span><span style="display:flex;"><span>p2 <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">f</span>()
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;p1 == p2: %t, p1 = %d, p2 = %d\n&#34;</span>, p1 <span style="color:#ff79c6">==</span> p2, <span style="color:#ff79c6">*</span>p1, <span style="color:#ff79c6">*</span>p2) <span style="color:#6272a4">// p1 == p2: false, p1 = 3, p2 = 3
+</span></span></span></code></pre></div><blockquote>
+<p>在Go里局部变量可能分配在栈上，也可能分配在堆上，具体参考后面关<em>局部变量的生命期</em>一节。本例中，因为<em>v</em>在函数外被引用，所以<em>v</em>是分配在堆上的。每次调用<code>f()</code>返回的地址都不同。</p>
+</blockquote>
+<p>将指针作为函数的参数传递时，因为可以通过指针间接修改所指向变量的值，所以要注意可能产生副作用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">incr</span>(p <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">*</span>p<span style="color:#ff79c6">++</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>p3 <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">incr</span>(<span style="color:#ff79c6">&amp;</span>p3)
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;p3 = %d\n&#34;</span>, p3) <span style="color:#6272a4">// p3 = 
+</span></span></span></code></pre></div><p>指针还是<code>flag</code>包的关键。<code>flag</code>包用于设置和解析命令行参数的：</p>
+<p><code>echo4.go</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#6272a4">// n and sep and pointers
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">var</span> n = flag.<span style="color:#50fa7b">Bool</span>(<span style="color:#f1fa8c">&#34;n&#34;</span>, <span style="color:#ff79c6">false</span>, <span style="color:#f1fa8c">&#34;commit trailing newline&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> sep = flag.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;s&#34;</span>, <span style="color:#f1fa8c">&#34; &#34;</span>, <span style="color:#f1fa8c">&#34;seperator&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	flag.<span style="color:#50fa7b">Parse</span>()
+</span></span><span style="display:flex;"><span>	result <span style="color:#ff79c6">:=</span> strings.<span style="color:#50fa7b">Join</span>(flag.<span style="color:#50fa7b">Args</span>(), <span style="color:#ff79c6">*</span>sep)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Print</span>(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !<span style="color:#ff79c6">*</span>n {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p><code>flag.Bool()</code>创建一个<em>bool</em>类型的<code>flag</code>参数，<code>flag.Parse()</code>解析参数，<code>flag.Args()</code>获取非<code>flag</code>参数。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ch2-program-structure ./echo4 --help
+</span></span><span style="display:flex;"><span>Usage of ./echo4:
+</span></span><span style="display:flex;"><span>  -n	commit trailing newline
+</span></span><span style="display:flex;"><span>  -s string
+</span></span><span style="display:flex;"><span>    	seperator <span style="color:#ff79c6">(</span>default <span style="color:#f1fa8c">&#34; &#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>➜  ch2-program-structure ./echo4 a b c
+</span></span><span style="display:flex;"><span>a b c
+</span></span><span style="display:flex;"><span>➜  ch2-program-structure ./echo4 -s / a b c
+</span></span><span style="display:flex;"><span>a/b/c
+</span></span><span style="display:flex;"><span>➜  ch2-program-structure ./echo4 -n a b c
+</span></span><span style="display:flex;"><span>a b c%
+</span></span></code></pre></div><hr>
+<p><strong>new函数</strong>：<code>new</code>是预定义函数，是创建变量的另一种方式。<code>new(T)</code>创建一个类型为<code>T</code>的匿名变量，默认值为<code>T</code>的零值，返回变量的地址，即指针。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	p1 <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">new</span>(<span style="color:#8be9fd">int</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#ff79c6">*</span>p1) <span style="color:#6272a4">// 0
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">*</span>p1 = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#ff79c6">*</span>p1) <span style="color:#6272a4">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>用<code>new</code>函数创建的变量与用var创建的变量然后返回地址没什么本质区别，唯一的区别就是<code>new</code>函数创建的是匿名变量，所以<code>new</code>函数更像是一种<em>语法糖</em>。以下两种方式是等价的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">newIntByNew</span>() <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">new</span>(<span style="color:#8be9fd">int</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">newIntByVar</span>() <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> dummy <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>dummy
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>另外，<code>new</code>属于预定义函数，不是关键字，所以名称可以被覆盖定义（注意不要引起混淆）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">delta</span>(old <span style="color:#8be9fd">int</span>, new <span style="color:#8be9fd">int</span>) <span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> new <span style="color:#ff79c6">-</span> old
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">delta</span>(<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">10</span>) <span style="color:#6272a4">// 5
+</span></span></span></code></pre></div><hr>
+<p><strong>变量的生命期</strong>：即变量在程序执行过程中存在的时间。<em>包级别</em>的变量的生命期为程序的整个执行期，而<em>局部变量</em>的生命期则是不固定的：变量会一直存活直到<strong>不可达 (unreachable)</strong>，此时变量的存储空间可能会被垃圾回收。</p>
+<p>因为变量的生命期取决于其是否可达，所以如果在函数外引用函数内的局部变量，则该局部变量可能会一直存在，即使函数已经结束。</p>
+<p>编译器会选择将局部变量分配在*栈(stack)<em>上或</em>堆(heap)*上，但不是根据<code>var</code>或<code>new</code>来决定的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> global <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	global = <span style="color:#50fa7b">f</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">g</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#ff79c6">*</span>global)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">f</span>() <span style="color:#ff79c6">*</span><span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> x <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>	x = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>x
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">g</span>() {
+</span></span><span style="display:flex;"><span>	y <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">new</span>(<span style="color:#8be9fd">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">*</span>y = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>变量<code>x</code>是分配在<em>堆</em>上的，因为函数<code>f</code>返回了<code>x</code>的地址，所以<code>x</code>在函数<code>f</code>外仍然是可达的，这种情况称为<code>x</code>从<code>f</code>中逃逸。</p>
+<p>在函数<code>g</code>中，<code>y</code>并没有在函数外被引用，所以<code>y</code>是分配在栈上的，当函数结束后，<code>y</code>可以被回收。</p>
+</blockquote>
+<p>虽然我们不需要显式地分配和释放内存，但是为了写出高效的代码，我们仍然需要关注变量的生命期。比如，在长生命期的变量（尤其是全局变量）中，通过不必要的指针引用短生命期的局部变量，将阻止编译器对短生命期对象的垃圾回收。</p>
+<h3 id="赋值-assignment">
+  赋值 (Assignment)
+  <a class="heading-link" href="#%e8%b5%8b%e5%80%bc-assignment">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><strong>元组 (tuple) 赋值</strong>：同时对多个变量赋值。<code>=</code>右边的表达式先解析，然后才赋值给<code>=</code>左边的变量，当变量同时出现在<code>=</code>两边时尤其有用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	x, y <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>	x, y = y, x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;x = %d, y = %d\n&#34;</span>, x, y) <span style="color:#6272a4">// x = 2, y = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>如果表达式比较复杂，尽量避免元组赋值，单个赋值的可读性更强一些。</p>
+<p>很多函数调用的返回值有多个，如果赋值给变量，则<code>=</code>左侧需要数量相同的变量，如果某个变量不会用到，则可以使用<code>_</code>来忽略：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	m1 <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+</span></span><span style="display:flex;"><span>	m1[<span style="color:#f1fa8c">&#34;x&#34;</span>] = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>	m1[<span style="color:#f1fa8c">&#34;y&#34;</span>] = <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	v, ok <span style="color:#ff79c6">:=</span> m1[<span style="color:#f1fa8c">&#34;x&#34;</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !ok {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Fprintf</span>(os.Stderr, <span style="color:#f1fa8c">&#34;not exist in map&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;v = %d\n&#34;</span>, v)	<span style="color:#6272a4">// v = 1
+</span></span></span></code></pre></div><hr>
+<p><strong>类型声明 (type declarations)</strong>：以一个已经存在的类型作为底层类型，定义一个类型名，主要用于分离与该底层类型不同或者不兼容的使用。</p>
+<p>类型声明大多数出现在包级别，因此在整个包内可见，如果被导出（首字母大写），则对其它包也是可见的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Celsius <span style="color:#8be9fd">float64</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Fahrenheit <span style="color:#8be9fd">float64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">const</span> (
+</span></span><span style="display:flex;"><span>	AbsoluteZeroC Celsius = <span style="color:#ff79c6">-</span><span style="color:#bd93f9">273.15</span>
+</span></span><span style="display:flex;"><span>	FreezingC     Celsius = <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>	BoilingC      Celsius = <span style="color:#bd93f9">100</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">CToF</span>(c Celsius) Fahrenheit {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#50fa7b">Fahrenheit</span>(c<span style="color:#ff79c6">*</span><span style="color:#bd93f9">9</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">5</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">32</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">FToC</span>(f Fahrenheit) Celsius {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#50fa7b">Celsius</span>((f <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">32</span>) <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">9</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<ul>
+<li><code>Celsius</code>和<code>Fahrenheit</code>的底层类型都是<code>float64</code>，但它们不是同样的类型，所以不能直接比较，或混合进行四则运算</li>
+<li><code>Fahrenheit()</code>和<code>Celsius()</code>是类型转换，不是函数调用，不会改变值，而是改变值的含义。</li>
+</ul>
+</blockquote>
+<p>对于任意类型<code>T</code>，都存在一个对应的转换操作<code>T(x)</code>，将变量<code>x</code>的值转换成类型<code>T</code>。</p>
+<ul>
+<li>这种转换仅当它们的底层类型相同，或当它们都是指针，指向的变量的底层类型相同时才可以。</li>
+<li>这种转换只会改变类型，不会改变值</li>
+</ul>
+<p>数值类型之间的转换也是允许的，但是可能会改变值，如将浮点类型转换为整型会丢弃小数部分：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>x <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">10.555</span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">int</span>(x)) <span style="color:#6272a4">// 10
+</span></span></span></code></pre></div><h3 id="包与文件-package--files">
+  包与文件 (Package &amp; Files)
+  <a class="heading-link" href="#%e5%8c%85%e4%b8%8e%e6%96%87%e4%bb%b6-package--files">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><strong>导入 (Import)</strong>：根据约定，包名为导入路径的最后一部分，如：<code>import &quot;a/b/c&quot;</code>，则包名为<code>c</code>。然后可以通过包名+包内导出的变量/函数名去引用，如<code>c.Convert()</code>。</p>
+<p>导入一个包但是不使用会导致编译错误。可以借助<code>goimports</code>工具或IDE等自动添加、移除包。</p>
+<hr>
+<p><strong>包初始化 (package initialization)</strong>：即初始化包级别的变量，根据变量声明的顺序依次初始化，如果变量之间有依赖关系，则根据依赖进行初始化：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> a = b <span style="color:#ff79c6">+</span> c
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> b = <span style="color:#50fa7b">f</span>() <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> c = <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">f</span>() <span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> c <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(a) <span style="color:#6272a4">// 4
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>如果包下有多个源文件，<code>go</code>命令会根据文件名对这些文件进行排序，然后发送给编译器，编译器根据收到的文件的先后顺序进行初始化。</p>
+<p>如果变量的初始化比较复杂，可以放在初始化函数<code>init</code>中。一个源文件里可以包含任意多个以下形式的<code>init</code>函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><p>这些<code>init</code>函数不能被调用或引用，但它们确实是正常的函数。一个文件里的<code>init</code>函数以声明的先后顺序在程序启动的时候被自动执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">println</span>(<span style="color:#f1fa8c">&#34;this is init one&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">init</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">println</span>(<span style="color:#f1fa8c">&#34;this is init two&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>包根据导入的顺序和依赖关系依次被初始化，<code>main</code>包最后被初始化。</p>
+<h3 id="作用域-scope">
+  作用域 (Scope)
+  <a class="heading-link" href="#%e4%bd%9c%e7%94%a8%e5%9f%9f-scope">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><em><strong>声明 (declaration)</strong></em> 将名称与标识符（如变量或函数）关联，声明的作用域指的是源码中可以通过该名称引用到该声明的范围。</p>
+<p>不要将作用域 (<em>scope</em>) 与生命期 (<em>lifttime</em>)混淆。声明的作用域指的是程序的一段文本块，是一个编译时(<em>compile-time</em>)属性；而变量的生命期指的是在程序执行过程中变量可以被引用的时间段，是一个运行时(<em>run-time</em>)属性。</p>
+<p>大括号<code>{}</code>构成一个<strong>句法块(<em>syntactic block</em>)</strong>，如函数体或循环体。在<em>句法块</em>中声明的名称在句法块外是不可见的。<strong>语法块(<em>lexical blocks</em>)<strong>是句法块的推而广之，一定范围的语句都可以构成语法块，如每个包、每个文件、每个<code>for</code>、<code>if</code>、<code>switch</code>语句等都有自己的语法块，整个源码构成的语法块称为</strong>全局语法块(<em>universe block</em>)</strong>。</p>
+<p>一个声明的语法块决定了它的作用域大小。内嵌的类型、函数和常量，如<code>int</code>, <code>len</code>, <code>true</code>等都属于全局语法块，可以在整个程序中被引用。</p>
+<p>程序可以包含同一个名称的多个声明，只要这些声明的语法块不同。编译器遇到名称引用的时候，从最内层的语法块一直寻找到全局语法块，如果没找到，则报错，如果在内部代码块和外部代码块都找到了声明，则使用先找到的内部语法块中的声明，这种情况称为：内部声明隐藏(<em>hide</em>)或屏蔽(<em>shadow</em>)了外部声明。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">f</span>() {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> g = <span style="color:#f1fa8c">&#34;g&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	f <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;f&#34;</span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(f) <span style="color:#6272a4">// &#34;f&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	fmt.<span style="color:#50fa7b">Println</span>(g) <span style="color:#6272a4">// &#34;g&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><blockquote>
+<p>局部变量<code>f</code>屏蔽了包级别函数<code>f()</code>。</p>
+</blockquote>
+<p><code>for</code>循环会创建两个语法块：一个是循环体（即<code>{}</code>中的语句，显式语法块），另一个是循环初始化语句（隐式语法块）。初始化语句中声明的变量的作用域为循环条件、循环后置操作以及循环体，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">toUpper1</span>() {
+</span></span><span style="display:flex;"><span>	x <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;hello!&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#8be9fd;font-style:italic">len</span>(x); i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>		x <span style="color:#ff79c6">:=</span> x[i]
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> x <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#39;!&#39;</span> {
+</span></span><span style="display:flex;"><span>			x <span style="color:#ff79c6">:=</span> x <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;A&#39;</span> <span style="color:#ff79c6">-</span> <span style="color:#f1fa8c">&#39;a&#39;</span>
+</span></span><span style="display:flex;"><span>			fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%c&#34;</span>, x)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<ul>
+<li>循环的初始化语句中声明的变量<code>i</code>在循环体中、循环条件中以及循环后置语句中(<code>i++</code>)可见。</li>
+<li><code>if</code>语句构建的内部语句块中的变量<code>x</code>屏蔽了<code>for</code>循环体中声明的<code>x</code>，<code>for</code>循环体中声明的变量<code>x</code>又屏蔽了函数体中声明的<code>x</code>。</li>
+</ul>
+</blockquote>
+<p>与<code>for</code>循环类似，<code>if</code>语句和<code>swith</code>语句也会同时创建两个语法块：条件和语句体。</p>
+<ul>
+<li><code>if</code>条件中声明的变量的作用域为<code>if</code>语句体以及嵌套的<code>else</code>和<code>else if</code></li>
+<li><code>swith</code>条件中声明的变量的作用域为swith语句体</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">printValue</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> x <span style="color:#ff79c6">:=</span> rand.<span style="color:#50fa7b">Intn</span>(<span style="color:#bd93f9">50</span>); x &gt; <span style="color:#bd93f9">10</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(x)
+</span></span><span style="display:flex;"><span>	} <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> y <span style="color:#ff79c6">:=</span> rand.<span style="color:#50fa7b">Intn</span>(<span style="color:#bd93f9">50</span>); y &gt; x {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(y)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// fmt.Printf(&#34;x = %d, y = %d\n&#34;, x, y)	// compile error: x and y are not visible here
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span></code></pre></div><blockquote>
+<p>同名变量在不同作用域中导致屏蔽，会使代码的可读性变差，应该尽量避免使用。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>参考：《The Go Programming Language》(Alan Donovan, Brian Kernighan) (英文版)</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

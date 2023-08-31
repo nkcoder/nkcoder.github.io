@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  SpringBoot系列六：Spring Boot Actuator · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。
+默认的 Endpoint Link to heading 默认的 path 前缀为actuator，可以通过属性配置：
+management.endpoints.web.base-path: /admin 通过/actuator可以查看所有的 endpoints:
+$ http :8080/actuator 主要的endpoint有：
+/beans : Spring Context中的所有bean /env ： 所有属性信息 /health ：系统的健康信息 /httptrace ：http请求的trace信息 /info ：系统info /loggers ：日志信息 /metrics ：系统的度量，包括内存、cpu、http请求等 /mappings ：所有@RequestMapping映射信息 /threaddump ：线程dump信息 /heapdump ：生成一个hprof文件 大部分的 endpoint的http访问是禁用的，可以通过属性management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude进行配置，支持通配符‘*’表示所有：
+management: endpoints: web: base-path: /actuator exposure: include: &#39;*&#39; exclude: heapdump,threaddump /info Link to heading 为/info提供数据有多种方式，第一种是静态的，在配置文件中定义以info为前缀的属性，如：
+info: contact: email: myeamil@example.com phone: &#43;86-17100000000 另一种是动态的，即实现InfoContributor接口，实现contribute()方法即可，代码参考MyInfoContributor.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SpringBoot系列六：Spring Boot Actuator"/>
+<meta name="twitter:description" content="SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。
+默认的 Endpoint Link to heading 默认的 path 前缀为actuator，可以通过属性配置：
+management.endpoints.web.base-path: /admin 通过/actuator可以查看所有的 endpoints:
+$ http :8080/actuator 主要的endpoint有：
+/beans : Spring Context中的所有bean /env ： 所有属性信息 /health ：系统的健康信息 /httptrace ：http请求的trace信息 /info ：系统info /loggers ：日志信息 /metrics ：系统的度量，包括内存、cpu、http请求等 /mappings ：所有@RequestMapping映射信息 /threaddump ：线程dump信息 /heapdump ：生成一个hprof文件 大部分的 endpoint的http访问是禁用的，可以通过属性management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude进行配置，支持通配符‘*’表示所有：
+management: endpoints: web: base-path: /actuator exposure: include: &#39;*&#39; exclude: heapdump,threaddump /info Link to heading 为/info提供数据有多种方式，第一种是静态的，在配置文件中定义以info为前缀的属性，如：
+info: contact: email: myeamil@example.com phone: &#43;86-17100000000 另一种是动态的，即实现InfoContributor接口，实现contribute()方法即可，代码参考MyInfoContributor."/>
+
+<meta property="og:title" content="SpringBoot系列六：Spring Boot Actuator" />
+<meta property="og:description" content="SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。
+默认的 Endpoint Link to heading 默认的 path 前缀为actuator，可以通过属性配置：
+management.endpoints.web.base-path: /admin 通过/actuator可以查看所有的 endpoints:
+$ http :8080/actuator 主要的endpoint有：
+/beans : Spring Context中的所有bean /env ： 所有属性信息 /health ：系统的健康信息 /httptrace ：http请求的trace信息 /info ：系统info /loggers ：日志信息 /metrics ：系统的度量，包括内存、cpu、http请求等 /mappings ：所有@RequestMapping映射信息 /threaddump ：线程dump信息 /heapdump ：生成一个hprof文件 大部分的 endpoint的http访问是禁用的，可以通过属性management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude进行配置，支持通配符‘*’表示所有：
+management: endpoints: web: base-path: /actuator exposure: include: &#39;*&#39; exclude: heapdump,threaddump /info Link to heading 为/info提供数据有多种方式，第一种是静态的，在配置文件中定义以info为前缀的属性，如：
+info: contact: email: myeamil@example.com phone: &#43;86-17100000000 另一种是动态的，即实现InfoContributor接口，实现contribute()方法即可，代码参考MyInfoContributor." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-03-28T14:14:01+08:00" />
+<meta property="article:modified_time" content="2020-03-28T14:14:01+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/springboot/springboot-sample6-actuator/">
+              SpringBoot系列六：Spring Boot Actuator
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-03-28T14:14:01&#43;08:00">
+                March 28, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/springboot/">SpringBoot</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>SpringBoot Actuator 可以用于监控 SpringBoot 应用，并查看应用内部的状态，可以通过 HTTP 或 JMX 方式。</p>
+<h2 id="默认的-endpoint">
+  默认的 Endpoint
+  <a class="heading-link" href="#%e9%bb%98%e8%ae%a4%e7%9a%84-endpoint">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>默认的 path 前缀为<code>actuator</code>，可以通过属性配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ff79c6">management.endpoints.web.base-path</span>: /admin
+</span></span></code></pre></div><p>通过<code>/actuator</code>可以查看所有的 endpoints:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http :8080/actuator
+</span></span></code></pre></div><p>主要的endpoint有：</p>
+<ul>
+<li>/beans :  Spring Context中的所有bean</li>
+<li>/env ： 所有属性信息</li>
+<li>/health ：系统的健康信息</li>
+<li>/httptrace ：http请求的trace信息</li>
+<li>/info ：系统info</li>
+<li>/loggers ：日志信息</li>
+<li>/metrics ：系统的度量，包括内存、cpu、http请求等</li>
+<li>/mappings ：所有@RequestMapping映射信息</li>
+<li>/threaddump ：线程dump信息</li>
+<li>/heapdump ：生成一个hprof文件</li>
+</ul>
+<p>大部分的 endpoint的http访问是禁用的，可以通过属性<code>management.endpoints.web.exposure.include</code>和<code>management.endpoints.web.exposure.exclude</code>进行配置，支持通配符<code>‘*’</code>表示所有：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ff79c6">management</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">endpoints</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">web</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">base-path</span>: /actuator
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">exposure</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">include</span>: <span style="color:#f1fa8c">&#39;*&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">exclude</span>: heapdump,threaddump
+</span></span></code></pre></div><h3 id="info">
+  /info
+  <a class="heading-link" href="#info">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>为<code>/info</code>提供数据有多种方式，第一种是静态的，在配置文件中定义以<code>info</code>为前缀的属性，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ff79c6">info</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">contact</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">email</span>: myeamil@example.com
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">phone</span>: +86-17100000000
+</span></span></code></pre></div><p>另一种是动态的，即实现<code>InfoContributor</code>接口，实现<code>contribute()</code>方法即可，代码参考<code>MyInfoContributor.java</code>。</p>
+<p>另外，Actuator 提供了一些预先定义的<code>InfoContributor</code>实现，比如<code>BuildInfoContributor</code>可以返回项目的 build 信息，如果要启用，需要在gradle 中添加配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>springBoot <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  buildInfo<span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>gradle 会在最后生成的 jar 包中生成<code>build-info.properties</code>文件，<code>/info</code>会读取该文件中的内容。</p>
+<p>如果希望在<code>/info</code>中看到最新的 Git commit 信息，在 gradle 中添加 plugin：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-gradle" data-lang="gradle"><span style="display:flex;"><span>plugins <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    id <span style="color:#f1fa8c">&#34;com.gorylenko.gradle-git-properties&#34;</span> version <span style="color:#f1fa8c">&#34;2.0.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><p>默认输出的是简要信息，可以通过配置<code>management.info.git.mode=full</code>输出更详细的 commit 信息。</p>
+<h3 id="health">
+  /health
+  <a class="heading-link" href="#health">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>/health</code>主要显示当前系统以及外部依赖组件（如 database, MQ）的健康状态，包括：<code>UP</code>, <code>DOWN</code>, <code>UNKNOWN</code>, <code>OUT-OF-SERVICE</code>等，这是聚合状态，即所有组件是<code>UP</code>，最后的状态才是<code>UP</code>，只要有一个组件的状态是<code>DOWN</code>，最后的状态是<code>DOWN</code>。</p>
+<p><code>management.endpoint.health.show-details</code>：显示更详细的信息。</p>
+<p>也可以实现<code>HealthIndicator</code>接口，扩展<code>/health</code>，代码示例见<code>MyHealthIndicator.java</code>。</p>
+<h3 id="loggers">
+  /loggers
+  <a class="heading-link" href="#loggers">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>/loggers</code>用于查看基于 package 的日志配置信息。</p>
+<p><code>/loggers/{package-name}</code>：查看某个 package 的日志配置。</p>
+<p><code>POST /loggers/{package-name}</code>：用于修改 package 的日志配置，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http post :8080/actuator/loggers/org.nkcoder.admin <span style="color:#8be9fd;font-style:italic">configuredLevel</span><span style="color:#ff79c6">=</span>DEBUG
+</span></span></code></pre></div><h3 id="env">
+  /env
+  <a class="heading-link" href="#env">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>/env</code>查看所有属性信息，包括环境变量、JVM 系统属性、Spring Cloud Config 属性，以及<code>application.yml</code>和<code>application.properties</code>中的属性。</p>
+<p><code>/env/{property-name}</code>：可以根据属性名查询属性值。</p>
+<p><code>POST /env</code>：可以用于设置属性。
+<code>DELETE /env</code>：可以用于删除属性。</p>
+<p>不过这些修改操作都是临时的，系统重启后会恢复原值。</p>
+<h3 id="metrics">
+  /metrics
+  <a class="heading-link" href="#metrics">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>返回包括内存、GC、请求等指标的值或统计信息。</p>
+<p><code>/metrics</code>：返回可以度量的指标的列表。
+<code>/metrics/{metric-name}</code>：返回具体指标的详细信息。</p>
+<h3 id="其它-endpoint">
+  其它 endpoint
+  <a class="heading-link" href="#%e5%85%b6%e5%ae%83-endpoint">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>/conditions</code>：查看<code>AutoConfiguration</code>下 bean 的加载信息，比如<code>@ConditionOnMissingBean</code>， <code>@ConditionOnClass</code>等。</p>
+<p><code>/mappings</code>：所有@RequestMapping的URL映射。</p>
+<p><code>/httptrace</code>: 可以查看系统的请求信息，需要<code>HttpTraceRepository</code>的实现bean，默认禁用，因为默认的实现是<code>InMemoryHttpTraceRepository</code>，会比较占用内存，如果要启用，可以定义一个<code>InMemoryHttpTraceRepository</code>的bean，或者自定义<code>HttpTraceRepository</code>的实现。</p>
+<p><code>/threaddump</code>：返回当前所有线程活动的快照信息。</p>
+<p><code>/heapdump</code>：会下载一个<code>HPROF</code>的 heap dump 文件。</p>
+<h2 id="自定义-endpoint">
+  自定义 Endpoint
+  <a class="heading-link" href="#%e8%87%aa%e5%ae%9a%e4%b9%89-endpoint">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>因为需要同时支持 HTTP 和 JMX MBeans，Actuator 使用的并不是<code>@Controller</code>或<code>@RestController</code>，而是<code>@Endpoint</code>，对应的操作注解为：
+<code>@ReadOperation, @WriteOperation, @DeleteOperation</code>。</p>
+<p>所以，定义一个 Endpoint，与定义一个 Controller 类似，只是替换成对应的注解即可，示例代码参考<code>MyEndPoint.java</code>。</p>
+<p><code>@JmxEndpoint</code>只是用于 JMX MBean，而<code>@WebEndpoint</code>只是用于 HTTP 请求。</p>
+<h2 id="安全控制">
+  安全控制
+  <a class="heading-link" href="#%e5%ae%89%e5%85%a8%e6%8e%a7%e5%88%b6">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Actuator 并不关心安全问题，所以安全问题可以交给 Spring Security 来控制。</p>
+<p>Actuator 的请求路径为<code>/actuator</code>（可配置），所以完全可以当作一般的 REST 节点来配置安全。</p>
+<p>为了可以不用依赖于可配置的<code>/actuator</code>字符串，Actuator 还提供了<code>EndpointRequest</code>配置，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>http<span style="color:#ff79c6">.</span><span style="color:#50fa7b">requestMatcher</span><span style="color:#ff79c6">(</span>EndpointRequest<span style="color:#ff79c6">.</span><span style="color:#50fa7b">toAnyEndpoint</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">excluding</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;health&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;info&#34;</span><span style="color:#ff79c6">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">.</span><span style="color:#50fa7b">authorizeRequests</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">anyRequest</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">hasRole</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;ADMIN&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">httpBasic</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>http<span style="color:#ff79c6">.</span><span style="color:#50fa7b">requestMatcher</span><span style="color:#ff79c6">(</span>EndpointRequest<span style="color:#ff79c6">.</span><span style="color:#50fa7b">to</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;beans&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;threaddump&#34;</span><span style="color:#ff79c6">,</span> <span style="color:#f1fa8c">&#34;heapdump&#34;</span><span style="color:#ff79c6">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">authorizeRequests</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">anyRequest</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">hasRole</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;ADMIN&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">and</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">.</span><span style="color:#50fa7b">httpBasic</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><h2 id="jmx">
+  JMX
+  <a class="heading-link" href="#jmx">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>默认情况下，除了<code>/heapdump</code>外，所有的 endpoint 都被暴露为 MBeans，可以通过 JMX 查看。</p>
+<p>与 HTTP 类似，endpoint 的暴露可以通过属性配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>management:
+</span></span><span style="display:flex;"><span>  endpoints:
+</span></span><span style="display:flex;"><span>    jmx:
+</span></span><span style="display:flex;"><span>      exposure:
+</span></span><span style="display:flex;"><span>        include: &#39;*&#39;
+</span></span><span style="display:flex;"><span>        exclude: threaddump,heapdump
+</span></span></code></pre></div><p>可以通过任意JMX客户端，如JConsole查看。</p>
+<p>也可以自定义 MBean，只需要将对应的 bean 使用<code>@ManagedResource</code>，并将需要暴露的属性用<code>@ManagedAttribute</code>，需要暴露的方法使用<code>@ManagedOperation</code>注解即可。</p>
+<p>MBean 状态的变化，需要 JMX 客户端通过 PULL 的方式主动拉取，Spring 也支持通过<code>NotificationPublisher</code>主动将变化 PUSH 给 JMX 客户端，只需要MBean实现<code>NotificationPublisherAware</code>接口，并发送 Notification。JMX 客户端需要 Subscribe。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>@Component
+</span></span><span style="display:flex;"><span>@ManagedResource
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MyCounterMbean</span> <span style="color:#8be9fd;font-style:italic">implements</span> NotificationPublisherAware <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> AtomicInteger counter<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">private</span> NotificationPublisher notificationPublisher<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#50fa7b">MyCounterMbean</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">counter</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> AtomicInteger<span style="color:#ff79c6">(</span>0<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @ManagedAttribute
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">getCount</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> counter<span style="color:#ff79c6">.</span><span style="color:#50fa7b">get</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @ManagedOperation
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">increment</span><span style="color:#ff79c6">(</span><span style="color:#8be9fd">int</span> delta<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">int</span> value <span style="color:#ff79c6">=</span> counter<span style="color:#ff79c6">.</span><span style="color:#50fa7b">addAndGet</span><span style="color:#ff79c6">(</span>delta<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>value <span style="color:#ff79c6">%</span> 5 <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>      notificationPublisher<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sendNotification</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> Notification<span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f1fa8c">&#34;my.counter&#34;</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">this</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>          value<span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f1fa8c">&#34;current value: &#34;</span> <span style="color:#ff79c6">+</span> value
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> value<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  @Override
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">setNotificationPublisher</span><span style="color:#ff79c6">(</span>NotificationPublisher notificationPublisher<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">notificationPublisher</span> <span style="color:#ff79c6">=</span> notificationPublisher<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><blockquote>
+<p>完整的示例代码见项目：<a href="https://github.com/nkcoder/springboot-samples/tree/master/springboot-actuator"  class="external-link" target="_blank" rel="noopener">github-springboot-actuator</a></p>
+</blockquote>
+<h3 id="参考">
+  参考
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://www.manning.com/books/spring-in-action-fifth-edition"  class="external-link" target="_blank" rel="noopener">Spring in Action, Fifth Edition</a></li>
+<li><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready"  class="external-link" target="_blank" rel="noopener">Spring Boot Actuator: Production-ready Features</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

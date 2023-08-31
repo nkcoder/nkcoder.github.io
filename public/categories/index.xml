@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/</link>
+    <description>Recent content in Categories on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Jun 2022 13:00:20 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scala</title>
+      <link>https://nkcoder.github.io/categories/scala/</link>
+      <pubDate>Sun, 19 Jun 2022 13:00:20 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/scala/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby</title>
+      <link>https://nkcoder.github.io/categories/ruby/</link>
+      <pubDate>Sun, 06 Feb 2022 10:33:57 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS</title>
+      <link>https://nkcoder.github.io/categories/aws/</link>
+      <pubDate>Sat, 07 Aug 2021 17:22:25 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go程序设计</title>
+      <link>https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Sun, 18 Apr 2021 22:36:16 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java并发</title>
+      <link>https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Fri, 23 Oct 2020 08:20:39 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://nkcoder.github.io/categories/docker/</link>
+      <pubDate>Thu, 09 Jul 2020 06:52:13 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SpringBoot</title>
+      <link>https://nkcoder.github.io/categories/springboot/</link>
+      <pubDate>Sun, 29 Mar 2020 11:33:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/springboot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reading</title>
+      <link>https://nkcoder.github.io/categories/reading/</link>
+      <pubDate>Wed, 19 Feb 2020 21:29:37 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/reading/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quartz</title>
+      <link>https://nkcoder.github.io/categories/quartz/</link>
+      <pubDate>Wed, 19 Feb 2020 21:12:59 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/categories/quartz/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

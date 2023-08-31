@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go程序设计 on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
+    <description>Recent content in Go程序设计 on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Apr 2021 22:36:16 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go的基本数据类型</title>
+      <link>https://nkcoder.github.io/posts/go/03-go-basic-data-types/</link>
+      <pubDate>Sun, 18 Apr 2021 22:36:16 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/03-go-basic-data-types/</guid>
+      <description>整数类型 Link to heading 整数区分有符号和无符号，且有四种大小：
+int8, int16, int32,	int64	// 有符号 uint8, uint16,	uint32,	uint64	// 无符号 其它类型说明：
+int和uint，它们的大小相同，32位或64位，与平台有关，不同的编译器即使在相同的硬件上得到的结果可能也不相同
+rune类型是int32的同义词，表示该值是一个Unicode码点(code point)
+byte是uint8的同义词，表示该值是原始数据(raw data)
+uintptr也是一个整型类型，但大小不确定，主要用于低级编程（如调用C语言库）。
+int, uint, uintptr与带大小的类型如int32, uint64等都是不同的类型，即使底层的类型相同，同时使用时需要做类型转换。
+r1, _ := utf8.DecodeRuneInString(&amp;#34;世&amp;#34;) fmt.Printf(&amp;#34;r1 = %c\n&amp;#34;, r1)	// 世 比较运算符：
+== !=	&amp;lt;	&amp;lt;= &amp;gt;	&amp;gt;= 所有的基本类型，如布尔、数值、字符串都是可比较的，即同一类型的两个值，可以使用上述比较运算符直接比较。
+fmt.Printf(&amp;#34;%t\n&amp;#34;, 10 &amp;lt; 5)	// false fmt.Printf(&amp;#34;%t\n&amp;#34;, 10 &amp;lt; 20.1)	// true fmt.Printf(&amp;#34;%t\n&amp;#34;, &amp;#34;abc&amp;#34; &amp;gt;= &amp;#34;ab&amp;#34;)	// true 位运算符：
+&amp;amp;	位AND，位的交集 |	位OR，位的并集 ^	位XOR，用作二元运算符时表示异或，用作单目运算符时表示按位取反 &amp;amp;^	位清空(AND NOT), z=x &amp;amp;^ y, 如果y的位为1，则z对应的位为0，否则与x对应的位相同 &amp;lt;&amp;lt;	位左移 &amp;gt;&amp;gt;	位右移 // bit operation const b1 uint8 = 1 &amp;lt;&amp;lt; 1 | 1 &amp;lt;&amp;lt; 5	// set 1 and 5 bit const b2 uint8 = 1 &amp;lt;&amp;lt; 1 | 1 &amp;lt;&amp;lt; 2	// set 1 and 2 bit fmt.</description>
+    </item>
+    
+    <item>
+      <title>Go的程序结构</title>
+      <link>https://nkcoder.github.io/posts/go/02-go-program-structure/</link>
+      <pubDate>Fri, 26 Feb 2021 09:46:31 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/02-go-program-structure/</guid>
+      <description>命名 (Names) Link to heading Go中的函数、变量、常量、类型、语句标签（label）、包都遵循一个简单的命名规则：以字母开头或以下划线(_)开头，紧跟着任意数量的字母、数字或下划线，大小写敏感。
+Go的25个关键字不能作为名称：
+break	default	func	interface	select case	defer	go	map	struct chan	else	goto	package	switch const	fallthrough	if	range	type continue	for	import	return	var 还有一些预定义的常量、类型和函数，这些名称虽然不是保留关键字，可以使用，但是容易引起混淆：
+Constants	true	false	iota	nil Types	int	int8	int16	int32	int64	uint	uint8	uint16	uint32	uint64	uintptr float32	float64	complex128	complex64	bool	byte	rune	string	error Functions	make	len	cap	new	append	copy	close	delete	complex	real	imag	panic	recover 函数里定义的变量仅在函数内可见；函数外定义的变量（或函数）对属于同一包（package）的所有源文件可见。如果名称（变量或函数）的首字母是大写的，则表示被导出（exported），在包（package）外可见，如fmt包的Printf函数。包名总是全小写的。</description>
+    </item>
+    
+    <item>
+      <title>Go语言入门</title>
+      <link>https://nkcoder.github.io/posts/go/01-go-introduction/</link>
+      <pubDate>Tue, 23 Feb 2021 20:28:08 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/go/01-go-introduction/</guid>
+      <description>跟着《The Go Programming Language》学习Go语言。
+在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。
+Hello World Link to heading helloworld.go
+package main import &amp;#34;fmt&amp;#34; func main() { fmt.Println(&amp;#34;hello, 世界&amp;#34;) } 直接运行：
+$ go run helloworld.go 编译再运行：
+$ go build helloworld.go $ ./helloworld Go是一门编译型语言，run命令执行编译、链接和运行，build命令执行编译和链接，并生成可执行程序。 Go也是以包（package）的方式组织代码。每个源文件都以package声明开头，表示该源文件所属的包， import用于导入程序依赖的包。main是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。 函数定义由func关键字、函数名称、参数列表、返回值构成。main是一个特殊的函数，表示程序的执行入口。 在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。 命令行参数 Link to heading os模块的Args变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数Args[0]表示程序的名称，Args[1:]表示程序执行所需的所有参数。
+echo1.go:
+// echo1 prints it&amp;#39;s command-line arguments package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) func main() { var s, sep string for i := 1; i &amp;lt; len(os.</description>
+    </item>
+    
+  </channel>
+</rss>

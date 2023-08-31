@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/ruby/</link>
+    <description>Recent content in ruby on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Feb 2022 10:33:57 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/ruby/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ruby in action: advanced</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/</link>
+      <pubDate>Sun, 06 Feb 2022 10:33:57 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-advanced/</guid>
+      <description>objects Link to heading ## objects are instances of classes puts &amp;#39;hello&amp;#39;.class puts &amp;#39;hello&amp;#39;.is_a?(String) ## output # String # true class instances Link to heading # frozen_string_literal: true ### A class is defined using the keyword class, a name, and the keyword end. # # Class names must start with an uppercase letter, and should use CamelCase. Variable and methods names should use snake_case. # The method new is defined on every class, and returns a new instance of the class.</description>
+    </item>
+    
+    <item>
+      <title>Ruby in action: intermediate</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/</link>
+      <pubDate>Sat, 05 Feb 2022 15:04:15 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/</guid>
+      <description>arrays Link to heading require &amp;#39;../util&amp;#39; # frozen_string_literal: true ############# arrays ############### ## array can hold different data type data = [&amp;#39;Daniel&amp;#39;, &amp;#39;Michael&amp;#39;, 10, [1, 2, 3, 4], 11.4, true] # index start from zero, first element(s) puts &amp;#34;first item: #{data[0]}&amp;#34; puts &amp;#34;first item: #{data.first}&amp;#34; puts &amp;#34;first 2 items: #{data.first(2)}&amp;#34; # last element(s) puts &amp;#34;last element: #{data[data.length - 1]}&amp;#34; puts &amp;#34;last element: #{data.last}&amp;#34; puts &amp;#34;last 2 elements: #{data.last(2)}&amp;#34; # multiple array puts &amp;#34;multiple array item: #{data[3][0]}&amp;#34; puts &amp;#34;the length of the array is #{data.</description>
+    </item>
+    
+    <item>
+      <title>Ruby in action: basics</title>
+      <link>https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/</link>
+      <pubDate>Fri, 04 Feb 2022 22:37:14 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/ruby-in-action-basics/</guid>
+      <description>pring vs puts vs p Link to heading ## print: no new line at the end ## puts: new line at the end ## p: print the argument as it is and returns the argument print &amp;#39;Good morning.&amp;#39; puts &amp;#39;Hello World!&amp;#39; puts &amp;#39;Come on.&amp;#39; p &amp;#39;Hello World!&amp;#39; p [&amp;#39;one&amp;#39;, &amp;#39;two&amp;#39;, 3] ## output: # Good morning.Hello World! # Come on. # &amp;#34;Hello World!&amp;#34; # [&amp;#34;one&amp;#34;, &amp;#34;two&amp;#34;, 3] string Link to heading ## single quote vs double quote, single quote doesn&amp;#39;t support interpolation first_name = &amp;#39;Michael&amp;#39; last_name = &amp;#39;Dent&amp;#39; puts &amp;#34;first name is #{first_name}, last name is #{last_name}&amp;#34; puts &amp;#39;first name is #{first_name}, last name is #{last_name}&amp;#39; ## output # first name is Michael, last name is Dent # first name is #{first_name}, last name is #{last_name} ## the methods will return a new copy hello = &amp;#39;Hello World!</description>
+    </item>
+    
+    <item>
+      <title>Configure Ruby development</title>
+      <link>https://nkcoder.github.io/posts/ruby/configure-ruby-development/</link>
+      <pubDate>Sat, 28 Aug 2021 20:49:23 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/ruby/configure-ruby-development/</guid>
+      <description>rbenv Link to heading # install rbenv, will also install ruby-build $ brew install rbenv # upgrade rbenv and ruby-build $ brew upgrade rbenv ruby-build # add `eval &amp;#34;$(rbenv init -)&amp;#34;` to your profile $ echo &amp;#39;eval &amp;#34;$(rbenv init -)&amp;#34;&amp;#39; &amp;gt;&amp;gt; ~/.zshrc # also need to add rbenv to PATH, if you have separate homebrew $ echo &amp;#39;export PATH=~/homebrew/bin:$PATH&amp;#39; &amp;gt;&amp;gt; ~/.zshrc # list latest stable versions $ rbenv install -l # list all local versions $ rbenv install -L # install a Ruby version $ rbenv install 3.</description>
+    </item>
+    
+  </channel>
+</rss>

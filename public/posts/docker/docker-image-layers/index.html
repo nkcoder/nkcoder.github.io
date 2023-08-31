@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker镜像：镜像分层 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Docker镜像是由一系列的镜像层构成的。
+查看镜像层 Link to heading 有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：
+➜ ~ docker pull redis Using default tag: latest latest: Pulling from library/redis 54fec2fa59d0: Pull complete 9c94e11103d9: Pull complete 04ab1bfc453f: Pull complete a22fde870392: Pull complete def16cac9f02: Pull complete 1604f5999542: Pull complete Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9 Status: Downloaded newer image for redis:latest docker.io/library/redis:latest 以Pull complete结尾的每一行表示一个镜像分层，前面的def16cac9f02是镜像层的ID。
+如果镜像已经拉取了，可以通过docker inspect查看镜像分层：
+➜ ~ docker inspect redis [ { &#34;Id&#34;: &#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&#34;, &#34;RepoTags&#34;: [ &#34;redis:latest&#34; ], ... &#34;RootFS&#34;: { &#34;Type&#34;: &#34;layers&#34;, &#34;Layers&#34;: [ &#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&#34;, &#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&#34;, &#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&#34;, &#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&#34;, &#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&#34;, &#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&#34; ] }, } ] 其中Layers节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker镜像：镜像分层"/>
+<meta name="twitter:description" content="Docker镜像是由一系列的镜像层构成的。
+查看镜像层 Link to heading 有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：
+➜ ~ docker pull redis Using default tag: latest latest: Pulling from library/redis 54fec2fa59d0: Pull complete 9c94e11103d9: Pull complete 04ab1bfc453f: Pull complete a22fde870392: Pull complete def16cac9f02: Pull complete 1604f5999542: Pull complete Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9 Status: Downloaded newer image for redis:latest docker.io/library/redis:latest 以Pull complete结尾的每一行表示一个镜像分层，前面的def16cac9f02是镜像层的ID。
+如果镜像已经拉取了，可以通过docker inspect查看镜像分层：
+➜ ~ docker inspect redis [ { &#34;Id&#34;: &#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&#34;, &#34;RepoTags&#34;: [ &#34;redis:latest&#34; ], ... &#34;RootFS&#34;: { &#34;Type&#34;: &#34;layers&#34;, &#34;Layers&#34;: [ &#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&#34;, &#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&#34;, &#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&#34;, &#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&#34;, &#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&#34;, &#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&#34; ] }, } ] 其中Layers节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。"/>
+
+<meta property="og:title" content="Docker镜像：镜像分层" />
+<meta property="og:description" content="Docker镜像是由一系列的镜像层构成的。
+查看镜像层 Link to heading 有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：
+➜ ~ docker pull redis Using default tag: latest latest: Pulling from library/redis 54fec2fa59d0: Pull complete 9c94e11103d9: Pull complete 04ab1bfc453f: Pull complete a22fde870392: Pull complete def16cac9f02: Pull complete 1604f5999542: Pull complete Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9 Status: Downloaded newer image for redis:latest docker.io/library/redis:latest 以Pull complete结尾的每一行表示一个镜像分层，前面的def16cac9f02是镜像层的ID。
+如果镜像已经拉取了，可以通过docker inspect查看镜像分层：
+➜ ~ docker inspect redis [ { &#34;Id&#34;: &#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&#34;, &#34;RepoTags&#34;: [ &#34;redis:latest&#34; ], ... &#34;RootFS&#34;: { &#34;Type&#34;: &#34;layers&#34;, &#34;Layers&#34;: [ &#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&#34;, &#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&#34;, &#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&#34;, &#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&#34;, &#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&#34;, &#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&#34; ] }, } ] 其中Layers节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/docker-image-layers/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-16T06:41:46+08:00" />
+<meta property="article:modified_time" content="2020-06-16T06:41:46+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/docker-image-layers/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/docker-image-layers/">
+              Docker镜像：镜像分层
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-06-16T06:41:46&#43;08:00">
+                June 16, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>Docker镜像是由一系列的镜像层构成的。</p>
+<h2 id="查看镜像层">
+  查看镜像层
+  <a class="heading-link" href="#%e6%9f%a5%e7%9c%8b%e9%95%9c%e5%83%8f%e5%b1%82">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker pull redis
+</span></span><span style="display:flex;"><span>Using default tag: latest
+</span></span><span style="display:flex;"><span>latest: Pulling from library/redis
+</span></span><span style="display:flex;"><span>54fec2fa59d0: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>9c94e11103d9: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>04ab1bfc453f: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>a22fde870392: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>def16cac9f02: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>1604f5999542: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#ff79c6">for</span> redis:latest
+</span></span><span style="display:flex;"><span>docker.io/library/redis:latest
+</span></span></code></pre></div><p>以<code>Pull complete</code>结尾的每一行表示一个镜像分层，前面的<code>def16cac9f02</code>是镜像层的ID。</p>
+<p>如果镜像已经拉取了，可以通过<code>docker inspect</code>查看镜像分层：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker inspect redis
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;Id&#34;</span>: <span style="color:#f1fa8c">&#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#34;RepoTags&#34;</span>: <span style="color:#ff79c6">[</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;redis:latest&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">]</span>,
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;RootFS&#34;</span>: <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;Type&#34;</span>: <span style="color:#f1fa8c">&#34;layers&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f1fa8c">&#34;Layers&#34;</span>: <span style="color:#ff79c6">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&#34;</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#f1fa8c">&#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">]</span>
+</span></span></code></pre></div><p>其中<code>Layers</code>节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。</p>
+<h2 id="镜像与镜像层">
+  镜像与镜像层
+  <a class="heading-link" href="#%e9%95%9c%e5%83%8f%e4%b8%8e%e9%95%9c%e5%83%8f%e5%b1%82">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>所有的Docker镜像都起始于一个基础镜像层，但进行修改或增加新的内容时，就会在当前镜像层之上创建新的镜像层。</p>
+<p>具体到Dockerfile，每个Docker镜像层都对应于Dockerfile中的一条指令。</p>
+<p>镜像层以堆栈结构排列，每个镜像层的内容，是与上一个镜像层相比不同部分的集合。</p>
+<p>所有的镜像层都是只读的。当创建一个容器时，会在对顶层创建一个可写的镜像层，也叫<code>容器层</code>，任何的修改操作（如增加、删除文件等）都是在顶层的可写镜像层中进行的。如果容器被删除，只有最顶层的可写镜像层被删除，其它只读镜像层都将被保留。</p>
+<p><img src="./img/container-layers.jpg" alt="conainter-layers"></p>
+<blockquote>
+<p>图片来自Docker官网: <a href="https://docs.docker.com/storage/storagedriver/"  class="external-link" target="_blank" rel="noopener">https://docs.docker.com/storage/storagedriver/</a></p>
+</blockquote>
+<p>不同镜像层之间的交互是由存储引擎（storage driver）实现的，有多个不同的存储引擎可以选择，他们有各自的适用场景。</p>
+<h3 id="共享镜像层">
+  共享镜像层
+  <a class="heading-link" href="#%e5%85%b1%e4%ba%ab%e9%95%9c%e5%83%8f%e5%b1%82">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>多个镜像之间可以并且确实在共享镜像层，这样可以有效节省时间并提升性能。比如拉取redis的两个不同tag的镜像：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker pull redis:6-alpine
+</span></span><span style="display:flex;"><span>6-alpine: Pulling from library/redis
+</span></span><span style="display:flex;"><span>cbdbe7a5bc2a: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>dc0373118a0d: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>cfd369fe6256: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>e5396613619b: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>6809b5ad2cd4: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>386ecfe54d06: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>Digest: sha256:2586f31f74ac1d7dc6f6c7eabca42f09bba5ec9911fc519d55fbd7508a9c4f01
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#ff79c6">for</span> redis:6-alpine
+</span></span><span style="display:flex;"><span>docker.io/library/redis:6-alpine
+</span></span><span style="display:flex;"><span>➜  ~ docker pull redis:5-alpine
+</span></span><span style="display:flex;"><span>5-alpine: Pulling from library/redis
+</span></span><span style="display:flex;"><span>cbdbe7a5bc2a: Already exists
+</span></span><span style="display:flex;"><span>dc0373118a0d: Already exists
+</span></span><span style="display:flex;"><span>cfd369fe6256: Already exists
+</span></span><span style="display:flex;"><span>3e45770272d9: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>558de8ea3153: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>a2c652551612: Pull <span style="color:#8be9fd;font-style:italic">complete</span>
+</span></span><span style="display:flex;"><span>Digest: sha256:83a3af36d5e57f2901b4783c313720e5fa3ecf0424ba86ad9775e06a9a5e35d0
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image <span style="color:#ff79c6">for</span> redis:5-alpine
+</span></span><span style="display:flex;"><span>docker.io/library/redis:5-alpine
+</span></span></code></pre></div><p><code>Already exists</code>的行表示镜像层本地已经存在，无需拉取，直接复用。</p>
+<h3 id="reference">
+  reference:
+  <a class="heading-link" href="#reference">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/storage/storagedriver/"  class="external-link" target="_blank" rel="noopener">storage-driver</a></li>
+<li><a href="https://www.amazon.com/Docker-Deep-Dive-Nigel-Poulton-ebook/dp/B01LXWQUFF"  class="external-link" target="_blank" rel="noopener">Docker Deep Dive</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

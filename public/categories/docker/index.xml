@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/docker/</link>
+    <description>Recent content in docker on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Jul 2020 06:52:13 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker容器：查看容器状态</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-status/</link>
+      <pubDate>Thu, 09 Jul 2020 06:52:13 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-status/</guid>
+      <description>本文涉及到的主要命令如下：
+docker container inspect：查看容器的详细信息 docker container log：查看容器的日志 docker container stats：查看容器的实时统计 查看容器的详细信息 Link to heading docker container inspect或docker inspect命令会显示容器的详细信息，默认以JSON格式输出：
+➜ ~ docker container inspect 3f3c3d02c947 [ { &amp;#34;Id&amp;#34;: &amp;#34;3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2&amp;#34;, &amp;#34;Created&amp;#34;: &amp;#34;2020-06-01T22:58:05.916162Z&amp;#34;, &amp;#34;Path&amp;#34;: &amp;#34;/tini&amp;#34;, &amp;#34;Args&amp;#34;: [ &amp;#34;--&amp;#34;, &amp;#34;/usr/local/bin/docker-entrypoint.sh&amp;#34;, &amp;#34;eswrapper&amp;#34; ], ... } ... ] 默认的输出信息很多，可以通过-f, --format格式化输出：
+➜ ~ docker inspect --format=&amp;#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&amp;#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&amp;#39;{{.NetworkSettings.Networks.bridge.IPAddress}}&amp;#39; 3f3c3d02c947 172.17.0.2 ➜ ~ docker inspect --format=&amp;#39;{{.LogPath}}&amp;#39; 3f3c3d02c947 /var/lib/docker/containers/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2/3f3c3d02c9474ad8d152548d9db81bcd86d956e9686828b537a9a9708b631af2-json.log 如果只想查看某个子节点，比如NetworkSettings下的Ports，因为Ports本身是个对象，默认只会显示节点中值的集合，可以使用模版函数json，将对象以json格式输出：
+➜ ~ docker inspect --format=&amp;#39;{{json .</description>
+    </item>
+    
+    <item>
+      <title>Docker容器：查看、停止、删除容器</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/</link>
+      <pubDate>Thu, 09 Jul 2020 06:50:13 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-list-stop-remove/</guid>
+      <description>查看容器 Link to heading 列出容器的命令为：docker container ls，等价的别名为：
+docker container ps docker container list docker ps 常用的参数说明如下：
+-a, --all：列出所有的容器，包括停止运行的容器 -s, --size：显示容器的大小 -q, --quiet：仅显示容器ID -f, --filter：过滤器，支持key=value的格式进行过滤，多个过滤器使用-f &amp;quot;key=value&amp;quot; -f &amp;quot;key=value&amp;quot;格式 -a列出所有容器：
+➜ ~ docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 1c4bc2440cff docker.elastic.co/elasticsearch/elasticsearch:7.7.0 &amp;#34;/tini -- /usr/local…&amp;#34; 7 days ago Exited (130) 5 days ago sweet_lovelace da242f09324e mysql:8.0.19 &amp;#34;docker-entrypoint.s…&amp;#34; 7 weeks ago Up 15 minutes 0.0.0.0:3306-&amp;gt;3306/tcp, 33060/tcp freeimmi_mini_db_1 -s列出容器的大小：
+➜ ~ docker ps -s CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES SIZE da242f09324e mysql:8.</description>
+    </item>
+    
+    <item>
+      <title>Docker容器：运行容器</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-container-run/</link>
+      <pubDate>Thu, 09 Jul 2020 06:46:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-container-run/</guid>
+      <description>镜像拉取后，就可以基于镜像运行容器了。
+运行镜像的命令为docker container run ，等价命令为：docker run，命令的格式为：
+docker container run [OPTIONS] IMAGE [COMMAND] [ARG...] 该命令的参数很多，详细参数及说明可以通过help查看，这里根据使用场景介绍几个常用且重要的参数。
+创建交互式终端 Link to heading ➜ ~ docker run --name my_alpine -it alpine / # ls bin dev etc home lib media mnt opt proc root run sbin srv sys tmp usr var / # ps -ef PID USER TIME COMMAND 1 root 0:00 /bin/sh 7 root 0:00 ps -ef 上面的例子，运行一个容器，命名为my_alpine，并创建一个交互式的伪终端（tty），连接到容器。
+--name：设置容器的名称，容器的名称不能重复，后面可以根据容器的名称停止/删除容器。如果没有指定名称，docker会生成一个随机不重复的名称 --interactive , -i：打开容器的stdin，即可以通过输入与容器交互 --tty , -t：分配一个伪终端连接到容器的stdin，-it一般同时使用，表示创建一个交互式终端，可以直接与容器交互 这里的-i和-t参数可能还是有点晕，我举个例子就明白了：如果只使用-i参数，那么可以与容器交互，但不是在标准的终端里显示的，如果只使用-t参数，虽然是在终端里操作，但因为非交互，所以不会显示命令的执行结果：</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：镜像分层</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-image-layers/</link>
+      <pubDate>Tue, 16 Jun 2020 06:41:46 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-image-layers/</guid>
+      <description>Docker镜像是由一系列的镜像层构成的。
+查看镜像层 Link to heading 有多种方式可以查看镜像的分层信息。第一种方式，在拉取镜像的时候：
+➜ ~ docker pull redis Using default tag: latest latest: Pulling from library/redis 54fec2fa59d0: Pull complete 9c94e11103d9: Pull complete 04ab1bfc453f: Pull complete a22fde870392: Pull complete def16cac9f02: Pull complete 1604f5999542: Pull complete Digest: sha256:f7ee67d8d9050357a6ea362e2a7e8b65a6823d9b612bc430d057416788ef6df9 Status: Downloaded newer image for redis:latest docker.io/library/redis:latest 以Pull complete结尾的每一行表示一个镜像分层，前面的def16cac9f02是镜像层的ID。
+如果镜像已经拉取了，可以通过docker inspect查看镜像分层：
+➜ ~ docker inspect redis [ { &amp;#34;Id&amp;#34;: &amp;#34;sha256:f9b9909726890b00d2098081642edf32e5211b7ab53563929a47f250bcdc1d7c&amp;#34;, &amp;#34;RepoTags&amp;#34;: [ &amp;#34;redis:latest&amp;#34; ], ... &amp;#34;RootFS&amp;#34;: { &amp;#34;Type&amp;#34;: &amp;#34;layers&amp;#34;, &amp;#34;Layers&amp;#34;: [ &amp;#34;sha256:c2adabaecedbda0af72b153c6499a0555f3a769d52370469d8f6bd6328af9b13&amp;#34;, &amp;#34;sha256:744315296a49be711c312dfa1b3a80516116f78c437367ff0bc678da1123e990&amp;#34;, &amp;#34;sha256:379ef5d5cb402a5538413d7285b21aa58a560882d15f1f553f7868dc4b66afa8&amp;#34;, &amp;#34;sha256:d00fd460effb7b066760f97447c071492d471c5176d05b8af1751806a1f905f8&amp;#34;, &amp;#34;sha256:4d0c196331523cfed7bf5bafd616ecb3855256838d850b6f3d5fba911f6c4123&amp;#34;, &amp;#34;sha256:98b4a6242af2536383425ba2d6de033a510e049d9ca07ff501b95052da76e894&amp;#34; ] }, } ] 其中Layers节点表示该镜像的镜像层，只不过这里显示的是镜像摘要。</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：删除镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-delete-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:40:26 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-delete-image/</guid>
+      <description>删除本地镜像命令为：docke image rm，等价的命令为：docker rmi和docker image remove。
+➜ ~ docker image rm --help Usage:	docker image rm [OPTIONS] IMAGE [IMAGE...] Remove one or more images Aliases: rm, rmi, remove Options: -f, --force Force removal of the image --no-prune Do not delete untagged parents 可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：
+➜ ~ docker rmi nkcoder/freeimmi_mini:4.12 ➜ ~ docker rmi 5ec653d76efc ➜ ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87 如果一个镜像关联了多个标签，是不能直接删除的：
+➜ ~ docker images alpine REPOSITORY TAG IMAGE ID CREATED SIZE alpine 950 f70734b6a266 2 weeks ago 5.</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：搜索镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-search-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:37:36 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-search-image/</guid>
+      <description>搜索Docker Hub中的镜像使用docker search命令：
+➜ ~ docker search --help Usage:	docker search [OPTIONS] TERM Search the Docker Hub for images Options: -f, --filter filter Filter output based on conditions provided --format string Pretty-print search using a Go template --limit int Max number of search results (default 25) --no-trunc Don&amp;#39;t truncate output 搜索包含关键字的镜像 Link to heading ➜ ~ docker search redis NAME DESCRIPTION STARS OFFICIAL AUTOMATED redis Redis is an open source key-value store that… 8140 [OK] bitnami/redis Bitnami Redis Docker Image 145 [OK] sameersbn/redis 80 [OK] .</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：查看本地镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-list-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:33:33 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-list-image/</guid>
+      <description>查看本地镜像，使用命令docker image ls：
+➜ ~ docker image ls --help Usage:	docker image ls [OPTIONS] [REPOSITORY[:TAG]] List images Aliases: ls, images, list Options: -a, --all Show all images (default hides intermediate images) --digests Show digests -f, --filter filter Filter output based on conditions provided --format string Pretty-print images using a Go template --no-trunc Don&amp;#39;t truncate output -q, --quiet Only show numeric IDs 该命令还有两个别名，即：docker images和docker image list。
+查看最近创建的镜像 Link to heading ➜ ~ docker image ls REPOSITORY TAG IMAGE ID CREATED SIZE nkcoder/freeimmi_mini 4.</description>
+    </item>
+    
+    <item>
+      <title>Docker镜像：拉取镜像</title>
+      <link>https://nkcoder.github.io/posts/docker/docker-pull-image/</link>
+      <pubDate>Tue, 16 Jun 2020 06:25:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/docker-pull-image/</guid>
+      <description>Docker的镜像存储在镜像注册中心（image registry）中，默认是Docker Hub，在拉取镜像的时候也可以指定其它注册中心。
+我们使用的大多数镜像都是在Docker Hub中已有镜像的基础上构建的。
+拉取镜像，使用docker image pull或docker pull命令。
+➜ ~ docker image pull --help Usage:	docker image pull [OPTIONS] NAME[:TAG|@DIGEST] Pull an image or a repository from a registry Options: -a, --all-tags Download all tagged images in the repository --disable-content-trust Skip image verification (default true) -q, --quiet Suppress verbose output 从Docker Hub拉取镜像 Link to heading 镜像的命名是：repo:tag，如果没有指定tag，则使用默认的latest标签。
+➜ ~ docker image pull alpine Using default tag: latest latest: Pulling from library/alpine cbdbe7a5bc2a: Pull complete Digest: sha256:9a839e63dad54c3a6d1834e29692c8492d93f90c59c978c1ed79109ea4fb9a54 Status: Downloaded newer image for alpine:latest docker.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在CentOS上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-centos/</link>
+      <pubDate>Sun, 07 Jun 2020 15:21:18 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-centos/</guid>
+      <description>在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 首先安装yum-utils，并设置使用stable仓库：
+$ sudo yum install -y yum-utils $ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo 安装最新版的Docker Engine和containerd：
+$ sudo yum install docker-ce docker-ce-cli containerd.io 确认GPG key的指纹为：060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35。
+如果希望安装特定的版本，首先搜索版本然后安装即可：
+$ yum list docker-ce --showduplicates | sort -r $ sudo yum install docker-ce-&amp;lt;VERSION_STRING&amp;gt; docker-ce-cli-&amp;lt;VERSION_STRING&amp;gt; containerd.io 启动Docker：
+$ sudo systemctl start docker 使用安装包安装 Link to heading 从CentOS-仓库中选择对应的CentOS版本，然后进入x86_64/stable/Packages/目录下载对应的rpm安装包，安装：
+$ sudo yum install /path/to/package.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在Ubunut上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/</link>
+      <pubDate>Sun, 07 Jun 2020 15:06:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-ubuntu/</guid>
+      <description>在Linux上安装Docker可以有以下几种方式：
+设置docker仓库，然后从仓库安装。这种方式的好处是易于安装和升级，这也是官方推荐的安装方式 下载对应平台的安装包，手动安装和升级。这种方式比较适合无网络访问的环境。 使用自动化脚本安装。这种方式主要用于开发和测试。 从仓库安装 Link to heading 更新apt，并安装可以使用HTTPS仓库的安装包：
+$ sudo apt-get update $ sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common 安装Docker官方的GPG密钥：
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 设置stable仓库：
+$ sudo add-apt-repository \ &amp;#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;#34; 最后，安装Docker Engine：
+$ sudo apt-get update $ sudo apt-get install docker-ce docker-ce-cli containerd.io 使用安装包安装 Link to heading 从ubuntu-仓库中选择对应的Ubuntu版本，然后进入/pool/stable目录下载对应的DEB安装包，安装：
+$ sudo dpkg -i /path/to/package.</description>
+    </item>
+    
+    <item>
+      <title>Docker安装：在Mac上安装</title>
+      <link>https://nkcoder.github.io/posts/docker/install-docker-on-mac/</link>
+      <pubDate>Sun, 07 Jun 2020 14:11:43 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/docker/install-docker-on-mac/</guid>
+      <description>安装Docker Desktop Link to heading Docker提供了Mac版的安装包，在Docker 网站下载docker.dmg安装即可。
+Mac版Docker的底层是基于Linux VM运行的，即Docker daemon是运行在一个轻量级的Linux VM之上的。
+Mac版Docker主要用于开发和测试。
+安装之后，可以执行相关命令检查下：
+➜ ~ docker --version Docker version 19.03.8, build afacb8b ➜ ~ docker-compose --version docker-compose version 1.25.4, build 8d51620a 故障排除 Link to heading 如果docker出现故障，除了可以卸载重新安装，还可以试试Mac版Docker自带的故障排除功能，点击Docker小鲸鱼后，选择Troubleshoot：
+可以进行诊断、重置磁盘等操作。
+Dashboard Link to heading Mac版Docker还提供了一个可视化的界面，可以看到当前运行的容器的状态、例子以及配置等信息，如：
+Kubernetes Link to heading Mac版Docker包含一个单机的Kubernetes服务器，可以将Docker容器或服务部署到Kubernetes中去测试。
+Enable Kubernetes：表示启用自带的Kubernetes Deploy Docker Stacks to Kubernetes by default：将Kubernetes设置为docker stack默认的服务编排器 首先使Kubernetes客户端kubectl连接本地的Kubernetes服务器：
+➜ ~ kubectl config get-contexts CURRENT NAME CLUSTER AUTHINFO NAMESPACE * docker-desktop docker-desktop docker-desktop docker-for-desktop docker-desktop docker-desktop ➜ ~ kubectl config use-context docker-desktop Switched to context &amp;#34;docker-desktop&amp;#34;.</description>
+    </item>
+    
+  </channel>
+</rss>

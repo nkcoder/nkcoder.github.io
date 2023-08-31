@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Scala: Functional Objects · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Constructing an object Link to heading class Rational(n: Int, d: Int) { println(&#34;Created &#34; &#43; n &#43; &#34;/&#34; &#43; d) } If your class doesn&rsquo;t have a body, you don&rsquo;t need to specify empty curly braces. The identifiers n and d are called class parameters, the Scala compiler will create a primary constructor that takes these two parameters. The Scala compiler will compile any code you place in the class body, which isn&rsquo;t part of a field or a method definition, into the primary constructor.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scala: Functional Objects"/>
+<meta name="twitter:description" content="Constructing an object Link to heading class Rational(n: Int, d: Int) { println(&#34;Created &#34; &#43; n &#43; &#34;/&#34; &#43; d) } If your class doesn&rsquo;t have a body, you don&rsquo;t need to specify empty curly braces. The identifiers n and d are called class parameters, the Scala compiler will create a primary constructor that takes these two parameters. The Scala compiler will compile any code you place in the class body, which isn&rsquo;t part of a field or a method definition, into the primary constructor."/>
+
+<meta property="og:title" content="Scala: Functional Objects" />
+<meta property="og:description" content="Constructing an object Link to heading class Rational(n: Int, d: Int) { println(&#34;Created &#34; &#43; n &#43; &#34;/&#34; &#43; d) } If your class doesn&rsquo;t have a body, you don&rsquo;t need to specify empty curly braces. The identifiers n and d are called class parameters, the Scala compiler will create a primary constructor that takes these two parameters. The Scala compiler will compile any code you place in the class body, which isn&rsquo;t part of a field or a method definition, into the primary constructor." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/scala-programming/3-functional-objects/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-07-31T18:49:25+08:00" />
+<meta property="article:modified_time" content="2021-07-31T18:49:25+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/scala-programming/3-functional-objects/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/scala-programming/3-functional-objects/">
+              Scala: Functional Objects
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-07-31T18:49:25&#43;08:00">
+                July 31, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              5-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/scala/">Scala</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="constructing-an-object">
+  Constructing an object
+  <a class="heading-link" href="#constructing-an-object">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">,</span> d<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Created &#34;</span> <span style="color:#ff79c6">+</span> n <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/&#34;</span> <span style="color:#ff79c6">+</span> d<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>If your class doesn&rsquo;t have a body, you don&rsquo;t need to specify empty curly braces.</li>
+<li>The identifiers <code>n</code> and <code>d</code> are called <strong>class parameters,</strong> the Scala compiler will create a <strong>primary constructor</strong> that takes these two parameters.</li>
+<li>The Scala compiler will compile any code you place in the class body, which isn&rsquo;t part of a field or a method definition, into the primary constructor.</li>
+</ul>
+<h2 id="adding-fields">
+  Adding fields
+  <a class="heading-link" href="#adding-fields">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">,</span> d<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> numer<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> n
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> <span style="color:#ff79c6">val</span> denom<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> add<span style="color:#ff79c6">(</span>value<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> n <span style="color:#ff79c6">+</span> d <span style="color:#ff79c6">+</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> anotherAdd<span style="color:#ff79c6">(</span>value<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span>n <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">.</span>d <span style="color:#ff79c6">+</span> value
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> add<span style="color:#ff79c6">(</span>that<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>d <span style="color:#ff79c6">+</span> d <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>n<span style="color:#ff79c6">,</span> d <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>d<span style="color:#ff79c6">)</span> <span style="color:#6272a4">// value d is not a member of Rational
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">def</span> anotherAdd<span style="color:#ff79c6">(</span>that<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>numer <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>denom <span style="color:#ff79c6">+</span> denom <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>numer<span style="color:#ff79c6">,</span> denom <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>denom<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>Class parameters are visible in the scope of the class, which means they can be used in class body, in methods and constructors.</li>
+<li>Although <code>n</code> and <code>d</code> are in the scope of <code>add()</code>, but you can only access them on the object on which <code>add()</code> was invoked.</li>
+<li><code>numer</code> and <code>denom</code> are fields, so you can access them on objects.</li>
+<li>To make a field or method private you simply place the <strong>private</strong> keyword in front of the definition.</li>
+</ul>
+<h2 id="auxiliary-constructors">
+  Auxiliary constructors
+  <a class="heading-link" href="#auxiliary-constructors">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">,</span> d<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">def</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">,</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>In Scala, constructors other than the primary constructor are called <strong>auxiliary constructors</strong>.</li>
+<li>Every auxiliary constructor must invoke another constructor of the same class as its first action. Every constructor invocation will end up eventually calling the primary constructor.</li>
+</ul>
+<h2 id="defining-operators">
+  Defining operators
+  <a class="heading-link" href="#defining-operators">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">,</span> d<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">val</span> numer<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> n
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">val</span> denom<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">def</span> <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">(</span>that<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>numer <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>denom <span style="color:#ff79c6">+</span> denom <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>numer<span style="color:#ff79c6">,</span> denom <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>denom<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">def</span> <span style="color:#ff79c6">*</span> <span style="color:#ff79c6">(</span>that<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span>numer <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>numer<span style="color:#ff79c6">,</span> denom <span style="color:#ff79c6">*</span> that<span style="color:#ff79c6">.</span>denom<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">val</span> r <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span><span style="color:#bd93f9">1</span><span style="color:#ff79c6">,</span> <span style="color:#bd93f9">5</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> r<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> <span style="color:#ff79c6">val</span> t <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">Rational</span><span style="color:#ff79c6">(</span><span style="color:#bd93f9">2</span><span style="color:#ff79c6">,</span> <span style="color:#bd93f9">5</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> t<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> r <span style="color:#ff79c6">+</span> t
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> res1<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">15</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">25</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> r <span style="color:#ff79c6">*</span> t
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> res2<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">25</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> r<span style="color:#ff79c6">.+(</span>t<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> res3<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">15</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">25</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>scala<span style="color:#ff79c6">&gt;</span> r <span style="color:#ff79c6">+</span> r <span style="color:#ff79c6">*</span> t
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> res4<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Rational</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">35</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">125</span>
+</span></span></code></pre></div><ul>
+<li>The operator syntax is equivalent to the method call.</li>
+<li>Given Scala&rsquo;s rules for operator precedence, the <code>*</code> method will bind more tightly than the <code>+</code> method, which means <code>x + x * y</code> will execute as <code>x + (x * y)</code>.</li>
+</ul>
+<h2 id="identifiers">
+  Identifiers
+  <a class="heading-link" href="#identifiers">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ul>
+<li><code>$</code> is reserved for identifiers generated by the Scala compiler.** Identifiers in user programs should not contain <code>$</code> characters since it might lead to name clashes with identifiers generated by the Scala compiler.</li>
+<li>Although underscores(<code>_</code>) are legal in identifiers, they are not used that often in Scala programs. <strong>Because underscores have many other non-identifier uses in Scala code.</strong> As a result, it is best to avoid identifiers like <code>to_string</code>, <code>__init__</code> or <code>name_</code>.</li>
+<li>constant <em>versus</em> val:
+<ul>
+<li>In Scala, the word <em>constant</em> doesn&rsquo;t just mean <code>val</code>.</li>
+<li><strong>Even though a <code>val</code> does remain constant after it&rsquo;s initialized, it is still a variable.</strong> For example, method parameters are <em>vals</em>, but each time the method is called, those vals can hold different values.</li>
+<li>A constant is more permanent. For example, <code>scala.math.PI</code> is defined to be the double value closet to the real value of π. This value is unlikely to change ever, thus <strong>PI</strong> is clearly a constant.</li>
+<li>Constant use cases:
+<ul>
+<li>Give names to values that would otherwise be <em>magic numbers</em> in your code: literal values with no explanation.</li>
+<li>Define constants for use in pattern matching</li>
+</ul>
+</li>
+<li><strong>In Scala, naming convention for constants is merely that the first character should be upper case.</strong> For example: <code>Preset_offset_years</code>.</li>
+</ul>
+</li>
+<li>The Scala compiler will internally mangle operator identifiers to turn them into legal Java identifiers with embedded <em>$</em> characters. For instance, the operator identifier <code>:-&gt;</code> would be represented internally as <code>$colon$minus$greater</code>. If you ever wanted to access this identifier from Java code, you&rsquo;d need to use the internal representation.</li>
+<li>You can put any string that&rsquo;s accepted by the runtime as an identifier between back ticks. The result is always a Scala identifier. A typical use case is accessing the static <code>yield</code> method in Java&rsquo;s <code>Thread</code> class. You cannot write <code>Thread.yield()</code> because <code>yield</code> is a reserved work in Scala.  However you can still name the method in back ticks:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#50fa7b">Thread</span><span style="color:#ff79c6">.</span>`yield()`
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="immutable-object-trade-offs">
+  Immutable object trade-offs
+  <a class="heading-link" href="#immutable-object-trade-offs">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Immutable objects offer several advantages over mutable objects, and one potential disadvantage.</p>
+<ul>
+<li>Immutable objects are often easier to reason about because <strong>they don&rsquo;t have complex state spaces that change over time.</strong></li>
+<li><strong>You can pass immutable objects around quite freely</strong>, whereas you may need to make defensive copies of mutable objects before passing them to other code.</li>
+<li>There is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed.</li>
+<li>Immutable objects make safe hash table keys.</li>
+<li>The main disadvantage of immutable objects is that they sometimes require that a large object graph be copied, whereas an update could be done in its place.</li>
+</ul>
+<blockquote>
+<p>This is my Scala notes as a Developer with heavy Java experience.《Programming in Scala》(Fourth Edition)(2.13): Martin Odersky | Lex Spoon | Bill Venner</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

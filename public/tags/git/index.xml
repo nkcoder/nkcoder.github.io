@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/tags/git/</link>
+    <description>Recent content in git on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Mar 2021 09:35:55 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git 提交或克隆代码失败（hung up unexpectedly)</title>
+      <link>https://nkcoder.github.io/posts/git-clone-or-push-hung-up/</link>
+      <pubDate>Sat, 06 Mar 2021 09:35:55 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/git-clone-or-push-hung-up/</guid>
+      <description>如果git提交 (push)或克隆 (clone)代码时，报如下的错误：
+可以尝试将http.postBuffer参数调大一点：
+git config --global http.postBuffer 10M 通过git config --help可以看到http.postBuffer相关的解释：
+http.postBuffer Maximum size in bytes of the buffer used by smart HTTP transports when POSTing data to the remote system. For requests larger than this buffer size, HTTP/1.1 and Transfer-Encoding: chunked is used to avoid creating a massive pack file locally. Default is 1 MiB, which is sufficient for most requests.
+即，http.postBuffer参数是HTTP与远程系统交互的缓冲区大小，默认为1MiB（=1.048576MB）。
+参考：
+The remote end hung up unexpectedly while git cloning </description>
+    </item>
+    
+  </channel>
+</rss>

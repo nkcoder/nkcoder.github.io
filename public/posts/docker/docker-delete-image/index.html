@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Docker镜像：删除镜像 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="删除本地镜像命令为：docke image rm，等价的命令为：docker rmi和docker image remove。
+➜ ~ docker image rm --help Usage:	docker image rm [OPTIONS] IMAGE [IMAGE...] Remove one or more images Aliases: rm, rmi, remove Options: -f, --force Force removal of the image --no-prune Do not delete untagged parents 可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：
+➜ ~ docker rmi nkcoder/freeimmi_mini:4.12 ➜ ~ docker rmi 5ec653d76efc ➜ ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87 如果一个镜像关联了多个标签，是不能直接删除的：
+➜ ~ docker images alpine REPOSITORY TAG IMAGE ID CREATED SIZE alpine 950 f70734b6a266 2 weeks ago 5.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker镜像：删除镜像"/>
+<meta name="twitter:description" content="删除本地镜像命令为：docke image rm，等价的命令为：docker rmi和docker image remove。
+➜ ~ docker image rm --help Usage:	docker image rm [OPTIONS] IMAGE [IMAGE...] Remove one or more images Aliases: rm, rmi, remove Options: -f, --force Force removal of the image --no-prune Do not delete untagged parents 可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：
+➜ ~ docker rmi nkcoder/freeimmi_mini:4.12 ➜ ~ docker rmi 5ec653d76efc ➜ ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87 如果一个镜像关联了多个标签，是不能直接删除的：
+➜ ~ docker images alpine REPOSITORY TAG IMAGE ID CREATED SIZE alpine 950 f70734b6a266 2 weeks ago 5."/>
+
+<meta property="og:title" content="Docker镜像：删除镜像" />
+<meta property="og:description" content="删除本地镜像命令为：docke image rm，等价的命令为：docker rmi和docker image remove。
+➜ ~ docker image rm --help Usage:	docker image rm [OPTIONS] IMAGE [IMAGE...] Remove one or more images Aliases: rm, rmi, remove Options: -f, --force Force removal of the image --no-prune Do not delete untagged parents 可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：
+➜ ~ docker rmi nkcoder/freeimmi_mini:4.12 ➜ ~ docker rmi 5ec653d76efc ➜ ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87 如果一个镜像关联了多个标签，是不能直接删除的：
+➜ ~ docker images alpine REPOSITORY TAG IMAGE ID CREATED SIZE alpine 950 f70734b6a266 2 weeks ago 5." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/docker/docker-delete-image/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-16T06:40:26+08:00" />
+<meta property="article:modified_time" content="2020-06-16T06:40:26+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/docker/docker-delete-image/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/docker/docker-delete-image/">
+              Docker镜像：删除镜像
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-06-16T06:40:26&#43;08:00">
+                June 16, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/docker/">docker</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>删除本地镜像命令为：<code>docke image rm</code>，等价的命令为：<code>docker rmi</code>和<code>docker image remove</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker image rm --help
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Usage:	docker image rm <span style="color:#ff79c6">[</span>OPTIONS<span style="color:#ff79c6">]</span> IMAGE <span style="color:#ff79c6">[</span>IMAGE...<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Remove one or more images
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Aliases:
+</span></span><span style="display:flex;"><span>  rm, rmi, remove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Options:
+</span></span><span style="display:flex;"><span>  -f, --force      Force removal of the image
+</span></span><span style="display:flex;"><span>      --no-prune   Do not delete untagged parents
+</span></span></code></pre></div><p>可以使用镜像ID、镜像tag、镜像摘要来标识并删除一个镜像：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker rmi nkcoder/freeimmi_mini:4.12
+</span></span><span style="display:flex;"><span>➜  ~ docker rmi 5ec653d76efc
+</span></span><span style="display:flex;"><span>➜  ~ docker rmi sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87
+</span></span></code></pre></div><p>如果一个镜像关联了多个标签，是不能直接删除的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker images alpine
+</span></span><span style="display:flex;"><span>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+</span></span><span style="display:flex;"><span>alpine              <span style="color:#bd93f9">950</span>                 f70734b6a266        <span style="color:#bd93f9">2</span> weeks ago         5.61MB
+</span></span><span style="display:flex;"><span>alpine              latest              f70734b6a266        <span style="color:#bd93f9">2</span> weeks ago         5.61MB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker image rm f70734b6a266
+</span></span><span style="display:flex;"><span>Error response from daemon: conflict: unable to delete f70734b6a266 <span style="color:#ff79c6">(</span>must be forced<span style="color:#ff79c6">)</span> - image is referenced in multiple repositories
+</span></span></code></pre></div><p>必须先移除tag引用才可以删除镜像（最后一个tag被删除时，镜像被自动删除），或者使用<code>-f</code>参数强制删除：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker rmi alpine:950
+</span></span><span style="display:flex;"><span>Untagged: alpine:950
+</span></span><span style="display:flex;"><span>➜  ~ docker rmi alpine:latest
+</span></span><span style="display:flex;"><span>Untagged: alpine:latest
+</span></span><span style="display:flex;"><span>Untagged: alpine@sha256:9a839e63dad54c3a6d1834e29692c8492d93f90c59c978c1ed79109ea4fb9a54
+</span></span><span style="display:flex;"><span>Deleted: sha256:f70734b6a266dcb5f44c383274821207885b549b75c8e119404917a61335981a
+</span></span><span style="display:flex;"><span>Deleted: sha256:3e207b409db364b595ba862cdc12be96dcdad8e36c59a03b7b3b61c946a5741a
+</span></span></code></pre></div><p>如果镜像当前正被container使用，则必须先停止和删除所有使用该镜像的container：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ docker rmi nkcoder/freeimmi_mini:4.12
+</span></span><span style="display:flex;"><span>Error response from daemon: conflict: unable to remove repository reference <span style="color:#f1fa8c">&#34;nkcoder/freeimmi_mini:4.12&#34;</span> <span style="color:#ff79c6">(</span>must force<span style="color:#ff79c6">)</span> - container 5b58606bfe7f is using its referenced image 5ec653d76efc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>➜  ~ docker container rm 5b58606bfe7f
+</span></span><span style="display:flex;"><span>5b58606bfe7f
+</span></span><span style="display:flex;"><span>➜  ~ docker rmi nkcoder/freeimmi_mini:4.12
+</span></span><span style="display:flex;"><span>Untagged: nkcoder/freeimmi_mini:4.12
+</span></span><span style="display:flex;"><span>Untagged: nkcoder/freeimmi_mini@sha256:f2e0e5a3263ba1d749768ba173dd769aade7616d5593065904efdbf77742cd87
+</span></span><span style="display:flex;"><span>Deleted: sha256:5ec653d76efccc0f2b235676aa1251dac7d268a11121f9638dac92e07912709e
+</span></span><span style="display:flex;"><span>Deleted: sha256:1730452bc8977999c6be96bf1e518ad4a7a3f89911d57c75163798267f573a52
+</span></span><span style="display:flex;"><span>Deleted: sha256:0fca82a48216c21010bc1f8732e85b33474ca1302610e239d19094db1913c7d8
+</span></span><span style="display:flex;"><span>Deleted: sha256:1bfeebd65323b8ddf5bd6a51cc7097b72788bc982e9ab3280d53d3c613adffa7
+</span></span></code></pre></div><h3 id="reference">
+  reference:
+  <a class="heading-link" href="#reference">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/commandline/rmi/"  class="external-link" target="_blank" rel="noopener">docker rmi</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

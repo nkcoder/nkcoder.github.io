@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>junit5 on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/tags/junit5/</link>
+    <description>Recent content in junit5 on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Feb 2020 23:23:29 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/junit5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Junit5 用法介绍</title>
+      <link>https://nkcoder.github.io/posts/junit5-tutorial/</link>
+      <pubDate>Wed, 19 Feb 2020 23:23:29 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/junit5-tutorial/</guid>
+      <description>Junit 5 简介 Link to heading Junit 5 由三个子项目构成：
+JUnit 5 = JUnit Platform + JUnit Jupiter + JUnit Vintage JUnit Platform：在 JVM 上启动测试框架的基础 JUnit Jupiter：提供在 JUnit 5 环境下编写测试和扩展的编程模型和扩展模型 JUnit Vintage：兼容 JUnit 3 和 JUnit 4 环境编写的测试 Junit 5 需要 Java 8 以上版本。
+如果在新环境下，仅支持 JUnit 5，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) 如果需要支持 JUnit 3 或 JUnit 4，需要加入 junit-vintage 的依赖，gradle 依赖如下：
+testImplementation(&#39;org.junit.jupiter:junit-jupiter:5.4.2&#39;) testImplementation(&#39;org.junit.vintage:junit-vintage-engine:5.4.1&#39;) testImplementation(&#39;junit:junit:4.12&#39;) 常用注解汇总 Link to heading 注解 说明 @Test 表明这是一个测试方法，类比于 JUnit 4 的@Test但是不支持任何参数 @ParameterizedTest 带参数的测试 @RepeatedTest 使测试重复执行 @TestFactory 该方法是一个支持动态测试的测试工厂 @TestTemplate 该方法是一个测试模板，支持在不同的测试场景下的多次调用 @TestMethodOrder 配置测试方法的执行顺序 @TestInstance 配置测试实例的生命周期 @DisplayName 自定义显示名称 @DisplayNameGeneration 自定义显示名称生成器 @BeforeEach 该方法会在当前类的每一个测试方法之前执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@Before 类似 @AfterEach 该方法会在当前类的每一个测试方法之后执行，包括：@Test, @RepeatedTest, @ParameterizedTest, @TestFactory, 与 JUnit 4 的@After 类似 @BeforeAll 该方法在当前类的所有测试方法之前执行，类似于 JUnit 4 的@BeforeClass @AfterAll 该方法在当前类的所有测试方法之后执行，类似于 JUnit 4 的@AfterClass @Tag 用于测试的过滤，类似于 JUnit 4 的 Category 和 TestNG 的 Group @Disabled 禁用当前测试，类比于 JUnit 4 的@Ignore @TempDir 通过字段注入或参数注入提供一个临时目录 自定义注解 Link to heading 比如我们要给一个类的所有测试方法加上一个@Tag(&amp;quot;fast&amp;quot;)，我们可以定义一个新的注解，然后用@FastTest替换@Test:</description>
+    </item>
+    
+  </channel>
+</rss>

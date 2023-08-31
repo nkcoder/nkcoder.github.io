@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Quartz系列九：Job Stores · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Quartz系列文章的第九篇：介绍Job Stores">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Quartz系列九：Job Stores"/>
+<meta name="twitter:description" content="Quartz系列文章的第九篇：介绍Job Stores"/>
+
+<meta property="og:title" content="Quartz系列九：Job Stores" />
+<meta property="og:description" content="Quartz系列文章的第九篇：介绍Job Stores" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-19T21:12:59+08:00" />
+<meta property="article:modified_time" content="2020-02-19T21:12:59+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/quartz/quartz-tutorial-9-job-stores/">
+              Quartz系列九：Job Stores
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-19T21:12:59&#43;08:00">
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/quartz/">quartz</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>JobStore 主要是追踪 scheduler 中的&quot;工作数据&quot;: jobs, triggers, calendars 等。为 scheduler 选择合适的 JobStore 是很重要的一步。如果你理解了它们之间的区别，选择就很简单了。在 SchedulerFactory 使用的配置文件（或对象）中声明 scheduler 的 JobStore（通过配置）。</p>
+<blockquote>
+<p>不要在代码中直接声明 JobStore 实例。由于某些原因，很多人尝试这样做。JobStore 是 Quartz 幕后使用的。你只需要通过配置告诉 Quartz 使用哪个 JobStore，然后在代码中使用 Scheduler 接口即可。</p>
+</blockquote>
+<h2 id="ramjobstore">
+  RAMJobStore
+  <a class="heading-link" href="#ramjobstore">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>RAMJobStore 是最容易使用的 JobStore，也是性能最好的（从 CPU 角度来看）。从名字就可以看出来：它将所有数据存在 RAM 中。这也是它如此快、如此易配置的原因。缺点是：当应用停止（或崩溃）时，所有的调度信息都将丢失 - 这也意味着 RAMJobStore 并不支持 jobs 和 triggers 的“持久性”。对有些应用来说这是可接受的 - 甚至是期望的，但是对于其它的应用，这可能是灾难性的。</p>
+<p><strong>配置 Quartz 使用 RAMJobStore</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span> <span style="color:#ff79c6">=</span> org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">simpl</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">RAMJobStore</span>
+</span></span></code></pre></div><p>没有其它的配置了。</p>
+<h2 id="jdbcjobstore">
+  JDBCJobStore
+  <a class="heading-link" href="#jdbcjobstore">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>JDBCJobStore - 将所有的数据通过 JDBC 保存在数据库中。正因如此，它比 RAMJobStore 的配置要复杂一些，也没那么快。但是，它的性能缺陷并没有那么不堪，尤其是当你在数据库的主键上都创建了索引。在目前主流的机器上，在局域网（scheduler 和 databasae 之间）环境下，接收和更新一个 trigger 的时间一般小于 10 毫秒。</p>
+<p>JDBCJobStore 可以与几乎所有的数据库一起工作，它已经被广泛用于 Oracle、PostgreSQL、MySQL、MS SQLServer、HSQLDB 和 DB2。要使用 JDBCJobStore，首先需要创建一组 Quartz 使用的数据库。你可以在 Quartz 包的&quot;docs/dbTables&quot;目录下找到创建表的 SQL 脚本。如果你没找到适合你的数据库的脚本，在其中一种脚本上修改下即可。需要注意的是：所有的表都是以&quot;QRTZ_&ldquo;为前缀的（如&quot;QRTZ_TRIGGERS&quot;和“QRTZ_JOB_DETAIL”）。前缀可以是任意值，只要在配置文件中告诉 JDBCJobStore 前缀的值即可。在同一个数据库中，对于不同的 scheduler 实例，使用不同的前缀去创建表是非常有用的。</p>
+<p>表创建好后，在配置和使用 JDBCJobStore 之前，还有重要的一步。你需要决定使用哪种事务。如果你不需要将调度命令（如增加和删除 trigger）与其它事务绑定，你可以让 Quartz 通过<strong>JobStoreTX</strong>来管理事务（这是最常用的选择）。</p>
+<p>如果你需要 Quartz 与其它事务一起工作（比如在 J2EE 应用中），你应该使用<strong>JobStoreCMT</strong> - 在这种情况下，Quartz 会让应用服务器管理事务。</p>
+<p>最后一步就是设置 DataSource，以便 JDBCJobStore 可以从数据库获取连接。DataSource 可以使用多种方式在 Quartz 配置文件中定义。一种方式是让 Quartz 自己创建和管理 DataSource - 通过提供数据库所有连接相关的信息。另一种方式是应用服务器提供 DataSource - 为 JDBCJobStore 提供 DataSource 的 JNDI 名称。配置细节，参考&quot;docs/config&quot;目录下的样例配置文件。</p>
+<p>使用 JDBCJobStore（假设你当前使用的是 StdSchedulerFactory），你首先需要将 JobStore 的 class 属性设置为：org.quartz.impl.jdbcjobstore.JobStoreTX 或者 org.quartz.impl.jdbcjobstore.JobStoreCMT，取决于你选择的事务管理方式。</p>
+<p><strong>Configuring Quartz to use JobStoreTx</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span> <span style="color:#ff79c6">=</span> org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">impl</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jdbcjobstore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">JobStoreTX</span>
+</span></span></code></pre></div><p>然后你需要选择 JobStore 使用的 DriverDelegate。DriverDelegate 主要做数据库相关的 JDBC 工作。StdJDBCDelegate 是使用普通的 JDBC 代码（SQL 语句）的一种代理。如果没有与数据库特定的代理，可以尝试使用 StdJDBCDelegate - 我们仅为那些使用 StdJDBCDelegate 有问题的数据库提供了特定的代理。其它代理可以在“org.quartz.impl.jdbcjobstore”包或子包下找到，包括 DB2v6Delegate, HSQLDBDelegate, MSSQLDelegate, PostgreSQLDelegate,WeblogicDelegate, OracleDelegate 等。</p>
+<p>选好了代理，将 class name 设置为 JDBCJobStore 使用的代理：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">driverDelegateClass</span> <span style="color:#ff79c6">=</span> org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">impl</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jdbcjobstore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">StdJDBCDelegate</span>
+</span></span></code></pre></div><p>接下来，需要告诉 JobStore 表名的前缀：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">tablePrefix</span> <span style="color:#ff79c6">=</span> QRTZ_
+</span></span></code></pre></div><p>最后，设置 JobStore 使用的 DataSource。DataSource 的名字必须在 Quartz 配置文件中定义。比如我们使用名为“myDS”的 DataSource（在配置文件中已定义）：</p>
+<p><strong>Configuring JDBCJobStore with the name of the DataSource to use</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">dataSource</span> <span style="color:#ff79c6">=</span> myDS
+</span></span></code></pre></div><blockquote>
+<p>如果你的 Scheduler 很忙（比如，总是执行与线程池线程数量一致的 job），可能需要将 DataSource 中连接数的数量设置为线程池大小+2.</p>
+</blockquote>
+<blockquote>
+<p>将&quot;org.quartz.jobStore.useProperties&quot;参数设置为“true&rdquo;（默认是 false）告诉 JDBCJobStore，JobDataMaps 中所有的值都是 String 类型，因此可以使用 name-value 形式存储，而不是在 BLOB 列中存储复杂对象的序列化结果。从长远来讲更安全，因为避免了将非 String 了行序列化为 BLOG 过程中的版本问题。</p>
+</blockquote>
+<h2 id="terracottajobstore">
+  TerracottaJobStore
+  <a class="heading-link" href="#terracottajobstore">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>TerracottaJobStore 提供了更好的扩展性和健壮性，且不使用数据库。意味着你的数据库不需要支持 Quartz 的负载，可以将数据库资源用于应用的其它部分。</p>
+<p>TerracottaJobStore 可以运行在集群或非集群模式，在任何一种模式下都可以保证在应用重启时 job 数据的持久化，因为数据是存储在 Terracotta 服务器上。性能比使用数据库高很多（差不多一个量级），但比 RAMJobStore 要慢。</p>
+<p>要使用 TerracottaJobStore（假设你当前使用的是 StdSchedulerFactory），只需要设置 org.quartz.jobStore.class = org.terracotta.quartz.TerracottaJobStore，并添加额外一行配置指定 Terracotta 服务器的地址：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">class</span> <span style="color:#ff79c6">=</span> org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">terracotta</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">TerracottaJobStore</span>
+</span></span><span style="display:flex;"><span>org<span style="color:#ff79c6">.</span><span style="color:#50fa7b">quartz</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">jobStore</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">tcConfigUrl</span> <span style="color:#ff79c6">=</span> localhost<span style="color:#ff79c6">:</span>9510
+</span></span></code></pre></div><p>关于 JobStore 和 Terracotta 的更多信息请参考：http://www.terracotta.org/quartz 。</p>
+<ul>
+<li>原文链接<a href="http://www.quartz-scheduler.org/documentation/2.4.0-SNAPSHOT/tutorials/tutorial-lesson-09.html"  class="external-link" target="_blank" rel="noopener">Lesson 9: Job Stores</a></li>
+<li>有兴趣的朋友可以参考我在 github 上的项目：<a href="https://github.com/nkcoder/quartz-explained"  class="external-link" target="_blank" rel="noopener">quartz 源码注释</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

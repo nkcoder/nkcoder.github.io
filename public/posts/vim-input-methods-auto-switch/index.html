@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  VIM中输入法自动切换的问题 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="问题描述：
+在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。
+期望结果：
+插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。
+确定英文输入法 Link to heading 首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的U.S.，如下图所示：
+VSCode Vim中如何解决 Link to heading 首先需要安装im-select，参考最新的安装文档，如在macOS系统下，通过以下命令安装：
+curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh 获取当前输入法的ID，如果英文输入法为U.S.，则ID应该为com.apple.keylayout.US：
+➜ ~ im-select com.apple.keylayout.US 然后在VSCode的settings.json（通过 Open Settings (JSON) 命令可以直接打开）中添加如下配置：
+&#34;vim.autoSwitchInputMethod.enable&#34;: true, &#34;vim.autoSwitchInputMethod.defaultIM&#34;: &#34;com.apple.keylayout.US&#34;, &#34;vim.autoSwitchInputMethod.obtainIMCmd&#34;: &#34;/usr/local/bin/im-select&#34;, &#34;vim.autoSwitchInputMethod.switchIMCmd&#34;: &#34;/usr/local/bin/im-select {im}&#34; 测试下，应该可以了。
+iTerm2 Vim中如何解决 Link to heading 通过SmartIM解决，先参考官方文档安装，如通过Vundle安装：
+在~/.vimrc中添加配置：Plugin &#39;ybian/smartim&#39; 打开vim，执行命令：:PluginInstall 相关的.vimrc参考：
+set nocompatible &#34; be iMproved, required filetype off &#34; required &#34; set the runtime path to include Vundle and initialize set rtp&#43;=~/.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="VIM中输入法自动切换的问题"/>
+<meta name="twitter:description" content="问题描述：
+在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。
+期望结果：
+插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。
+确定英文输入法 Link to heading 首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的U.S.，如下图所示：
+VSCode Vim中如何解决 Link to heading 首先需要安装im-select，参考最新的安装文档，如在macOS系统下，通过以下命令安装：
+curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh 获取当前输入法的ID，如果英文输入法为U.S.，则ID应该为com.apple.keylayout.US：
+➜ ~ im-select com.apple.keylayout.US 然后在VSCode的settings.json（通过 Open Settings (JSON) 命令可以直接打开）中添加如下配置：
+&#34;vim.autoSwitchInputMethod.enable&#34;: true, &#34;vim.autoSwitchInputMethod.defaultIM&#34;: &#34;com.apple.keylayout.US&#34;, &#34;vim.autoSwitchInputMethod.obtainIMCmd&#34;: &#34;/usr/local/bin/im-select&#34;, &#34;vim.autoSwitchInputMethod.switchIMCmd&#34;: &#34;/usr/local/bin/im-select {im}&#34; 测试下，应该可以了。
+iTerm2 Vim中如何解决 Link to heading 通过SmartIM解决，先参考官方文档安装，如通过Vundle安装：
+在~/.vimrc中添加配置：Plugin &#39;ybian/smartim&#39; 打开vim，执行命令：:PluginInstall 相关的.vimrc参考：
+set nocompatible &#34; be iMproved, required filetype off &#34; required &#34; set the runtime path to include Vundle and initialize set rtp&#43;=~/."/>
+
+<meta property="og:title" content="VIM中输入法自动切换的问题" />
+<meta property="og:description" content="问题描述：
+在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。
+期望结果：
+插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。
+确定英文输入法 Link to heading 首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的U.S.，如下图所示：
+VSCode Vim中如何解决 Link to heading 首先需要安装im-select，参考最新的安装文档，如在macOS系统下，通过以下命令安装：
+curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh 获取当前输入法的ID，如果英文输入法为U.S.，则ID应该为com.apple.keylayout.US：
+➜ ~ im-select com.apple.keylayout.US 然后在VSCode的settings.json（通过 Open Settings (JSON) 命令可以直接打开）中添加如下配置：
+&#34;vim.autoSwitchInputMethod.enable&#34;: true, &#34;vim.autoSwitchInputMethod.defaultIM&#34;: &#34;com.apple.keylayout.US&#34;, &#34;vim.autoSwitchInputMethod.obtainIMCmd&#34;: &#34;/usr/local/bin/im-select&#34;, &#34;vim.autoSwitchInputMethod.switchIMCmd&#34;: &#34;/usr/local/bin/im-select {im}&#34; 测试下，应该可以了。
+iTerm2 Vim中如何解决 Link to heading 通过SmartIM解决，先参考官方文档安装，如通过Vundle安装：
+在~/.vimrc中添加配置：Plugin &#39;ybian/smartim&#39; 打开vim，执行命令：:PluginInstall 相关的.vimrc参考：
+set nocompatible &#34; be iMproved, required filetype off &#34; required &#34; set the runtime path to include Vundle and initialize set rtp&#43;=~/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/vim-input-methods-auto-switch/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-24T23:02:20+08:00" />
+<meta property="article:modified_time" content="2021-02-24T23:02:20+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/vim-input-methods-auto-switch/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/vim-input-methods-auto-switch/">
+              VIM中输入法自动切换的问题
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-02-24T23:02:20&#43;08:00">
+                February 24, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="https://nkcoder.github.io/tags/vim/">vim</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>问题描述：</p>
+<blockquote>
+<p>在命令行中使用vim，或VSCode中安装了vim插件并启用vim模式后，随时可能输入中文和英文。当在vim的插入模式下输入中文后，立即使用ESC切换为命令模式后，因为还是中文输入法状态，所以vim是接收不到命令的，需要首先将输入法切换为英文。</p>
+</blockquote>
+<p>期望结果：</p>
+<blockquote>
+<p>插入模式下可以随意输入中英文，然后使用ESC进入命令模式后，自动切换为英文输入法，命令模式直接可用，再进入插入模式时，自动切换为上一次的输入法。</p>
+</blockquote>
+<h3 id="确定英文输入法">
+  确定英文输入法
+  <a class="heading-link" href="#%e7%a1%ae%e5%ae%9a%e8%8b%b1%e6%96%87%e8%be%93%e5%85%a5%e6%b3%95">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>首先确定自己使用的英文输入法（中文输入法随意），macOS下建议使用默认的<code>U.S.</code>，如下图所示：</p>
+<p><img src="https://nkcoder.github.io/images/tech-by-tag/vim_mac-input-method.png" alt="vim_mac-input-method.png"></p>
+<h3 id="vscode-vim中如何解决">
+  VSCode Vim中如何解决
+  <a class="heading-link" href="#vscode-vim%e4%b8%ad%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>首先需要安装<a href="https://github.com/daipeihust/im-select#installation"  class="external-link" target="_blank" rel="noopener">im-select</a>，参考最新的安装文档，如在macOS系统下，通过以下命令安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -Ls https://raw.githubusercontent.com/daipeihust/im-select/master/install_mac.sh | sh
+</span></span></code></pre></div><p>获取当前输入法的ID，如果英文输入法为<code>U.S.</code>，则ID应该为<code>com.apple.keylayout.US</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  ~ im-select
+</span></span><span style="display:flex;"><span>com.apple.keylayout.US
+</span></span></code></pre></div><p>然后在VSCode的<code>settings.json</code>（通过 <code>Open Settings (JSON)</code> 命令可以直接打开）中添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;vim.autoSwitchInputMethod.enable&#34;</span>: <span style="color:#ff79c6">true</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;vim.autoSwitchInputMethod.defaultIM&#34;</span>: <span style="color:#f1fa8c">&#34;com.apple.keylayout.US&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;vim.autoSwitchInputMethod.obtainIMCmd&#34;</span>: <span style="color:#f1fa8c">&#34;/usr/local/bin/im-select&#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;vim.autoSwitchInputMethod.switchIMCmd&#34;</span>: <span style="color:#f1fa8c">&#34;/usr/local/bin/im-select {im}&#34;</span>
+</span></span></code></pre></div><p>测试下，应该可以了。</p>
+<h3 id="iterm2-vim中如何解决">
+  iTerm2 Vim中如何解决
+  <a class="heading-link" href="#iterm2-vim%e4%b8%ad%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>通过<a href="https://github.com/ybian/smartim"  class="external-link" target="_blank" rel="noopener">SmartIM</a>解决，先参考官方文档安装，如通过Vundle安装：</p>
+<ul>
+<li>在<code>~/.vimrc</code>中添加配置：<code>Plugin 'ybian/smartim'</code></li>
+<li>打开vim，执行命令：<code>:PluginInstall</code></li>
+</ul>
+<p>相关的<code>.vimrc</code>参考：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>set nocompatible              &#34; be iMproved, required
+</span></span><span style="display:flex;"><span>filetype off                  &#34; required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; set the runtime path to include Vundle and initialize
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">set rtp+=~/.vim/bundle/Vundle.vim
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">call vundle#begin()
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> alternatively, pass a path where Vundle should install plugins
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;call vundle#begin(&#39;~/some/path/here&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> Keep Plugin commands between vundle#begin/end.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; let Vundle manage Vundle, required
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">Plugin &#39;VundleVim/Vundle.vim&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> smartim to swith input method automatically
+</span></span><span style="display:flex;"><span>Plugin &#39;ybian/smartim&#39;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; All of your Plugins must be added before the following line
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">call vundle#end()            &#34;</span> required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>filetype plugin indent on    &#34; required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; To ignore plugin indent changes, instead use:
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span>filetype plugin on
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> Brief help
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; :PluginList       - lists configured plugins
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34; :PluginSearch foo - searches for foo; append `!` to refresh local cache
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;</span> see :h vundle for more details or wiki for FAQ
+</span></span><span style="display:flex;"><span>&#34; Put your non-Plugin stuff after this line
+</span></span></code></pre></div><p><a href="https://github.com/ybian/smartim"  class="external-link" target="_blank" rel="noopener">SmartIM</a>假设默认的英文输入法为<code>U.S.</code>（即<code>com.apple.keylayout.US</code>)，如果是其它英文输入法，则在<code>.vimrc</code>中需要添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>let g:smartim_default = &#39;&lt;your_default_keyboard_id&gt;&#39;
+</span></span></code></pre></div><hr>
+<blockquote>
+<p>参考：</p>
+<ol>
+<li><a href="https://www.zhihu.com/question/303850876"  class="external-link" target="_blank" rel="noopener">如何解决VSCode Vim中文输入法切换问题？</a></li>
+<li><a href="https://github.com/ybian/smartim"  class="external-link" target="_blank" rel="noopener">SmartIM</a></li>
+</ol>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

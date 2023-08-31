@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java并发 on My New Hugo Site</title>
+    <link>https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/</link>
+    <description>Recent content in Java并发 on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Oct 2020 08:20:39 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java并发：CyclicBarrier</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc10-cyclicbarrier/</link>
+      <pubDate>Fri, 23 Oct 2020 08:20:39 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc10-cyclicbarrier/</guid>
+      <description>CyclicBarrier可以称为循环栅栏，也是一个线程同步工具，在所有线程到达barrier之前，线程需要等待。
+CyclicBarrier的必需参数为parties，可以称为同伴（线程）的数量：
+CyclicBarrier cyclicBarrier = new CyclicBarrier(10);	当线程调用await()时，表示线程已到达，如果所有线程都已到达，则所有线程继续向后执行，否则线程等待，直到：
+最后一个线程到达 等待中的某个线程被中断 等待中的某个线程在等待的过程中超时 等待中的某个线程调用了CyclicBarrier的reset()方法 如果某个等待的线程被中断，则所有其它等待的线程都会抛出BrokenBarrierException。
+构造CyclicBarrier时还可以带第二个参数，是一个Runnable，即当所有线程都到达barrier时，需要执行的操作。
+CyclicBarrier cyclicBarrier = new CyclicBarrier(10, action); 该操作由最后一个到达barrier的线程会执行，当它执行完之后，其它等待的线程才被允许继续执行。
+CyclicBarrier被称为循环栅栏，是因为它是可以循环使用的。
+实现：
+使用两个变量parties和count保存barrier关联的线程数量，parties用于barrier重复利用时重置线程数，而count用于记录到达barrier的线程的数量，当线程调用await()时，count的值递减，当count的值为0时，表示barrier完成， 线程调用await()，需要加锁，使用ReentrantLock实现。count递减，并判断是否为0： 如果此时count为0，首先如果Runnable不为空，则在当前线程中执行。然后开始新的barrier循环（先将所有等待的线程唤醒，然后使用parties重置count。） 如果count不为0，当前线程等待。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：CountDownLatch</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc9-countdownlatch/</link>
+      <pubDate>Fri, 23 Oct 2020 08:19:55 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc9-countdownlatch/</guid>
+      <description>CountDownLatch可以被称为倒计数器，是一个线程协作工具，可以让一个（或一组线程）等待倒计数器（持有倒计数器的线程执行某项工作）结束，然后开始执行。
+CountDownLatch countDownLatch = new CountDownLatch(10); CountDownLatch的参数表示计数器的值，线程调用countdown()方法使计数器递减，调用await(方法进行等待，当计数器的值为0时，等待的线程继续执行。
+注意：
+线程调用countdown()后，并不会阻塞，而是会继续执行 线程调用await()后会一直阻塞直到计数器的值为0，或者线程被中断 CountDownLatch不能复用 实现：
+CountDownLatch内部有一个AQS（AbstractQueuedSynchronizer）的实现Sync，通过AQS的state参数保存计数器 await()函数，先检查线程是否已被中断，然后检查计数器（即state）是否为0，如果为0，则当前线程继续向后执行，如果不为0，则将当前线程加入到等待队列中 countdown()函数，将计数器的值减1，如果减1后，计数器的值为0，则释放所有等待的线程，如果在减1之前计数器的值已经为0，则什么都不做。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：读写锁ReadWriteLock</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc8-readwritelock/</link>
+      <pubDate>Fri, 23 Oct 2020 08:18:57 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc8-readwritelock/</guid>
+      <description>读写锁允许多个线程同时读，即线程的读读之间是不互斥的，只有线程的读写和写写之间才是互斥的。
+如果系统中数据量很大，读操作远大于写操作，使用读写锁比使用普通的互斥锁，可以更好地提升系统性能。
+ReadWriteLock readWriteLock = new ReentrantReadWriteLock(); 读写锁的默认实现是ReentrantReadWriteLock，有如下特性：
+公平性： 默认非公平锁，即读写锁的获取顺序不定，所以可能会有线程长时间无法获取到锁。非公平锁的吞吐率比公平锁更高。 公平锁，等待时间最长的线程优先获取锁。当锁被释放时，或者是等待时间最长的一个写线程获取到锁，或者是等待时间最长的一组读线程获取到锁。 可重入性：允许读线程/写线程以ReentrantLock的方式重新获取到读/写锁。写线程可以获取读锁，但是读线程不能获取写锁。 锁降级：可重入性允许写锁降级为读锁，即线程先获取写锁，然后获取读锁，然后释放写锁。但是读锁是不能升级为写锁的。 支持Condition：写锁可以像ReentrantLock一样使用ReentrantLock.newCondition，但是读锁不行。 该实现最大支持65535个递归的写锁和65536个读锁，超过限制会报错。 </description>
+    </item>
+    
+    <item>
+      <title>Java并发：Semaphore</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc7-semaphore/</link>
+      <pubDate>Fri, 23 Oct 2020 08:18:02 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc7-semaphore/</guid>
+      <description>synchronized和ReentrantLock，在任一时刻都只允许一个线程访问临界资源，而Semaphore可以允许多个线程同时访问临界资源。
+构造信号量时需要指定许可数，即允许同时访问的线程数量。
+private static final Semaphore SEMAPHORE = new Semaphore(5); 说明：构造函数的第二个参数表示是否公平，即根据先进先出的顺序获取许可。
+信号量的主要方法有：
+public void acquire();	// 获取许可，如果无法获取，则线程等待直到被中断或成功获取到许可 public void acquireUninterruptibly(); // 获取许可，如果无法获取，则线程等待直到成功获取到许可，不响应中断 public boolean tryAcquire();	// 尝试获取许可，成功则返回true，否则返回false public boolean tryAcquire(long timeout, TimeUnit unit); // 尝试获取许可，如果无法获取，等待指定时间 public void release();	// 释放一个许可 注意：tryAcquire()与ReentrantLock的tryLock()方法类似，无论锁是否公平，线程总是会立即获取可用的许可，而不论是否有其它线程在等待。
+try { SEMAPHORE.acquire(); TimeUnit.SECONDS.sleep(3); System.out.println(Thread.currentThread().getId() + &amp;#34;: I&amp;#39;m done.&amp;#34;); // System.out.println(&amp;#34;-------------------------------------------&amp;#34;); } catch (InterruptedException exception) { exception.printStackTrace(); } finally { SEMAPHORE.release(); } </description>
+    </item>
+    
+    <item>
+      <title>Java并发：可重入锁ReentrantLock</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/</link>
+      <pubDate>Fri, 23 Oct 2020 08:16:59 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc6-reentrantlock/</guid>
+      <description>可重入性 Link to heading 可重入锁ReentrantLock，表示一个线程可以反复获得同一把锁。需要注意的是，如果一个线程多次获得锁，那么在释放的时候，也必须释放相同的次数。如果释放的次数少了，相当于当前这个线程还持有锁，其它线程无法获取锁，如果释放的次数多了，会抛出java.lang.IllegalMonitorStateException异常。
+LOCK.lock(); LOCK.lock(); try { i++; } finally { LOCK.unlock(); LOCK.unlock(); } 可中断 Link to heading 通过lock()方法获取锁的时候，如果锁已被其它线程占用，当前线程会休眠（不能被线程调度器调度），直到获取到锁。
+lockInterruptibly方法允许线程在等待锁的过程中被其它线程中断。
+try { lock.lockInterruptibly(); } catch (InterruptedException exception) { // log exception } finally { if (lock.isHeldByCurrentThread()) { lock.unlock(); } 限时等待 Link to heading tryLock()表示线程尝试获取锁，如果获取成功，则占用，并立即返回true；如果获取失败，也不会等待，而是立即返回false。支持可以带时间参数，表示限时等待，如tryLock(3, TimeUnit.SECONDS)等待3秒，超时则失败返回false。
+try { if (lock.tryLock(3, TimeUnit.SECONDS)) { TimeUnit.SECONDS.sleep(5); System.out.println(Thread.currentThread().getId() + &amp;#34;: my job done.&amp;#34;); } else { System.out.println(Thread.currentThread().getId() + &amp;#34;: get lock failed.&amp;#34;); } } catch (InterruptedException exception) { exception.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：volatile与synchronized</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc5-volatile-and-synchronized/</link>
+      <pubDate>Fri, 23 Oct 2020 08:15:01 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc5-volatile-and-synchronized/</guid>
+      <description>锁提供了两种主要特性：互斥和可见性。
+互斥：同一时刻只能一个线程持有某个特定的锁，并访问共享数据 可见性：一个线程在释放锁之前对共享数据的修改，对随后获得该锁的线程是可见的， synchronized是一种锁实现，因此具有互斥和可见性，可以保证线程安全。而volatile变量只能保证可见性，不能代替锁用于线程安全。
+synchronized通过加锁保证任何时刻只会有一个线程访问同步代码块。synchronized加锁主要有三种形式：
+在锁定对象上加锁：只有获得对象的锁才可以进入代码块
+synchronized (object) { ... } 在实例方法上加锁：只有获得当前实例对象的锁才可以进入代码块
+public synchronized void increase() { base++; } 在静态方法上加锁：只有获得类的锁才可以进入代码块
+public static synchronized void increase() { base++; } synchronized除了线程同步、保证线程安全外，还可以保证线程间的可见性和有序性。
+public class VolatileSynchronizedDemo { public static void main(String[] args) throws InterruptedException { CalculateRunnable calculateThread = new CalculateRunnable(); // they should reference the same runnable Thread t1 = new Thread(calculateThread); Thread t2 = new Thread(calculateThread); t1.start(); t2.start(); t1.join(); t2.join(); } public static class CalculateRunnable implements Runnable { private int base = 0; public synchronized void increase() { base++; } @Override public void run() { for (int i = 0; i &amp;lt; 100000; i++) { increase(); } System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：join和yield</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc4-join-and-yield/</link>
+      <pubDate>Fri, 23 Oct 2020 08:12:17 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc4-join-and-yield/</guid>
+      <description>调用线程的join()方法，表示等待该线程执行完后，当前线程再继续执行。
+从实现上看，join()就是调用当前线程的wait()方法进行有限或无限的等待，线程执行完后再调用notifyAll()方法将等待的线程唤醒。
+public final synchronized void join(long millis) throws InterruptedException { long base = System.currentTimeMillis(); long now = 0; if (millis &amp;lt; 0) { throw new IllegalArgumentException(&amp;#34;timeout value is negative&amp;#34;); } if (millis == 0) { while (isAlive()) { wait(0); } } else { while (isAlive()) { long delay = millis - now; if (delay &amp;lt;= 0) { break; } wait(delay); now = System.currentTimeMillis() - base; } } } 因为实现上调用的是当前线程的wait()和notifyAll()，所以应用程序不要直接使用线程的wait()和notifyAll()，以免影响API的使用。</description>
+    </item>
+    
+    <item>
+      <title>Java并发：wait和notify</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc3-wait-and-notify/</link>
+      <pubDate>Thu, 22 Oct 2020 23:42:44 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc3-wait-and-notify/</guid>
+      <description>wait()和notify()都是Object对象上的方法，因此可以在任何对象上调用。
+在一个对象上调用wait()方法后，线程就进入对象的等待队列，即线程在该对象上等待，直到其它线程调用了该对象的notify()或notifyAll()方法。
+一个对象的等待队列可能有多个线程，即多个线程都在等待这个对象。notify()会随机唤醒等待队列上的一个线程，而notifyAll()则会唤醒等待队列上的所有线程。
+必须在获得对象锁的前提下（即在synchronized语句中）才可以调用对象的wait()和notify()方法。
+wait()方法在执行前需先获得对象锁，执行后会自动释放对象锁；notify()方法在执行前需先获得对象锁，但并不会直接释放锁，而是正常执行。被唤醒的线程并不能立即继续执行，在执行前还是需要先获得对象锁。
+import java.util.concurrent.TimeUnit; public class WaitNotifyDemo { public static void main(String[] args) { final Object object = new Object(); Thread t1 = new Thread(&amp;#34;t1&amp;#34;) { @Override public void run() { synchronized (object) { System.out.println( Thread.currentThread().getName() + &amp;#34;, start at &amp;#34; + System.currentTimeMillis()); try { object.wait(); } catch (InterruptedException e) { System.out.println(e.getStackTrace()); } System.out .println(Thread.currentThread().getName() + &amp;#34;, end at &amp;#34; + System.currentTimeMillis()); } } }; Thread t2 = new Thread(&amp;#34;t2&amp;#34;) { @Override public void run() { synchronized (object) { System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：线程中断</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/</link>
+      <pubDate>Thu, 22 Oct 2020 23:34:07 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/</guid>
+      <description>如何让线程停止或退出呢？
+大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过while循环等）。
+Thread类中的suspend()方法和resume()方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被suspend()时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以resume()目标线程的线程在resume()目标线程之前尝试获取该关键资源的锁，此时死锁发生了。
+Thread类的stop()方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被stop()时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。
+停止线程更好的方式是使用中断interrupt()。
+线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。
+Thread类有三个方法与中断有关：
+Thread#isInterrupted()：实例方法，判断线程是否被中断，中断状态不变 Thread#interrupt()：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于wait(), sleep(), join()方法中，则线程会抛出InterruptedException异常，同时中断状态被清除 Thread.interrupted()：静态方法，判断当前线程是否被中断，同时中断状态被清除 public class InterruptDemo { public static void main(String[] args) throws InterruptedException { Thread t1 = new Thread(new MyRunnable()); t1.start(); Thread.sleep(3000); t1.interrupt(); } public static class MyRunnable implements Runnable { @Override public void run() { while (true) { // when current thread is interrupted, stop if (Thread.currentThread().isInterrupted()) { System.out.println(&amp;#34;I&amp;#39;m interrupted, exit.&amp;#34;); break; } try { Thread.sleep(2000); } catch (InterruptedException ex) { // when interrupt in sleep()|join()|wait(), the interrupt status is cleared System.</description>
+    </item>
+    
+    <item>
+      <title>Java并发：基本概念</title>
+      <link>https://nkcoder.github.io/posts/java-concurrent/jc1-basic-concepts/</link>
+      <pubDate>Thu, 22 Oct 2020 23:29:41 +0800</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java-concurrent/jc1-basic-concepts/</guid>
+      <description>同步与异步 Link to heading 同步：同步的方法调用，必须等到方法执行完毕返回后，调用方才会继续向后执行。 异步：异步的方法调用，立即返回，被调用的方法在独立的线程中执行，执行完后可以回调调用方，所以异步调用类似于消息通知。
+并发与并行 Link to heading 并发：多个任务交替执行，时间上还是顺序发生的。 并行：多个任务同时执行，时间上也是同时发生的。
+单CPU系统里的多进程或多线程实际上都是并发的，而不是并行的，只有在多CPU系统里才会有真正的并行。
+临界区 Link to heading 临界区表示一种公共资源或共享数据，可以被多个线程使用，但每一次只能被一个线程使用。如果已经有线程在使用临界区资源，其它线程只能等待。
+阻塞与非阻塞 Link to heading 阻塞与非阻塞通常用于形容线程间的相互影响。如果多个线程竞争临界资源，未获取到使用权的线程就会等待，线程挂起，处于阻塞状态。
+非阻塞表示没有线程会妨碍其它线程的执行，所有线程都会尝试不断向前执行。
+死锁、饥饿与活锁 Link to heading 死锁：多个线程，每一个线程既不放弃已占有的共享资源，同时尝试获取其它线程的资源，导致都无法向后执行。
+饥饿：一个或多个线程因为种种原因无法获得需要的资源，导致一直无法执行。常见情况：
+低优先级的线程由于一直被高优先级线程抢占导致无法获取所需的资源 某个线程一直占用关键资源不放，导致其它需要该资源的线程无法执行 活锁：相互协作的线程彼此响应从而修改自己的状态，导致都无法执行下去的情形。活锁中的资源在线程间不断跳跃，线程并未阻塞。常见的例子：电梯里外的两个人彼此礼貌左右避让，但每次都在同一侧相遇，导致一个没法进电梯，一个没法出电梯。</description>
+    </item>
+    
+  </channel>
+</rss>

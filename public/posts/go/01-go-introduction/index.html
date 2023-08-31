@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Go语言入门 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="跟着《The Go Programming Language》学习Go语言。
+在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。
+Hello World Link to heading helloworld.go
+package main import &#34;fmt&#34; func main() { fmt.Println(&#34;hello, 世界&#34;) } 直接运行：
+$ go run helloworld.go 编译再运行：
+$ go build helloworld.go $ ./helloworld Go是一门编译型语言，run命令执行编译、链接和运行，build命令执行编译和链接，并生成可执行程序。 Go也是以包（package）的方式组织代码。每个源文件都以package声明开头，表示该源文件所属的包， import用于导入程序依赖的包。main是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。 函数定义由func关键字、函数名称、参数列表、返回值构成。main是一个特殊的函数，表示程序的执行入口。 在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。 命令行参数 Link to heading os模块的Args变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数Args[0]表示程序的名称，Args[1:]表示程序执行所需的所有参数。
+echo1.go:
+// echo1 prints it&#39;s command-line arguments package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { var s, sep string for i := 1; i &lt; len(os.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go语言入门"/>
+<meta name="twitter:description" content="跟着《The Go Programming Language》学习Go语言。
+在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。
+Hello World Link to heading helloworld.go
+package main import &#34;fmt&#34; func main() { fmt.Println(&#34;hello, 世界&#34;) } 直接运行：
+$ go run helloworld.go 编译再运行：
+$ go build helloworld.go $ ./helloworld Go是一门编译型语言，run命令执行编译、链接和运行，build命令执行编译和链接，并生成可执行程序。 Go也是以包（package）的方式组织代码。每个源文件都以package声明开头，表示该源文件所属的包， import用于导入程序依赖的包。main是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。 函数定义由func关键字、函数名称、参数列表、返回值构成。main是一个特殊的函数，表示程序的执行入口。 在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。 命令行参数 Link to heading os模块的Args变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数Args[0]表示程序的名称，Args[1:]表示程序执行所需的所有参数。
+echo1.go:
+// echo1 prints it&#39;s command-line arguments package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { var s, sep string for i := 1; i &lt; len(os."/>
+
+<meta property="og:title" content="Go语言入门" />
+<meta property="og:description" content="跟着《The Go Programming Language》学习Go语言。
+在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。
+Hello World Link to heading helloworld.go
+package main import &#34;fmt&#34; func main() { fmt.Println(&#34;hello, 世界&#34;) } 直接运行：
+$ go run helloworld.go 编译再运行：
+$ go build helloworld.go $ ./helloworld Go是一门编译型语言，run命令执行编译、链接和运行，build命令执行编译和链接，并生成可执行程序。 Go也是以包（package）的方式组织代码。每个源文件都以package声明开头，表示该源文件所属的包， import用于导入程序依赖的包。main是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。 函数定义由func关键字、函数名称、参数列表、返回值构成。main是一个特殊的函数，表示程序的执行入口。 在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。 命令行参数 Link to heading os模块的Args变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数Args[0]表示程序的名称，Args[1:]表示程序执行所需的所有参数。
+echo1.go:
+// echo1 prints it&#39;s command-line arguments package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { var s, sep string for i := 1; i &lt; len(os." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/go/01-go-introduction/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-23T20:28:08+08:00" />
+<meta property="article:modified_time" content="2021-02-23T20:28:08+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/go/01-go-introduction/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/go/01-go-introduction/">
+              Go语言入门
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-02-23T20:28:08&#43;08:00">
+                February 23, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              3-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">Go程序设计</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <blockquote>
+<p>跟着《The Go Programming Language》学习Go语言。</p>
+</blockquote>
+<p>在学习一门新语言时，人们可能倾向于以自己熟悉的其它语言的方式来写代码。在学习Go语言时，请摒弃这种偏见。本书的示例代码就是好的、规范的Go语言代码，当写自己的Go代码时，请以此作为参考。</p>
+<hr>
+<h3 id="hello-world">
+  Hello World
+  <a class="heading-link" href="#hello-world">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>helloworld.go</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;hello, 世界&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>直接运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go run helloworld.go
+</span></span></code></pre></div><p>编译再运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>$ <span style="color:#ff79c6">go</span> build helloworld.<span style="color:#ff79c6">go</span>
+</span></span><span style="display:flex;"><span>$ .<span style="color:#ff79c6">/</span>helloworld
+</span></span></code></pre></div><ul>
+<li>Go是一门编译型语言，<code>run</code>命令执行编译、链接和运行，<code>build</code>命令执行编译和链接，并生成可执行程序。</li>
+<li>Go也是以包（package）的方式组织代码。每个源文件都以<code>package</code>声明开头，表示该源文件所属的包， <code>import</code>用于导入程序依赖的包。<code>main</code>是一个特殊的包，表示定义的是可独立运行的程序，而不是库（library）。你必须只导入（import）程序需要的包，如果导入了不必要的包，或者没有导入需要的包，程序将无法编译。</li>
+<li>函数定义由<code>func</code>关键字、函数名称、参数列表、返回值构成。<code>main</code>是一个特殊的函数，表示程序的执行入口。</li>
+<li>在语句或声明的最后，不需要分号表示结束，除非多条语句或声明出现在一行上。</li>
+</ul>
+<h3 id="命令行参数">
+  命令行参数
+  <a class="heading-link" href="#%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%8f%82%e6%95%b0">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>os</code>模块的<code>Args</code>变量的值是一个字符串切片（slice，可以暂时理解为可动态扩容的序列），表示命令行参数，第一个参数<code>Args[0]</code>表示程序的名称，<code>Args[1:]</code>表示程序执行所需的所有参数。</p>
+<p><code>echo1.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#6272a4">// echo1 prints it&#39;s command-line arguments
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> s, sep <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">1</span>; i &lt; <span style="color:#8be9fd;font-style:italic">len</span>(os.Args); i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>		s <span style="color:#ff79c6">+=</span> sep <span style="color:#ff79c6">+</span> os.Args[i]
+</span></span><span style="display:flex;"><span>		sep = <span style="color:#f1fa8c">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(s)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go run echo1.go hello world
+</span></span></code></pre></div><ul>
+<li>
+<p><code>//</code>表示注释，注释的内容会被编译器忽略</p>
+</li>
+<li>
+<p><code>var</code>定义变量，<code>string</code>是类型。变量定义时可以初始化，如果没初始化，默认值为类型的零值（zero value），如数值类型的零值为0，字符类型的零值为空字符串&quot;&quot;</p>
+</li>
+<li>
+<p><code>:=</code>表示简短变量声明，即声明变量并基于默认值推断合适的变量类型</p>
+</li>
+<li>
+<p><code>++</code>表示自增，还有<code>--</code>表示自减，仅支持后缀操作符，不支持前缀操作符，如<code>--i</code>是不合法的</p>
+</li>
+<li>
+<p><code>for</code>循环是go唯一的循环语句</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> initialization; condition; post {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>for</code>语句中不需要小括号<code>()</code>，但大括号<code>{}</code>是必须的，且左大括号<code>{</code>必须与<code>post语句</code>处于同一行。<code>for</code>语句的三部分都是可选的。</p>
+</li>
+</ul>
+<hr>
+<p><code>echo2.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	s, sep <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;&#34;</span>, <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, arg <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> os.Args[<span style="color:#bd93f9">1</span>:] {
+</span></span><span style="display:flex;"><span>		s <span style="color:#ff79c6">+=</span> sep <span style="color:#ff79c6">+</span> arg
+</span></span><span style="display:flex;"><span>		sep = <span style="color:#f1fa8c">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(s)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p><code>for</code>语句只有<em>condtion</em>部分，每次循环迭代，range会产生一对值，第一个值表示当前迭代的索引（index），第二个值表示当前迭代的值。如果不会用到第一个值，可以使用<strong>空标志符</strong>（_，即下划线），空标志符用于语法需要一个变量名，而程序逻辑不需要的场景。</p>
+</li>
+<li>
+<p>变量声明可以有多种形式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>s <span style="color:#ff79c6">:=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> s <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> s = <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> s <span style="color:#8be9fd">string</span> = <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span></code></pre></div><p>第一种形式最简洁，但只能用于函数中，不能用于包级别变量声明；第二种形式依赖于默认值进行初始化，第三种形式很少使用，除非定义多个变量，第四种形式是冗余的。<strong>实际中，一般使用第一种和第二种形式，一个显式表明初始值很重要，一个隐式表明初始值不重要。</strong></p>
+</li>
+</ul>
+<hr>
+<p><code>echo3.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(strings.<span style="color:#50fa7b">Join</span>(os.Args[<span style="color:#bd93f9">1</span>:], <span style="color:#f1fa8c">&#34; &#34;</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><code>Join</code>是<code>strings</code>包中的方法，用于字符串连接</li>
+</ul>
+<h3 id="统计重复行">
+  统计重复行
+  <a class="heading-link" href="#%e7%bb%9f%e8%ae%a1%e9%87%8d%e5%a4%8d%e8%a1%8c">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>dup.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	counts <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>)
+</span></span><span style="display:flex;"><span>	files <span style="color:#ff79c6">:=</span> os.Args[<span style="color:#bd93f9">1</span>:]
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(files) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">countLines</span>(os.Stdin, counts)
+</span></span><span style="display:flex;"><span>	} <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">for</span> _, arg <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> files {
+</span></span><span style="display:flex;"><span>			f, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Open</span>(arg)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>				fmt.<span style="color:#50fa7b">Fprintf</span>(os.Stderr, <span style="color:#f1fa8c">&#34;dup: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">continue</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#50fa7b">countLines</span>(f, counts)
+</span></span><span style="display:flex;"><span>			f.<span style="color:#50fa7b">Close</span>()
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> line, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> counts {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> n &gt; <span style="color:#bd93f9">1</span> {
+</span></span><span style="display:flex;"><span>			fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%d\t%s\n&#34;</span>, n, line)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// NOTE: ignoring potential errors from input.Err()
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">countLines</span>(f <span style="color:#ff79c6">*</span>os.File, counts <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">int</span>) {
+</span></span><span style="display:flex;"><span>	input <span style="color:#ff79c6">:=</span> bufio.<span style="color:#50fa7b">NewScanner</span>(f)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> input.<span style="color:#50fa7b">Scan</span>() {
+</span></span><span style="display:flex;"><span>		counts[input.<span style="color:#50fa7b">Text</span>()]<span style="color:#ff79c6">++</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><code>make(map[string]int)</code>表示创建一个map，key是string类型，value是int类型</li>
+<li><code>os.Open</code>打开文件，返回指向文件的指针</li>
+<li><code>input.Scan()</code>读取文件中的行，直到文件结束或发生错误，这里忽略了可能的错误</li>
+</ul>
+<h3 id="网络请求">
+  网络请求
+  <a class="heading-link" href="#%e7%bd%91%e7%bb%9c%e8%af%b7%e6%b1%82">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><code>fetch.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, url <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> os.Args[<span style="color:#bd93f9">1</span>:] {
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">const</span> prefix = <span style="color:#f1fa8c">&#34;http://&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> !strings.<span style="color:#50fa7b">HasPrefix</span>(url, prefix) {
+</span></span><span style="display:flex;"><span>			url = prefix <span style="color:#ff79c6">+</span> url
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		resp, err <span style="color:#ff79c6">:=</span> http.<span style="color:#50fa7b">Get</span>(url)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>			fmt.<span style="color:#50fa7b">Fprintf</span>(os.Stderr, <span style="color:#f1fa8c">&#34;fetch: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>			os.<span style="color:#50fa7b">Exit</span>(<span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		_, err = io.<span style="color:#50fa7b">Copy</span>(os.Stdout, resp.Body)
+</span></span><span style="display:flex;"><span>		statusCode <span style="color:#ff79c6">:=</span> resp.StatusCode
+</span></span><span style="display:flex;"><span>		resp.Body.<span style="color:#50fa7b">Close</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>			fmt.<span style="color:#50fa7b">Fprintf</span>(os.Stderr, <span style="color:#f1fa8c">&#34;fetch: reading %s: %v\n&#34;</span>, url, err)
+</span></span><span style="display:flex;"><span>			os.<span style="color:#50fa7b">Exit</span>(<span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;status code: &#34;</span>, statusCode)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>这个程序的功能与<code>curl</code>命令类似，<code>http.Get</code>函数发起http请求，<code>io.Copy</code>函数复制数据，<code>body.Close</code>关闭流防止资源泄漏</li>
+</ul>
+<hr>
+<p><code>fetchall.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;io/ioutil&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	start <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Now</span>()
+</span></span><span style="display:flex;"><span>	ch <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">chan</span> <span style="color:#8be9fd">string</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, url <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> os.Args[<span style="color:#bd93f9">1</span>:] {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">go</span> <span style="color:#50fa7b">fetch</span>(url, ch)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> <span style="color:#ff79c6">range</span> os.Args[<span style="color:#bd93f9">1</span>:] {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#ff79c6">&lt;-</span>ch)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%.2fs elapsed\n&#34;</span>, time.<span style="color:#50fa7b">Since</span>(start).<span style="color:#50fa7b">Seconds</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">fetch</span>(url <span style="color:#8be9fd">string</span>, ch <span style="color:#8be9fd;font-style:italic">chan</span><span style="color:#ff79c6">&lt;-</span> <span style="color:#8be9fd">string</span>) {
+</span></span><span style="display:flex;"><span>	start <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Now</span>()
+</span></span><span style="display:flex;"><span>	resp, err <span style="color:#ff79c6">:=</span> http.<span style="color:#50fa7b">Get</span>(url)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		ch <span style="color:#ff79c6">&lt;-</span> fmt.<span style="color:#50fa7b">Sprint</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	nbytes, err <span style="color:#ff79c6">:=</span> io.<span style="color:#50fa7b">Copy</span>(ioutil.Discard, resp.Body)
+</span></span><span style="display:flex;"><span>	resp.Body.<span style="color:#50fa7b">Close</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		ch <span style="color:#ff79c6">&lt;-</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;while reading %s: %v&#34;</span>, url, err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	secs <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Since</span>(start).<span style="color:#50fa7b">Seconds</span>()
+</span></span><span style="display:flex;"><span>	ch <span style="color:#ff79c6">&lt;-</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%.2fs %d7d %s&#34;</span>, secs, nbytes, url)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><code>goroutine</code>是并行的函数执行，<code>channel</code>是<code>goroutine</code>之间的通信机制，即一个<code>goroutine</code>将某种类型的数据传递给另一个<code>goroutine</code>。<code>main</code>方法运行在一个<code>goroutine</code>中，<code>go</code>语句会创建一个额外的<code>goroutine</code>。</li>
+<li><code>main</code>方法通过<code>make</code>方法创建一个字符串类型的<code>channel</code></li>
+</ul>
+<hr>
+<p><code>server.go</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>   <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f1fa8c">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f1fa8c">&#34;net/http&#34;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f1fa8c">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> mu sync.Mutex
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> count <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>   http.<span style="color:#50fa7b">HandleFunc</span>(<span style="color:#f1fa8c">&#34;/&#34;</span>, handler)
+</span></span><span style="display:flex;"><span>   http.<span style="color:#50fa7b">HandleFunc</span>(<span style="color:#f1fa8c">&#34;/count&#34;</span>, counter)
+</span></span><span style="display:flex;"><span>   log.<span style="color:#50fa7b">Fatal</span>(http.<span style="color:#50fa7b">ListenAndServe</span>(<span style="color:#f1fa8c">&#34;localhost:8000&#34;</span>, <span style="color:#ff79c6">nil</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">handler</span>(w http.ResponseWriter, r <span style="color:#ff79c6">*</span>http.Request) {
+</span></span><span style="display:flex;"><span>   mu.<span style="color:#50fa7b">Lock</span>()
+</span></span><span style="display:flex;"><span>   count<span style="color:#ff79c6">++</span>
+</span></span><span style="display:flex;"><span>   mu.<span style="color:#50fa7b">Unlock</span>()
+</span></span><span style="display:flex;"><span>   fmt.<span style="color:#50fa7b">Fprintf</span>(w, <span style="color:#f1fa8c">&#34;URL.Path = %q\n&#34;</span>, r.URL.Path)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">counter</span>(w http.ResponseWriter, r <span style="color:#ff79c6">*</span>http.Request) {
+</span></span><span style="display:flex;"><span>   mu.<span style="color:#50fa7b">Lock</span>()
+</span></span><span style="display:flex;"><span>   fmt.<span style="color:#50fa7b">Fprintf</span>(w, <span style="color:#f1fa8c">&#34;count %d\n&#34;</span>, count)
+</span></span><span style="display:flex;"><span>   mu.<span style="color:#50fa7b">Unlock</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go run server.go &amp;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span>1<span style="color:#ff79c6">]</span> <span style="color:#bd93f9">4890</span>
+</span></span><span style="display:flex;"><span>$ go run fetch.go http://localhost:8000/
+</span></span><span style="display:flex;"><span>URL.Path <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>status code:  <span style="color:#bd93f9">200</span>
+</span></span><span style="display:flex;"><span>$ go run fetch.go http://localhost:8000/
+</span></span><span style="display:flex;"><span>^<span style="color:#ff79c6">[[</span>AURL.Path <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>status code:  <span style="color:#bd93f9">200</span>
+</span></span><span style="display:flex;"><span>$ go run fetch.go http://localhost:8000/
+</span></span><span style="display:flex;"><span>URL.Path <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>status code:  <span style="color:#bd93f9">200</span>
+</span></span><span style="display:flex;"><span>$ go run fetch.go http://localhost:8000/count
+</span></span><span style="display:flex;"><span>count <span style="color:#bd93f9">3</span>
+</span></span></code></pre></div><ul>
+<li>以/开头的请求会被handler方法处理，以<code>/count</code>开头的请求会被counter方法处理，每一个请求都是在独立的<code>goroutine</code>中被处理的。</li>
+<li>因为<code>count</code>是共享变量，如果多个请求同时更新，会出现<em>竞争条件</em>，所以需要使用<code>sync.Mutex</code>进行同步。</li>
+</ul>
+<hr>
+<blockquote>
+<p>参考：《The Go Programming Language》(Alan Donovan, Brian Kernighan) (英文版)</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

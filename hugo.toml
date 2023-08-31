@@ -1,0 +1,77 @@
+baseurl = "https://nkcoder.github.io/"
+languageCode = 'en-us'
+title = 'A Coder'
+theme = 'hugo-coder'
+
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentsstyle = "bw"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+disqusShortname = "nkcoder"
+
+googleAnalytics = "UA-168735975-1"
+
+[params]
+    author = "Daniel Guo"
+    info = "I'm a developer"
+    description = "Daniel Guo's tech blog"
+    keywords = "blog,developer,Java,Docker,Redis,Scala,SpringBoot"
+    avatarurl = "images/avatar.png"
+
+    favicon_32 = "/img/favicon-32x32.png"
+    favicon_16 = "/img/favicon-16x16.png"
+
+    footercontent = "Enjoy coding, friends!"
+
+    hidecredits = false
+    hidecopyright = false
+
+    rtl = false
+
+    math = true
+    custom_css = ["css/custom.css"]
+
+# Social links
+[[params.social]]
+    name = "Github"
+    icon = "fab fa-github fa-2x"
+    weight = 1
+    url = "https://github.com/nkcoder/"
+[[params.social]]
+    name = "StackOverflow"
+    icon = "fab fa-stack-overflow fa-2x"
+    weight = 2
+    url = "https://stackoverflow.com/users/2695077/"
+
+# Menu links
+[[menu.main]]
+    name = "Blog"
+    weight = 1
+    url  = "/posts/"
+[[menu.main]]
+    name = "Category"
+    weight = 2
+    url  = "/categories/"
+[[menu.main]]
+    name = "Tag"
+    weight = 3
+    url = "/tags/"
+
+# highlight
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "dracula"
+    tabWidth = 2

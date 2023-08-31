@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Configure Ruby development · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="rbenv Link to heading # install rbenv, will also install ruby-build $ brew install rbenv # upgrade rbenv and ruby-build $ brew upgrade rbenv ruby-build # add `eval &#34;$(rbenv init -)&#34;` to your profile $ echo &#39;eval &#34;$(rbenv init -)&#34;&#39; &gt;&gt; ~/.zshrc # also need to add rbenv to PATH, if you have separate homebrew $ echo &#39;export PATH=~/homebrew/bin:$PATH&#39; &gt;&gt; ~/.zshrc # list latest stable versions $ rbenv install -l # list all local versions $ rbenv install -L # install a Ruby version $ rbenv install 3.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Configure Ruby development"/>
+<meta name="twitter:description" content="rbenv Link to heading # install rbenv, will also install ruby-build $ brew install rbenv # upgrade rbenv and ruby-build $ brew upgrade rbenv ruby-build # add `eval &#34;$(rbenv init -)&#34;` to your profile $ echo &#39;eval &#34;$(rbenv init -)&#34;&#39; &gt;&gt; ~/.zshrc # also need to add rbenv to PATH, if you have separate homebrew $ echo &#39;export PATH=~/homebrew/bin:$PATH&#39; &gt;&gt; ~/.zshrc # list latest stable versions $ rbenv install -l # list all local versions $ rbenv install -L # install a Ruby version $ rbenv install 3."/>
+
+<meta property="og:title" content="Configure Ruby development" />
+<meta property="og:description" content="rbenv Link to heading # install rbenv, will also install ruby-build $ brew install rbenv # upgrade rbenv and ruby-build $ brew upgrade rbenv ruby-build # add `eval &#34;$(rbenv init -)&#34;` to your profile $ echo &#39;eval &#34;$(rbenv init -)&#34;&#39; &gt;&gt; ~/.zshrc # also need to add rbenv to PATH, if you have separate homebrew $ echo &#39;export PATH=~/homebrew/bin:$PATH&#39; &gt;&gt; ~/.zshrc # list latest stable versions $ rbenv install -l # list all local versions $ rbenv install -L # install a Ruby version $ rbenv install 3." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/ruby/configure-ruby-development/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-28T20:49:23+08:00" />
+<meta property="article:modified_time" content="2021-08-28T20:49:23+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/ruby/configure-ruby-development/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/ruby/configure-ruby-development/">
+              Configure Ruby development
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-08-28T20:49:23&#43;08:00">
+                August 28, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/ruby/">ruby</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="rbenv">
+  rbenv
+  <a class="heading-link" href="#rbenv">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># install rbenv, will also install ruby-build</span>
+</span></span><span style="display:flex;"><span>$ brew install rbenv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># upgrade rbenv and ruby-build</span>
+</span></span><span style="display:flex;"><span>$ brew upgrade rbenv ruby-build
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># add `eval &#34;$(rbenv init -)&#34;` to your profile</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#39;eval &#34;$(rbenv init -)&#34;&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># also need to add rbenv to PATH, if you have separate homebrew</span>
+</span></span><span style="display:flex;"><span>$ <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#39;export PATH=~/homebrew/bin:$PATH&#39;</span> &gt;&gt; ~/.zshrc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># list latest stable versions</span>
+</span></span><span style="display:flex;"><span>$ rbenv install -l
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># list all local versions</span>
+</span></span><span style="display:flex;"><span>$ rbenv install -L
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># install a Ruby version</span>
+</span></span><span style="display:flex;"><span>$ rbenv install 3.0.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># set global version, will be set in ~/.rbenv/version</span>
+</span></span><span style="display:flex;"><span>$ rbenv global 3.0.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># set local version, or switch version</span>
+</span></span><span style="display:flex;"><span>$ rbenv <span style="color:#8be9fd;font-style:italic">local</span> system
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># all versions install are located in `~/.rbenv/versions`, to remove a version, just remove the directory.</span>
+</span></span><span style="display:flex;"><span>$ rm -rf ~/.rbenv/versions/3.0.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># you can also remove a version by uninstall</span>
+</span></span><span style="display:flex;"><span>$ rbenv uninstall 3.0.2
+</span></span></code></pre></div><h2 id="bundler">
+  bundler
+  <a class="heading-link" href="#bundler">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># install Ruby gems</span>
+</span></span><span style="display:flex;"><span>$ gem install bundler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># manage gem dependencies</span>
+</span></span><span style="display:flex;"><span>$ bundler install
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># check the location where gems are being installed</span>
+</span></span><span style="display:flex;"><span>$ gem env
+</span></span></code></pre></div><h2 id="intellij-idea--rubymine">
+  Intellij Idea / RubyMine
+  <a class="heading-link" href="#intellij-idea--rubymine">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Open a project from existing source and setup project SDK.</p>
+<ul>
+<li>File → New → Project from existing sources&hellip;</li>
+<li>Project Structure → Project → Project SDK: rbenv:3.0.2</li>
+<li>Module → Ruby SDK and Gems: rbenv:3.0.2</li>
+</ul>
+<p><img src="https://nkcoder.github.io/images/ruby/intellij-project-structure-ruby.png" alt="intellij-project-structure-ruby"></p>
+<p><img src="https://nkcoder.github.io/images/ruby/intellij-module-ruby.png" alt="intellij-module-ruby"></p>
+<p><img src="https://nkcoder.github.io/images/ruby/ruby-mine-sdk-gems.png" alt="ruby-mine-sdk-config"></p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

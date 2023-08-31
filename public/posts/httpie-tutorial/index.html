@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  HTTPie用法介绍 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="HTTPie是基于命令行的 HTTP 客户端，功能与CURL类似，但更简单、易用。
+但是如果对用法不熟悉，经常容易混淆，比如查询参数用==还是=，请求体的数据用=还是:=等，这里记录日常开发中的常见用法作为备忘。
+以下示例大多来自HTTPie 官方文档，如果有不清楚的地方，请移步参考。
+语法 Link to heading http [flags][method] URL [ITEM [ITEM]] 默认请求方法 Link to heading 如果[METHOD]被忽略，没有请求数据，则默认为GET，如果有请求数据，则默认为POST：
+$ http localhost:8080/books $ http localhost:8080/books id:=1 name=&#39;Spring in action&#39; localhost 可忽略 Link to heading 默认协议为 http，所以http://可以忽略，如果 URL 是localhost，也可以忽略，如：
+$ http :8080/books HTTP headers Link to heading 格式为：header-name:header-value
+$ http get :8080/books/1 Authorization:my-auth-token 请求数据默认会被序列化为 json，同时，HTTPie 默认设置以下 header：
+Content-Type: application/json Accept: application/json, */* URL 请求参数 Link to heading 当然可以将请求参数追加在 URL 后面，但是使用param==value的方式可以不用关心特殊字符的转义：">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HTTPie用法介绍"/>
+<meta name="twitter:description" content="HTTPie是基于命令行的 HTTP 客户端，功能与CURL类似，但更简单、易用。
+但是如果对用法不熟悉，经常容易混淆，比如查询参数用==还是=，请求体的数据用=还是:=等，这里记录日常开发中的常见用法作为备忘。
+以下示例大多来自HTTPie 官方文档，如果有不清楚的地方，请移步参考。
+语法 Link to heading http [flags][method] URL [ITEM [ITEM]] 默认请求方法 Link to heading 如果[METHOD]被忽略，没有请求数据，则默认为GET，如果有请求数据，则默认为POST：
+$ http localhost:8080/books $ http localhost:8080/books id:=1 name=&#39;Spring in action&#39; localhost 可忽略 Link to heading 默认协议为 http，所以http://可以忽略，如果 URL 是localhost，也可以忽略，如：
+$ http :8080/books HTTP headers Link to heading 格式为：header-name:header-value
+$ http get :8080/books/1 Authorization:my-auth-token 请求数据默认会被序列化为 json，同时，HTTPie 默认设置以下 header：
+Content-Type: application/json Accept: application/json, */* URL 请求参数 Link to heading 当然可以将请求参数追加在 URL 后面，但是使用param==value的方式可以不用关心特殊字符的转义："/>
+
+<meta property="og:title" content="HTTPie用法介绍" />
+<meta property="og:description" content="HTTPie是基于命令行的 HTTP 客户端，功能与CURL类似，但更简单、易用。
+但是如果对用法不熟悉，经常容易混淆，比如查询参数用==还是=，请求体的数据用=还是:=等，这里记录日常开发中的常见用法作为备忘。
+以下示例大多来自HTTPie 官方文档，如果有不清楚的地方，请移步参考。
+语法 Link to heading http [flags][method] URL [ITEM [ITEM]] 默认请求方法 Link to heading 如果[METHOD]被忽略，没有请求数据，则默认为GET，如果有请求数据，则默认为POST：
+$ http localhost:8080/books $ http localhost:8080/books id:=1 name=&#39;Spring in action&#39; localhost 可忽略 Link to heading 默认协议为 http，所以http://可以忽略，如果 URL 是localhost，也可以忽略，如：
+$ http :8080/books HTTP headers Link to heading 格式为：header-name:header-value
+$ http get :8080/books/1 Authorization:my-auth-token 请求数据默认会被序列化为 json，同时，HTTPie 默认设置以下 header：
+Content-Type: application/json Accept: application/json, */* URL 请求参数 Link to heading 当然可以将请求参数追加在 URL 后面，但是使用param==value的方式可以不用关心特殊字符的转义：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/httpie-tutorial/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-02-19T23:26:04+08:00" />
+<meta property="article:modified_time" content="2020-02-19T23:26:04+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/httpie-tutorial/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/httpie-tutorial/">
+              HTTPie用法介绍
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-02-19T23:26:04&#43;08:00">
+                February 19, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="https://nkcoder.github.io/tags/httpie/">httpie</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><code>HTTPie</code>是基于命令行的 HTTP 客户端，功能与<code>CURL</code>类似，但更简单、易用。</p>
+<p>但是如果对用法不熟悉，经常容易混淆，比如查询参数用<code>==</code>还是<code>=</code>，请求体的数据用<code>=</code>还是<code>:=</code>等，这里记录日常开发中的常见用法作为备忘。</p>
+<p>以下示例大多来自<a href="https://httpie.org/doc"  class="external-link" target="_blank" rel="noopener">HTTPie 官方文档</a>，如果有不清楚的地方，请移步参考。</p>
+<h2 id="语法">
+  语法
+  <a class="heading-link" href="#%e8%af%ad%e6%b3%95">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>http [flags][method] URL [ITEM [ITEM]]
+</span></span></code></pre></div><h2 id="默认请求方法">
+  默认请求方法
+  <a class="heading-link" href="#%e9%bb%98%e8%ae%a4%e8%af%b7%e6%b1%82%e6%96%b9%e6%b3%95">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>如果<code>[METHOD]</code>被忽略，没有请求数据，则默认为<code>GET</code>，如果有请求数据，则默认为<code>POST</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http localhost:8080/books
+</span></span><span style="display:flex;"><span>$ http localhost:8080/books id:<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span> <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;Spring in action&#39;</span>
+</span></span></code></pre></div><h2 id="localhost-可忽略">
+  localhost 可忽略
+  <a class="heading-link" href="#localhost-%e5%8f%af%e5%bf%bd%e7%95%a5">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>默认协议为 http，所以<code>http://</code>可以忽略，如果 URL 是<code>localhost</code>，也可以忽略，如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http :8080/books
+</span></span></code></pre></div><h2 id="http-headers">
+  HTTP headers
+  <a class="heading-link" href="#http-headers">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>格式为：header-name:header-value</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http get :8080/books/1 Authorization:my-auth-token
+</span></span></code></pre></div><p>请求数据默认会被序列化为 json，同时，HTTPie 默认设置以下 header：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Content-Type: application/json
+</span></span><span style="display:flex;"><span>Accept: application/json, */*
+</span></span></code></pre></div><h2 id="url-请求参数">
+  URL 请求参数
+  <a class="heading-link" href="#url-%e8%af%b7%e6%b1%82%e5%8f%82%e6%95%b0">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>当然可以将请求参数追加在 URL 后面，但是使用<code>param==value</code>的方式可以不用关心特殊字符的转义：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http get :8080/books <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">==</span><span style="color:#f1fa8c">&#34;my book&#34;</span> <span style="color:#8be9fd;font-style:italic">author</span><span style="color:#ff79c6">==</span><span style="color:#f1fa8c">&#34;kate&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GET /?name=my+book&amp;author=Kate
+</span></span></code></pre></div><h2 id="请求体数据">
+  请求体数据
+  <a class="heading-link" href="#%e8%af%b7%e6%b1%82%e4%bd%93%e6%95%b0%e6%8d%ae">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>字符串类型的数据用<code>=</code>，非字符串类型或 Raw Json 的数据用<code>:=</code>，引用文件数据使用<code>@data-file</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http post :8080/books id:<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span> <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;Akka in Action&#34;</span> soldOut:<span style="color:#ff79c6">=</span><span style="color:#8be9fd;font-style:italic">false</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;id&#34;</span>: <span style="color:#bd93f9">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;name&#34;</span>: <span style="color:#f1fa8c">&#34;Akka in Action&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;soldOut&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http PUT api.example.com/person/1 <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>  <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span>John <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"></span>  age:<span style="color:#ff79c6">=</span><span style="color:#bd93f9">29</span> married:<span style="color:#ff79c6">=</span><span style="color:#8be9fd;font-style:italic">false</span> hobbies:<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;[&#34;http&#34;, &#34;pies&#34;]&#39;</span> <span style="color:#f1fa8c">\ </span><span style="color:#6272a4"># Raw JSON</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">description</span><span style="color:#ff79c6">=</span>@about-john.txt <span style="color:#f1fa8c">\ </span><span style="color:#6272a4"># Embed text file</span>
+</span></span><span style="display:flex;"><span>  bookmarks:<span style="color:#ff79c6">=</span>@bookmarks.json <span style="color:#6272a4"># Embed JSON file</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>PUT /person/1 HTTP/1.1
+</span></span><span style="display:flex;"><span>Accept: application/json, _/_
+</span></span><span style="display:flex;"><span>Content-Type: application/json
+</span></span><span style="display:flex;"><span>Host: api.example.com
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;age&#34;: 29,
+</span></span><span style="display:flex;"><span>  &#34;hobbies&#34;: [
+</span></span><span style="display:flex;"><span>    &#34;http&#34;,
+</span></span><span style="display:flex;"><span>    &#34;pies&#34;
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  &#34;description&#34;: &#34;John is a nice guy who likes pies.&#34;,
+</span></span><span style="display:flex;"><span>  &#34;married&#34;: false,
+</span></span><span style="display:flex;"><span>  &#34;name&#34;: &#34;John&#34;,
+</span></span><span style="display:flex;"><span>  &#34;bookmarks&#34;: {
+</span></span><span style="display:flex;"><span>    &#34;HTTPie&#34;: &#34;http://httpie.org&#34;,
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果字段较多，数据较复杂，最好是直接加载数据文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http PUT api.example.com/person/1 &lt; person.json
+</span></span></code></pre></div><h2 id="下载文件">
+  下载文件
+  <a class="heading-link" href="#%e4%b8%8b%e8%bd%bd%e6%96%87%e4%bb%b6">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>重定向方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http example.org/file &gt; file
+</span></span></code></pre></div><p><code>wget</code>方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http --download example.org/file
+</span></span></code></pre></div><h2 id="form-提交">
+  form 提交
+  <a class="heading-link" href="#form-%e6%8f%90%e4%ba%a4">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>普通 form：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http --form POST api.example.org/person/1 <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;John Smith&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>POST /person/1 HTTP/1.1
+</span></span><span style="display:flex;"><span>Content-Type: application/x-www-form-urlencoded; charset=utf-8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>name=John+Smith
+</span></span></code></pre></div><p>文件上传的 form：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ http -f POST example.com/jobs <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#39;John Smith&#39;</span> cv@~/Documents/cv.pdf
+</span></span></code></pre></div><p>等价与以下 HTML：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#ff79c6">&lt;form</span> <span style="color:#50fa7b">enctype=</span><span style="color:#f1fa8c">&#34;multipart/form-data&#34;</span> <span style="color:#50fa7b">method=</span><span style="color:#f1fa8c">&#34;post&#34;</span> <span style="color:#50fa7b">action=</span><span style="color:#f1fa8c">&#34;http://example.com/jobs&#34;</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;input</span> <span style="color:#50fa7b">type=</span><span style="color:#f1fa8c">&#34;text&#34;</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;name&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;input</span> <span style="color:#50fa7b">type=</span><span style="color:#f1fa8c">&#34;file&#34;</span> <span style="color:#50fa7b">name=</span><span style="color:#f1fa8c">&#34;cv&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;/form&gt;</span>
+</span></span></code></pre></div><h2 id="常用-flag">
+  常用 flag
+  <a class="heading-link" href="#%e5%b8%b8%e7%94%a8-flag">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>--headers, -h  仅输出headerxinxi
+</span></span><span style="display:flex;"><span>--stream, -S  将response按行stream输出，而不是等待所有response然后输出
+</span></span><span style="display:flex;"><span>--output FILE, -o FILE  输出到文件，而不是控制台
+</span></span><span style="display:flex;"><span>--verbose, -v  输出详细的request和response信息
+</span></span><span style="display:flex;"><span>--json, -j  默认，命令行的数据会被序列化为JSON对象
+</span></span><span style="display:flex;"><span>--form, -f  命令行的数据会被序列化为FORM的字段，并将Content-Type设置为application/x-www-form-urlencoded
+</span></span></code></pre></div><h2 id="参考">
+  参考
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<ol>
+<li><a href="https://httpie.org/doc"  class="external-link" target="_blank" rel="noopener">HTTPie doc</a></li>
+</ol>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Ruby in action: intermediate · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="arrays Link to heading require &#39;../util&#39; # frozen_string_literal: true ############# arrays ############### ## array can hold different data type data = [&#39;Daniel&#39;, &#39;Michael&#39;, 10, [1, 2, 3, 4], 11.4, true] # index start from zero, first element(s) puts &#34;first item: #{data[0]}&#34; puts &#34;first item: #{data.first}&#34; puts &#34;first 2 items: #{data.first(2)}&#34; # last element(s) puts &#34;last element: #{data[data.length - 1]}&#34; puts &#34;last element: #{data.last}&#34; puts &#34;last 2 elements: #{data.last(2)}&#34; # multiple array puts &#34;multiple array item: #{data[3][0]}&#34; puts &#34;the length of the array is #{data.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ruby in action: intermediate"/>
+<meta name="twitter:description" content="arrays Link to heading require &#39;../util&#39; # frozen_string_literal: true ############# arrays ############### ## array can hold different data type data = [&#39;Daniel&#39;, &#39;Michael&#39;, 10, [1, 2, 3, 4], 11.4, true] # index start from zero, first element(s) puts &#34;first item: #{data[0]}&#34; puts &#34;first item: #{data.first}&#34; puts &#34;first 2 items: #{data.first(2)}&#34; # last element(s) puts &#34;last element: #{data[data.length - 1]}&#34; puts &#34;last element: #{data.last}&#34; puts &#34;last 2 elements: #{data.last(2)}&#34; # multiple array puts &#34;multiple array item: #{data[3][0]}&#34; puts &#34;the length of the array is #{data."/>
+
+<meta property="og:title" content="Ruby in action: intermediate" />
+<meta property="og:description" content="arrays Link to heading require &#39;../util&#39; # frozen_string_literal: true ############# arrays ############### ## array can hold different data type data = [&#39;Daniel&#39;, &#39;Michael&#39;, 10, [1, 2, 3, 4], 11.4, true] # index start from zero, first element(s) puts &#34;first item: #{data[0]}&#34; puts &#34;first item: #{data.first}&#34; puts &#34;first 2 items: #{data.first(2)}&#34; # last element(s) puts &#34;last element: #{data[data.length - 1]}&#34; puts &#34;last element: #{data.last}&#34; puts &#34;last 2 elements: #{data.last(2)}&#34; # multiple array puts &#34;multiple array item: #{data[3][0]}&#34; puts &#34;the length of the array is #{data." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-05T15:04:15+08:00" />
+<meta property="article:modified_time" content="2022-02-05T15:04:15+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/ruby/ruby-in-action-intermediate/">
+              Ruby in action: intermediate
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-02-05T15:04:15&#43;08:00">
+                February 5, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              6-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/ruby/">ruby</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="arrays">
+  arrays
+  <a class="heading-link" href="#arrays">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;../util&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># frozen_string_literal: true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# arrays ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## array can hold different data type</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;Daniel&#39;</span>, <span style="color:#f1fa8c">&#39;Michael&#39;</span>, <span style="color:#bd93f9">10</span>, <span style="color:#ff79c6">[</span><span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">4</span><span style="color:#ff79c6">]</span>, <span style="color:#bd93f9">11</span><span style="color:#ff79c6">.</span><span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">true</span><span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index start from zero, first element(s)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;first item: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">[</span><span style="color:#bd93f9">0</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;first item: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>first<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;first 2 items: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>first(<span style="color:#bd93f9">2</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last element(s)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;last element: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">[</span>data<span style="color:#ff79c6">.</span>length <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;last element: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>last<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;last 2 elements: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>last(<span style="color:#bd93f9">2</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># multiple array</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;multiple array item: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">[</span><span style="color:#bd93f9">3</span><span style="color:#ff79c6">][</span><span style="color:#bd93f9">0</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;the length of the array is </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>length<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># first item: Daniel</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># first item: Daniel</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># first 2 items: [&#34;Daniel&#34;, &#34;Michael&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last element: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last element: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last 2 elements: [11.4, true]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># multiple array item: 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># the length of the array is 6</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### bracket and fetch</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;get element in the array&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## negative index counts from the end</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;last item: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">[-</span><span style="color:#bd93f9">1</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## just return empty, no error raised</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;out of index returns empty: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">[</span>data<span style="color:#ff79c6">.</span>length<span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;last item by fetch: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>fetch(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## if you uncomment the below, error will raise: in `fetch&#39;: index 6 outside of array bounds: -6...6</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># puts data.fetch(data.length)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## the second is the default value if the index is invalid</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;fetch use default value: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>fetch(data<span style="color:#ff79c6">.</span>length, <span style="color:#bd93f9">100</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## the block will be executed if the index is invalid</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;fetch use block: </span><span style="color:#f1fa8c">#{</span>data<span style="color:#ff79c6">.</span>fetch(data<span style="color:#ff79c6">.</span>length) <span style="color:#f1fa8c">{</span> <span style="color:#ff79c6">|</span>i<span style="color:#ff79c6">|</span> <span style="color:#f1fa8c">&#34;invalid index </span><span style="color:#f1fa8c">#{</span>i<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#f1fa8c">}}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last item: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># out of index returns empty:</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># last item by fetch: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># fetch use default value: 100</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># fetch use block: invalid index 6</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### iterate array elements, each is the preferred one.</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;iterate array elements&#39;</span>)
+</span></span><span style="display:flex;"><span>arr <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;hello&#39;</span>, <span style="color:#f1fa8c">&#39;world&#39;</span>, <span style="color:#f1fa8c">&#39;peeps&#39;</span><span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>arr<span style="color:#ff79c6">.</span>each { <span style="color:#ff79c6">|</span>i<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">print</span> i }
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> arr
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">print</span> i
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### other useful methods: include?, empty?, append, prepend, push, pop, filter, join, split</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;other useful methods&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span>)<span style="color:#ff79c6">.</span>to_a
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;is empty?: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>empty?<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;include?: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>include?(<span style="color:#bd93f9">6</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>x<span style="color:#ff79c6">.</span>append(<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">7</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;uniq elements: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>uniq<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>x<span style="color:#ff79c6">.</span>prepend(<span style="color:#bd93f9">8</span>)
+</span></span><span style="display:flex;"><span>x<span style="color:#ff79c6">.</span>push(<span style="color:#bd93f9">9</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#ff79c6">=</span> x<span style="color:#ff79c6">.</span>pop
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;push and pop: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">#{</span>y<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;filter even: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>filter <span style="color:#f1fa8c">{</span> <span style="color:#ff79c6">|</span>e<span style="color:#ff79c6">|</span> e<span style="color:#ff79c6">.</span>even? <span style="color:#f1fa8c">}}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;filter odd: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>filter(<span style="color:#ff79c6">&amp;</span><span style="color:#f1fa8c">:odd?</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## filter is an alias of select</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;select even: </span><span style="color:#f1fa8c">#{</span>x<span style="color:#ff79c6">.</span>select(<span style="color:#ff79c6">&amp;</span><span style="color:#f1fa8c">:even?</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>z <span style="color:#ff79c6">=</span> x<span style="color:#ff79c6">.</span>join(<span style="color:#f1fa8c">&#39;-&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;after join: </span><span style="color:#f1fa8c">#{</span>z<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;split: </span><span style="color:#f1fa8c">#{</span>z<span style="color:#ff79c6">.</span>split(<span style="color:#f1fa8c">&#39;-&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># is empty?: false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># include?: false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># uniq elements: [1, 2, 3, 4, 5, 6, 7]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># push and pop: [8, 1, 2, 3, 4, 5, 5, 6, 7], 9</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># filter even: [8, 2, 4, 6]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># filter odd: [1, 3, 5, 5, 7]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># select even: [8, 2, 4, 6]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># after join: 8-1-2-3-4-5-5-6-7</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># split: [&#34;8&#34;, &#34;1&#34;, &#34;2&#34;, &#34;3&#34;, &#34;4&#34;, &#34;5&#34;, &#34;5&#34;, &#34;6&#34;, &#34;7&#34;]</span>
+</span></span></code></pre></div><h2 id="loops">
+  loops
+  <a class="heading-link" href="#loops">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4"># frozen_string_literal: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;../util&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# while loops ###############</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;while loop&#39;</span>)
+</span></span><span style="display:flex;"><span>index <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">while</span> index <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;index is </span><span style="color:#f1fa8c">#{</span>index<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  index <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# each loops ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## if there is only one line in the loop body, prefer {}</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;each loop&#39;</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#bd93f9">1</span><span style="color:#ff79c6">..</span><span style="color:#bd93f9">5</span>)<span style="color:#ff79c6">.</span>each { <span style="color:#ff79c6">|</span>i<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;index is </span><span style="color:#f1fa8c">#{</span>i<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 3</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># index is 5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## for multi-line body, prefer do...end</span>
+</span></span><span style="display:flex;"><span>names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;Daniel&#39;</span>, <span style="color:#f1fa8c">&#39;Michael&#39;</span>, <span style="color:#f1fa8c">&#39;Colin&#39;</span><span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># names = %w[Daniel Michael Colin]</span>
+</span></span><span style="display:flex;"><span>names<span style="color:#ff79c6">.</span>each <span style="color:#ff79c6">do</span> <span style="color:#ff79c6">|</span><span style="color:#8be9fd;font-style:italic">name</span><span style="color:#ff79c6">|</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;The name is </span><span style="color:#f1fa8c">#{</span><span style="color:#8be9fd;font-style:italic">name</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;Welcome </span><span style="color:#f1fa8c">#{</span><span style="color:#8be9fd;font-style:italic">name</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The name is Daniel</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Welcome Daniel</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The name is Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Welcome Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The name is Colin</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Welcome Colin</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# loop ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># `loop` is equivalent to `while true`</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;loop keyword&#39;</span>)
+</span></span><span style="display:flex;"><span>loop_index <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>max_loop <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">loop</span> <span style="color:#ff79c6">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;current loop index: </span><span style="color:#f1fa8c">#{</span>loop_index<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>  loop_index <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">break</span> <span style="color:#ff79c6">if</span> loop_index <span style="color:#ff79c6">==</span> max_loop
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span></code></pre></div><h2 id="hashes">
+  hashes
+  <a class="heading-link" href="#hashes">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4"># frozen_string_literal: true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">require</span> <span style="color:#f1fa8c">&#39;../util&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">############# hashes ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## hash can hold any data type, return nil if the key not exist in the hash</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;access hash elements&#39;</span>)
+</span></span><span style="display:flex;"><span>dict <span style="color:#ff79c6">=</span> { <span style="color:#f1fa8c">&#39;one&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;two&#39;</span>, <span style="color:#f1fa8c">&#39;three&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">[</span><span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span><span style="color:#ff79c6">]</span>, <span style="color:#bd93f9">4</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">true</span>, <span style="color:#f1fa8c">&#39;five&#39;</span> <span style="color:#ff79c6">=&gt;</span> { <span style="color:#f1fa8c">&#39;hello&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;world&#39;</span> } }
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;the hash is: </span><span style="color:#f1fa8c">#{</span>dict<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;the value of an element: </span><span style="color:#f1fa8c">#{</span>dict<span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;one&#39;</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;the value of an element: </span><span style="color:#f1fa8c">#{</span>dict<span style="color:#ff79c6">.</span>fetch(<span style="color:#bd93f9">2</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;the value of not exist key: </span><span style="color:#f1fa8c">#{</span>dict<span style="color:#ff79c6">[</span><span style="color:#f1fa8c">&#39;no-exist&#39;</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># the hash is: {&#34;one&#34;=&gt;1, 2=&gt;&#34;two&#34;, &#34;three&#34;=&gt;[1, 2, 3], 4=&gt;true, &#34;five&#34;=&gt;{&#34;hello&#34;=&gt;&#34;world&#34;}}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># the value of an element: 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># the value of an element: two</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># the value of not exist key:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### symbols as hash keys</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;symbols as hash keys&#39;</span>)
+</span></span><span style="display:flex;"><span>symbol_hash <span style="color:#ff79c6">=</span> { <span style="color:#8be9fd;font-style:italic">name</span>: <span style="color:#f1fa8c">&#39;Jonathon&#39;</span>, <span style="color:#f1fa8c">country</span>: <span style="color:#f1fa8c">&#39;AU&#39;</span>, <span style="color:#f1fa8c">&#39;age&#39;</span>: <span style="color:#bd93f9">20</span> }
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;value is: </span><span style="color:#f1fa8c">#{</span>symbol_hash<span style="color:#ff79c6">[</span><span style="color:#f1fa8c">:name</span><span style="color:#ff79c6">]</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>symbol_hash<span style="color:#ff79c6">.</span>each { <span style="color:#ff79c6">|</span>k, _<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;type of key: </span><span style="color:#f1fa8c">#{</span>k<span style="color:#ff79c6">.</span>class<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> }
+</span></span><span style="display:flex;"><span>symbol_hash<span style="color:#ff79c6">.</span>each { <span style="color:#ff79c6">|</span>k, v<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">puts</span> v <span style="color:#ff79c6">if</span> k<span style="color:#ff79c6">.</span>is_a?(Symbol) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># value is: Jonathon</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># type of key: Symbol</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># type of key: Symbol</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># type of key: Symbol</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Jonathon</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># AU</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># 20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### useful methods of hash</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># some methods are equivalent, prefer key? over has_key?, prefer value? over has_value?</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;useful methods&#39;</span>)
+</span></span><span style="display:flex;"><span>dict2 <span style="color:#ff79c6">=</span> { <span style="color:#f1fa8c">&#39;Michael&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;AU&#39;</span>, <span style="color:#f1fa8c">&#39;Daniel&#39;</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#f1fa8c">&#39;US&#39;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;keys: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>keys<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;values: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>values<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;length: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>length<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;has value?: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>value?(<span style="color:#f1fa8c">&#39;AU&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;has value?: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>has_value?(<span style="color:#f1fa8c">&#39;AU&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;has key?: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>key?(<span style="color:#f1fa8c">&#39;Anderson&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;has key?: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>has_key?(<span style="color:#f1fa8c">&#39;Daniel&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;has key?: </span><span style="color:#f1fa8c">#{</span>dict2<span style="color:#ff79c6">.</span>include?(<span style="color:#f1fa8c">&#39;Daniel&#39;</span>)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># keys: [&#34;Michael&#34;, &#34;Daniel&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># values: [&#34;AU&#34;, &#34;US&#34;]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># length: 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># has value?: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># has value?: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># has key?: false</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># has key?: true</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># has key?: true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">### each, select</span>
+</span></span><span style="display:flex;"><span>print_delimiter(<span style="color:#f1fa8c">&#39;each, select&#39;</span>)
+</span></span><span style="display:flex;"><span>dict3 <span style="color:#ff79c6">=</span> { <span style="color:#f1fa8c">&#39;name&#39;</span>: <span style="color:#f1fa8c">&#39;Michael&#39;</span>, <span style="color:#f1fa8c">&#39;age&#39;</span>: <span style="color:#bd93f9">18</span>, <span style="color:#f1fa8c">&#39;favorite_sport&#39;</span>: <span style="color:#f1fa8c">&#39;basketball&#39;</span> }
+</span></span><span style="display:flex;"><span>dict3<span style="color:#ff79c6">.</span>each { <span style="color:#ff79c6">|</span>k, v<span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;key is </span><span style="color:#f1fa8c">#{</span>k<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, value is </span><span style="color:#f1fa8c">#{</span>v<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## if an argument is unnecessary, use _ or prepend _ to the argument</span>
+</span></span><span style="display:flex;"><span>dict_by_select <span style="color:#ff79c6">=</span> dict3<span style="color:#ff79c6">.</span>select { <span style="color:#ff79c6">|</span>_, v<span style="color:#ff79c6">|</span> v<span style="color:#ff79c6">.</span>is_a?(<span style="color:#8be9fd;font-style:italic">Integer</span>) }
+</span></span><span style="display:flex;"><span>dict_by_select2 <span style="color:#ff79c6">=</span> dict3<span style="color:#ff79c6">.</span>select { <span style="color:#ff79c6">|</span>_k, v<span style="color:#ff79c6">|</span> v<span style="color:#ff79c6">.</span>is_a?(<span style="color:#8be9fd;font-style:italic">Integer</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;dict_by_select: </span><span style="color:#f1fa8c">#{</span>dict_by_select<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#34;dict_by_select2: </span><span style="color:#f1fa8c">#{</span>dict_by_select2<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># key is name, value is Michael</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># key is age, value is 18</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># key is favorite_sport, value is basketball</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># dict_by_select: {:age=&gt;18}</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># dict_by_select2: {:age=&gt;18}</span>
+</span></span></code></pre></div><h2 id="methods">
+  methods
+  <a class="heading-link" href="#methods">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#6272a4">############# methods ###############</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## a method must be first defined before it can be referenced.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## if the method doesn&#39;t have parameters, the parentheses are redundant.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">say_hi</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Hi!&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>say_hi
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hi!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## ruby methods will return the result of the last statement, so the `return` keyword is redundant.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## the parameters must match exactly</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">hello_message</span>(first_name, last_name)
+</span></span><span style="display:flex;"><span>  <span style="color:#f1fa8c">&#34;Hello, </span><span style="color:#f1fa8c">#{</span>first_name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">, </span><span style="color:#f1fa8c">#{</span>last_name<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>message <span style="color:#ff79c6">=</span> hello_message(<span style="color:#f1fa8c">&#39;Michael&#39;</span>, <span style="color:#f1fa8c">&#39;Ken&#39;</span>)
+</span></span><span style="display:flex;"><span>same_message <span style="color:#ff79c6">=</span> hello_message <span style="color:#f1fa8c">&#39;Michael&#39;</span>, <span style="color:#f1fa8c">&#39;Ken&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> message
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> same_message
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Hello, Michael, Ken</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## special methods: class, methods</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#f1fa8c">&#39;Hello&#39;</span><span style="color:#ff79c6">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts</span> <span style="color:#bd93f9">10</span><span style="color:#ff79c6">.</span><span style="color:#bd93f9">0</span><span style="color:#ff79c6">.</span>class
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#f1fa8c">&#39;Hello&#39;</span><span style="color:#ff79c6">.</span>methods
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">## output</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># String</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Integer</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Float</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># [:unicode_normalize, :unicode_normalize!, :ascii_only? ...</span>
+</span></span></code></pre></div><h3 id="references">
+  References
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li><a href="http://ruby-for-beginners.rubymonstas.org/objects/classes.html"  class="external-link" target="_blank" rel="noopener">ruby-for-beginners</a></li>
+<li><a href="https://www.udemy.com/course/the-complete-ruby-on-rails-developer-course/"  class="external-link" target="_blank" rel="noopener">The Complete Ruby on Rails Developer Course</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

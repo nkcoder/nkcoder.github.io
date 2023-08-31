@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Scala: Build-in Control Structures · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="If expressions Link to heading val fileName = if (!args.isEmpty) args(0) else &#34;default.txt&#34; Scala&rsquo;s if is an expression that results in a value. The first advantage is that we use a val instead of var. Using a val is the functional style and it tells readers of the code that the variable will never change, saving them from scanning all code in the variable&rsquo;s scope to see if it ever changes.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Scala: Build-in Control Structures"/>
+<meta name="twitter:description" content="If expressions Link to heading val fileName = if (!args.isEmpty) args(0) else &#34;default.txt&#34; Scala&rsquo;s if is an expression that results in a value. The first advantage is that we use a val instead of var. Using a val is the functional style and it tells readers of the code that the variable will never change, saving them from scanning all code in the variable&rsquo;s scope to see if it ever changes."/>
+
+<meta property="og:title" content="Scala: Build-in Control Structures" />
+<meta property="og:description" content="If expressions Link to heading val fileName = if (!args.isEmpty) args(0) else &#34;default.txt&#34; Scala&rsquo;s if is an expression that results in a value. The first advantage is that we use a val instead of var. Using a val is the functional style and it tells readers of the code that the variable will never change, saving them from scanning all code in the variable&rsquo;s scope to see if it ever changes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-08-01T08:20:47+08:00" />
+<meta property="article:modified_time" content="2021-08-01T08:20:47+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/scala-programming/4-build-in-control-structures/">
+              Scala: Build-in Control Structures
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-08-01T08:20:47&#43;08:00">
+                August 1, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              4-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/scala/">Scala</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="if-expressions">
+  If expressions
+  <a class="heading-link" href="#if-expressions">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> fileName <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(!</span>args<span style="color:#ff79c6">.</span>isEmpty<span style="color:#ff79c6">)</span> args<span style="color:#ff79c6">(</span><span style="color:#bd93f9">0</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">else</span> <span style="color:#f1fa8c">&#34;default.txt&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Scala&rsquo;s <code>if</code> is an expression that results in a value.</li>
+<li>The first advantage is that we use a <em>val</em> instead of <em>var.</em> <strong>Using a <em>val</em> is the functional style and it tells readers of the code that the variable will never change</strong>, saving them from scanning all code in the variable&rsquo;s scope to see if it ever changes.</li>
+<li><strong>The second advantage to using a <em>val</em> instead of <em>var</em> is it better supports equational reasoning.</strong> The introduced variable is equal to the expression that computes it, assuming that expression has no side effects. Thus any time you want to write the variable name, you cloud instead write the expression.</li>
+</ul>
+<blockquote>
+<p>Look for opportunities to use <em>vals</em>. They can make your code both easier to read and easier to refactor.</p>
+</blockquote>
+<h2 id="while-loops">
+  While loops
+  <a class="heading-link" href="#while-loops">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> gcdLoop<span style="color:#ff79c6">(</span>x<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span><span style="color:#ff79c6">,</span> y<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Long</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">var</span> a <span style="color:#ff79c6">=</span> x
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">var</span> b <span style="color:#ff79c6">=</span> y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span>a <span style="color:#ff79c6">!=</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">val</span> temp <span style="color:#ff79c6">=</span> a
+</span></span><span style="display:flex;"><span>      a <span style="color:#ff79c6">=</span> a <span style="color:#ff79c6">%</span> b
+</span></span><span style="display:flex;"><span>      b <span style="color:#ff79c6">=</span> temp
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    b
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li>Scala also has a <em>do-while</em> loop. <strong>They are loops, not expressions, because they don&rsquo;t result in an interesting value.</strong></li>
+<li>The return value is <code>Unit</code> and is written <code>()</code>. Reassignment to <em>vars</em> also results in <code>Unit</code> value.</li>
+<li>Because the <em>while</em> loop results in no value, it is often left out of pure functional languages. Scala includes the while loop nonetheless because sometimes an imperative solution can be more readable.</li>
+<li><strong>In general, we recommend you challenge <em>while</em> loops in your code in the same way you challenge <em>vars</em>.</strong> If there isn&rsquo;t a good justification for a particular <em>while</em> or <em>do-while</em> loop, try to find a way to do the same thing without it.</li>
+</ul>
+<h2 id="for-expressions">
+  For expressions
+  <a class="heading-link" href="#for-expressions">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">val</span> filesHere <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">File</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.&#34;</span><span style="color:#ff79c6">).</span>listFiles
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>file <span style="color:#ff79c6">&lt;-</span> filesHere<span style="color:#ff79c6">)</span> println<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;-</span> <span style="color:#bd93f9">1</span> to <span style="color:#bd93f9">4</span><span style="color:#ff79c6">)</span> println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">s&#34;iteration: </span><span style="color:#f1fa8c">$i</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>i <span style="color:#ff79c6">&lt;-</span> <span style="color:#bd93f9">1</span> until <span style="color:#bd93f9">4</span><span style="color:#ff79c6">)</span> println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">s&#34;iteration: </span><span style="color:#f1fa8c">$i</span><span style="color:#f1fa8c">&#34;</span>
+</span></span></code></pre></div><ul>
+<li><strong>The <code>for</code> expression syntax works for any kind of collections</strong>: Array, List, Range etc., any collection that has a <code>foreach</code> method with appropriate signatures.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>file <span style="color:#ff79c6">&lt;-</span> filesHere <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">().</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">))</span> println<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>  file <span style="color:#ff79c6">&lt;-</span> filesHere
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>isFile
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">().</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">)</span> println<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><ul>
+<li><strong>You can add a filter by adding an <code>if</code> clause inside the <code>for</code>&rsquo;s parentheses.</strong></li>
+<li>You can add more filters, just keep adding <code>if</code> clauses</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>	file <span style="color:#ff79c6">&lt;-</span> filesHere <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">.</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>	line <span style="color:#ff79c6">&lt;-</span> fileLines<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">if</span> line<span style="color:#ff79c6">.</span>trim<span style="color:#ff79c6">().</span>matches<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;intro&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">)</span> println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">s&#34;file: </span><span style="color:#f1fa8c">$file</span><span style="color:#f1fa8c">, line: </span><span style="color:#f1fa8c">$line</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	file <span style="color:#ff79c6">&lt;-</span> filesHere <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">.</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	line <span style="color:#ff79c6">&lt;-</span> fileLines<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">if</span> line<span style="color:#ff79c6">.</span>trim<span style="color:#ff79c6">.</span>matches<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;intro&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">s&#34;file: </span><span style="color:#f1fa8c">$file</span><span style="color:#f1fa8c">, line: </span><span style="color:#f1fa8c">${</span>line<span style="color:#ff79c6">.</span>trim<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><ul>
+<li><strong>If you add multiple <code>&lt;-</code> clauses, you will get nested <em>loops</em>.</strong></li>
+<li><strong>If you prefer, you can use curly braces instead of parentheses to surround the generators and filters.</strong> One advantage to use curly braces is that you can leave off the semicolons since the Scala compile will not infer semicolons while inside parentheses.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	file <span style="color:#ff79c6">&lt;-</span> filesHere <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">.</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	line <span style="color:#ff79c6">&lt;-</span> fileLines<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span> 
+</span></span><span style="display:flex;"><span>	trimmed <span style="color:#ff79c6">=</span> line<span style="color:#ff79c6">.</span>trim<span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> trimmed<span style="color:#ff79c6">.</span>matches<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;intro&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> println<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">s&#34;file: </span><span style="color:#f1fa8c">$file</span><span style="color:#f1fa8c">, line: </span><span style="color:#f1fa8c">$trimmed</span><span style="color:#f1fa8c">&#34;</span>
+</span></span></code></pre></div><ul>
+<li><strong>You can bind the result to a new variable using an equals sign(<code>=</code>)</strong>. The bound variable is introduced and used just like a <em>val</em>, only with the <em>val</em> keyword left out.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">for</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	file <span style="color:#ff79c6">&lt;-</span> filesHere <span style="color:#ff79c6">if</span> file<span style="color:#ff79c6">.</span>getName<span style="color:#ff79c6">().</span>endsWith<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.scala&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	line <span style="color:#ff79c6">&lt;-</span> fileLines<span style="color:#ff79c6">(</span>file<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>	trimmed <span style="color:#ff79c6">=</span> line<span style="color:#ff79c6">.</span>trim
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> trimmed<span style="color:#ff79c6">.</span>matches<span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;.*for*.&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">yield</span> trimmed<span style="color:#ff79c6">.</span>length<span style="color:#ff79c6">()</span>
+</span></span></code></pre></div><ul>
+<li><strong>The <code>for</code> expression can generate a value for each iteration.</strong> Each time the body of the <em>for</em> expression executes, it produces one value. When the <em>for</em> expression completes, all yielded values are contained in a single collection.</li>
+<li>The type of the resulting collection is based on the kind of collections processed in the iteration clauses.</li>
+<li><strong>The syntax is: <code>for clauses yield body</code></strong>. <strong>The <em>yield</em> goes before the entire body.</strong> Even if the body is a block surrounded by curly braces, put the yield before the first curly brace, not before the last expression of the block.</li>
+</ul>
+<h2 id="exception-handling">
+  Exception handling
+  <a class="heading-link" href="#exception-handling">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> half<span style="color:#ff79c6">(</span>n<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span><span style="color:#ff79c6">)</span><span style="color:#ff79c6">:</span> <span style="color:#8be9fd">Int</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>n <span style="color:#ff79c6">%</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span><span style="color:#ff79c6">)</span> n <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">throw</span> <span style="color:#ff79c6">new</span> <span style="color:#50fa7b">RuntimeException</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;n must be even.&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">val</span> h <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  half<span style="color:#ff79c6">(</span><span style="color:#bd93f9">11</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">catch</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">case</span> ex<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">RuntimeException</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">case</span> ex<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">ArithmeticException</span> <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span> <span style="color:#ff79c6">finally</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">//
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><ul>
+<li><strong>In Scala, <em>throw</em> is an expression that has a result type <code>Nothing</code></strong>, which is at the bottom of Scala&rsquo;s type hierarchy, which means it&rsquo;s a subtype of any other types.</li>
+<li><strong>Unlike Java, Scala doesn&rsquo;t  require you to catch checked exceptions or declare them in a <em>throws</em> clause.</strong> You can declare a <em>throws</em> clause if you wish with the <em>@throws</em> annotation, but it is no required.</li>
+<li>In Scala, <em>try-catch-finally</em> results in a value.</li>
+</ul>
+<blockquote>
+<p>This is my Scala notes as a Developer with heavy Java experience.《Programming in Scala》(Fourth Edition)(2.13): Martin Odersky | Lex Spoon | Bill Venner</p>
+</blockquote>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

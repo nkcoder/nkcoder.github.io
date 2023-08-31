@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Java并发：线程中断 · My New Hugo Site
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="如何让线程停止或退出呢？
+大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过while循环等）。
+Thread类中的suspend()方法和resume()方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被suspend()时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以resume()目标线程的线程在resume()目标线程之前尝试获取该关键资源的锁，此时死锁发生了。
+Thread类的stop()方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被stop()时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。
+停止线程更好的方式是使用中断interrupt()。
+线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。
+Thread类有三个方法与中断有关：
+Thread#isInterrupted()：实例方法，判断线程是否被中断，中断状态不变 Thread#interrupt()：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于wait(), sleep(), join()方法中，则线程会抛出InterruptedException异常，同时中断状态被清除 Thread.interrupted()：静态方法，判断当前线程是否被中断，同时中断状态被清除 public class InterruptDemo { public static void main(String[] args) throws InterruptedException { Thread t1 = new Thread(new MyRunnable()); t1.start(); Thread.sleep(3000); t1.interrupt(); } public static class MyRunnable implements Runnable { @Override public void run() { while (true) { // when current thread is interrupted, stop if (Thread.currentThread().isInterrupted()) { System.out.println(&#34;I&#39;m interrupted, exit.&#34;); break; } try { Thread.sleep(2000); } catch (InterruptedException ex) { // when interrupt in sleep()|join()|wait(), the interrupt status is cleared System.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java并发：线程中断"/>
+<meta name="twitter:description" content="如何让线程停止或退出呢？
+大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过while循环等）。
+Thread类中的suspend()方法和resume()方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被suspend()时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以resume()目标线程的线程在resume()目标线程之前尝试获取该关键资源的锁，此时死锁发生了。
+Thread类的stop()方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被stop()时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。
+停止线程更好的方式是使用中断interrupt()。
+线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。
+Thread类有三个方法与中断有关：
+Thread#isInterrupted()：实例方法，判断线程是否被中断，中断状态不变 Thread#interrupt()：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于wait(), sleep(), join()方法中，则线程会抛出InterruptedException异常，同时中断状态被清除 Thread.interrupted()：静态方法，判断当前线程是否被中断，同时中断状态被清除 public class InterruptDemo { public static void main(String[] args) throws InterruptedException { Thread t1 = new Thread(new MyRunnable()); t1.start(); Thread.sleep(3000); t1.interrupt(); } public static class MyRunnable implements Runnable { @Override public void run() { while (true) { // when current thread is interrupted, stop if (Thread.currentThread().isInterrupted()) { System.out.println(&#34;I&#39;m interrupted, exit.&#34;); break; } try { Thread.sleep(2000); } catch (InterruptedException ex) { // when interrupt in sleep()|join()|wait(), the interrupt status is cleared System."/>
+
+<meta property="og:title" content="Java并发：线程中断" />
+<meta property="og:description" content="如何让线程停止或退出呢？
+大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过while循环等）。
+Thread类中的suspend()方法和resume()方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被suspend()时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以resume()目标线程的线程在resume()目标线程之前尝试获取该关键资源的锁，此时死锁发生了。
+Thread类的stop()方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被stop()时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。
+停止线程更好的方式是使用中断interrupt()。
+线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。
+Thread类有三个方法与中断有关：
+Thread#isInterrupted()：实例方法，判断线程是否被中断，中断状态不变 Thread#interrupt()：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于wait(), sleep(), join()方法中，则线程会抛出InterruptedException异常，同时中断状态被清除 Thread.interrupted()：静态方法，判断当前线程是否被中断，同时中断状态被清除 public class InterruptDemo { public static void main(String[] args) throws InterruptedException { Thread t1 = new Thread(new MyRunnable()); t1.start(); Thread.sleep(3000); t1.interrupt(); } public static class MyRunnable implements Runnable { @Override public void run() { while (true) { // when current thread is interrupted, stop if (Thread.currentThread().isInterrupted()) { System.out.println(&#34;I&#39;m interrupted, exit.&#34;); break; } try { Thread.sleep(2000); } catch (InterruptedException ex) { // when interrupt in sleep()|join()|wait(), the interrupt status is cleared System." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-22T23:34:07+08:00" />
+<meta property="article:modified_time" content="2020-10-22T23:34:07+08:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      My New Hugo Site
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/java-concurrent/jc2-thread-interrupt/">
+              Java并发：线程中断
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-10-22T23:34:07&#43;08:00">
+                October 22, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa fa-folder" aria-hidden="true"></i>
+    <a href="https://nkcoder.github.io/categories/java%E5%B9%B6%E5%8F%91/">Java并发</a></div>
+
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>如何让线程停止或退出呢？</p>
+<p>大多数线程执行完任务后就自动退出了，但也有部分后台线程是常驻的，不停地提供服务（通过<code>while</code>循环等）。</p>
+<p><code>Thread</code>类中的<code>suspend()</code>方法和<code>resume()</code>方法早已废弃，禁止使用了，因为容易导致死锁：如果目标线程被<code>suspend()</code>时持有关键资源的锁，而其它所有线程在获得该锁之前不能访问该关键资源。当可以<code>resume()</code>目标线程的线程在<code>resume()</code>目标线程之前尝试获取该关键资源的锁，此时死锁发生了。</p>
+<p><code>Thread</code>类的<code>stop()</code>方法同样被废弃，因为该方法强制目标线程立即停止执行，容易导致数据或状态不一致。当目标线程被<code>stop()</code>时，线程持有的所有锁都被立即释放，如果之前被锁保护的对象处于不一致状态（如数据处理到一半），则该对象就暴露给了其它线程，导致不可预期的结果。</p>
+<p>停止线程更好的方式是使用<code>中断interrupt()</code>。</p>
+<p>线程中断并不是让目标线程立即停止退出，而是给目标线程发个通知：有线程希望你退出啦！至于目标线程收到通知后如何处理，由目标线程自己决定。</p>
+<p>Thread类有三个方法与中断有关：</p>
+<ul>
+<li><code>Thread#isInterrupted()</code>：实例方法，判断线程是否被中断，中断状态不变</li>
+<li><code>Thread#interrupt()</code>：实例方法，中断线程，默认设置线程的中断状态，如果线程当前处于<code>wait()</code>, <code>sleep()</code>, <code>join()</code>方法中，则线程会抛出<code>InterruptedException</code>异常，同时中断状态被清除</li>
+<li><code>Thread.interrupted()</code>：静态方法，判断当前线程是否被中断，同时中断状态被清除</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">InterruptDemo</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">main</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">[]</span> args<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">throws</span> InterruptedException <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    Thread t1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Thread<span style="color:#ff79c6">(</span><span style="color:#ff79c6">new</span> MyRunnable<span style="color:#ff79c6">());</span>
+</span></span><span style="display:flex;"><span>    t1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">start</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>    Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sleep</span><span style="color:#ff79c6">(</span>3000<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    t1<span style="color:#ff79c6">.</span><span style="color:#50fa7b">interrupt</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> <span style="color:#8be9fd;font-style:italic">class</span> <span style="color:#50fa7b">MyRunnable</span> <span style="color:#8be9fd;font-style:italic">implements</span> Runnable <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    @Override
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">run</span><span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">while</span> <span style="color:#ff79c6">(</span><span style="color:#ff79c6">true</span><span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// when current thread is interrupted, stop
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>        <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentThread</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">isInterrupted</span><span style="color:#ff79c6">())</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>          System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;I&#39;m interrupted, exit.&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">break</span><span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">try</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>          Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">sleep</span><span style="color:#ff79c6">(</span>2000<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">catch</span> <span style="color:#ff79c6">(</span>InterruptedException ex<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#6272a4">// when interrupt in sleep()|join()|wait(), the interrupt status is cleared
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>          System<span style="color:#ff79c6">.</span><span style="color:#50fa7b">out</span><span style="color:#ff79c6">.</span><span style="color:#50fa7b">println</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;I&#39;m interrupted when sleeping.&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#6272a4">// interrupt again to set interrupt status
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>          Thread<span style="color:#ff79c6">.</span><span style="color:#50fa7b">currentThread</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">interrupt</span><span style="color:#ff79c6">();;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

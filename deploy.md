@@ -8,6 +8,8 @@ In `Settings` -> `Pages` -> `Build and deployment` -> `Source`: Github Actions.
 
 ```bash
 hugo new content posts/java/my-first-post.md
+hugo
+hugo server
 ```
 
 Push the change to GitHub which will trigger the workflow defined in `.github/gh-pages.yml` to deploy the update using GitHub Actions.

@@ -4,7 +4,7 @@ date: 2023-09-07T07:26:15+10:00
 draft: false
 ---
 
-Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter [VAVR](hat.openai.com), a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
+Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter [VAVR](https://www.vavr.io/), a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
 
 ## What is VAVR?
 
@@ -16,11 +16,11 @@ With its enhanced functional constructs like immutable collections, functional c
 
 ## Functional programming concepts
 
-**Side effects**: common side effects are changing objects or variables in place, printing to the console, writing to a log file or to a database. Side-effects are considered harmful if they affect the semantics of our program in an undesirable way.
+**Side effects**: a side effect is something a function does aside from simply returning a result. Examples of side effects include modifying a field on an object, throwing an exception, and accessing the network or file system.
 
 **Referential transparent**: a function, or more generally an expression, is called referentially transparent if a call can be replaced by its value without affecting the behavior of the program. Simply spoken, given the same input the output is always the same.
 
-**Pure function**: a function is called pure if all expressions involved are referentially transparent. Easy to reason about, test and debug. The key to a better Java is to use immutable values paired with referentially transparent functions.
+**Pure function**: a function is called pure if all expressions involved are referentially transparent. Pure functions are easy to reason about, test and debug.
 
 **Partial function**: A partial function from X to Y is a function f: X′ → Y, for some subset X′ of X. It generalizes the concept of a function f: X → Y by not forcing f to map every element of X to an element of Y. That means a partial function works properly only for some input values. If the function is called with a disallowed input value, it will typically throw an exception.
 

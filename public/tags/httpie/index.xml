@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>httpie on My New Hugo Site</title>
+    <title>httpie on A Coder</title>
     <link>https://nkcoder.github.io/tags/httpie/</link>
-    <description>Recent content in httpie on My New Hugo Site</description>
+    <description>Recent content in httpie on A Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 19 Feb 2020 23:26:04 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/tags/httpie/index.xml" rel="self" type="application/rss+xml" />

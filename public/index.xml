@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>A Coder</title>
     <link>https://nkcoder.github.io/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on A Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 31 Aug 2023 21:55:36 +1000</lastBuildDate><atom:link href="https://nkcoder.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Sep 2023 07:26:15 +1000</lastBuildDate><atom:link href="https://nkcoder.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Java refresh: main Features After Java8</title>
+      <title>VAVR: brings functional programming type to Java</title>
+      <link>https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/</link>
+      <pubDate>Thu, 07 Sep 2023 07:26:15 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/</guid>
+      <description>Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter VAVR, a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
+What is VAVR? Link to heading VAVR, formerly known as Javaslang, is a functional library for Java 8+ that enriches the language with immutable data types and functional control structures. It aims to reduce the lines of code, enhance code quality, and improve the overall developer experience.</description>
+    </item>
+    
+    <item>
+      <title>Java refresh: main features after Java8</title>
       <link>https://nkcoder.github.io/posts/java/main-features-after-java8/</link>
       <pubDate>Thu, 31 Aug 2023 21:55:36 +1000</pubDate>
       
       <guid>https://nkcoder.github.io/posts/java/main-features-after-java8/</guid>
-      <description>1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &amp;lt;pre&amp;gt;{@code ...}&amp;lt;/pre&amp;gt; blocks.
-/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&amp;#34;v: &amp;#34; + v.get()); * } * } */ 2. JEP 400: UTF-8 by Default (@18) Link to heading Specify UTF-8 as the default charset of the standard Java APIs.</description>
+      <description>Just take some time to refresh my Java knowledge, especially the new features after Java 8.
+1. JEP 413: Code Snippets in Java API Documentation (@18) Link to heading To replace the use of &amp;lt;pre&amp;gt;{@code ...}&amp;lt;/pre&amp;gt; blocks.
+/** * JEP 413: Code Snippets in Java API Documentation * The following code shows how to use {@code Optional.isPresent}: * {@snippet : * if (v.isPresent()) { * System.out.println(&amp;#34;v: &amp;#34; + v.get()); * } * } */ 2.</description>
     </item>
     
     <item>

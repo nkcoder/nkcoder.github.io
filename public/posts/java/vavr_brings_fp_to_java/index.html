@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  VAVR: brings functional programming type to Java · A Coder
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter VAVR, a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
+What is VAVR? Link to heading VAVR, formerly known as Javaslang, is a functional library for Java 8&#43; that enriches the language with immutable data types and functional control structures. It aims to reduce the lines of code, enhance code quality, and improve the overall developer experience.">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="VAVR: brings functional programming type to Java"/>
+<meta name="twitter:description" content="Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter VAVR, a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
+What is VAVR? Link to heading VAVR, formerly known as Javaslang, is a functional library for Java 8&#43; that enriches the language with immutable data types and functional control structures. It aims to reduce the lines of code, enhance code quality, and improve the overall developer experience."/>
+
+<meta property="og:title" content="VAVR: brings functional programming type to Java" />
+<meta property="og:description" content="Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter VAVR, a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.
+What is VAVR? Link to heading VAVR, formerly known as Javaslang, is a functional library for Java 8&#43; that enriches the language with immutable data types and functional control structures. It aims to reduce the lines of code, enhance code quality, and improve the overall developer experience." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-07T07:26:15+10:00" />
+<meta property="article:modified_time" content="2023-09-07T07:26:15+10:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      A Coder
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/">
+              VAVR: brings functional programming type to Java
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2023-09-07T07:26:15&#43;10:00">
+                September 7, 2023
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              5-minute read
+            </span>
+          </div>
+          
+          
+          
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter <a href="hat.openai.com" >VAVR</a>, a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.</p>
+<h2 id="what-is-vavr">
+  What is VAVR?
+  <a class="heading-link" href="#what-is-vavr">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>VAVR, formerly known as Javaslang, is a functional library for Java 8+ that enriches the language with immutable data types and functional control structures. It aims to reduce the lines of code, enhance code quality, and improve the overall developer experience.</p>
+<h2 id="why-choose-vavr">
+  Why Choose VAVR?
+  <a class="heading-link" href="#why-choose-vavr">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>With its enhanced functional constructs like immutable collections, functional control structures, and pattern matching, VAVR aims to bring Java closer to true functional languages, increasing code safety and reducing boilerplate.</p>
+<h2 id="functional-programming-concepts">
+  Functional programming concepts
+  <a class="heading-link" href="#functional-programming-concepts">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><strong>Side effects</strong>: common side effects are changing objects or variables in place, printing to the console, writing to a log file or to a database. Side-effects are considered harmful if they affect the semantics of our program in an undesirable way.</p>
+<p><strong>Referential transparent</strong>: a function, or more generally an expression, is called referentially transparent if a call can be replaced by its value without affecting the behavior of the program. Simply spoken, given the same input the output is always the same.</p>
+<p><strong>Pure function</strong>: a function is called pure if all expressions involved are referentially transparent. Easy to reason about, test and debug. The key to a better Java is to use immutable values paired with referentially transparent functions.</p>
+<p><strong>Partial function</strong>: A partial function from X to Y is a function f: X′ → Y, for some subset X′ of X. It generalizes the concept of a function f: X → Y by not forcing f to map every element of X to an element of Y. That means a partial function works properly only for some input values. If the function is called with a disallowed input value, it will typically throw an exception.</p>
+<h2 id="key-components-of-vavr">
+  Key Components of VAVR
+  <a class="heading-link" href="#key-components-of-vavr">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h2 id="tuple">
+  Tuple
+  <a class="heading-link" href="#tuple">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Tuples are immutable and can hold multiple objects of different types. They&rsquo;re great for returning multiple values from a function without the need to create a custom class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// create tuples, you have Tuple1...Tuple8
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Tuple2<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> java17 <span style="color:#ff79c6">=</span> Tuple<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Java&#34;</span><span style="color:#ff79c6">,</span> 17<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// map each element with a mapper
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Tuple2<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> String<span style="color:#ff79c6">&gt;</span> java17 <span style="color:#ff79c6">=</span> Tuple<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Java&#34;</span><span style="color:#ff79c6">,</span> 17<span style="color:#ff79c6">).</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>        s <span style="color:#ff79c6">-&gt;</span> s <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;!&#34;</span><span style="color:#ff79c6">,</span>
+</span></span><span style="display:flex;"><span>        String<span style="color:#ff79c6">::</span>valueOf
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// map all elements with one mapper
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Tuple2<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> String<span style="color:#ff79c6">&gt;</span> java17Again <span style="color:#ff79c6">=</span> Tuple<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Java&#34;</span><span style="color:#ff79c6">,</span> 17<span style="color:#ff79c6">).</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> Tuple<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>s <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;!&#34;</span><span style="color:#ff79c6">,</span> String<span style="color:#ff79c6">.</span><span style="color:#50fa7b">valueOf</span><span style="color:#ff79c6">(</span>i<span style="color:#ff79c6">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// transform the tuple to a new type
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>String java17 <span style="color:#ff79c6">=</span> Tuple<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Java&#34;</span><span style="color:#ff79c6">,</span> 17<span style="color:#ff79c6">).</span><span style="color:#50fa7b">apply</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">(</span>s<span style="color:#ff79c6">,</span> i<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> s <span style="color:#ff79c6">+</span> i <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="functions">
+  Functions
+  <a class="heading-link" href="#functions">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Functional programming is all about values and transformation of values using functions. VAVR provides first-class functions, enabling higher-order functions, currying, memoization, and more.</p>
+<p>Functional interfaces are from <code>Function0</code>, <code>Function1</code> to <code>Function 8</code>, and functional interfaces that throw a checked exception are from <code>CheckedFunction0</code> to <code>CheckedFunction8</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#6272a4">// create functions
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Function2<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> sum <span style="color:#ff79c6">=</span> Function2<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>Integer<span style="color:#ff79c6">::</span>sum<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>Function3<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> sum3 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>x<span style="color:#ff79c6">,</span> y<span style="color:#ff79c6">,</span> z<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">+</span> y <span style="color:#ff79c6">+</span> z<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// composition: the application of one function to the result of another to produce a third function
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// `andThen` or `compose`
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> plusOne <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">+</span> 1<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> multiply2 <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">*</span> 2<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> andThen <span style="color:#ff79c6">=</span> plusOne<span style="color:#ff79c6">.</span><span style="color:#50fa7b">andThen</span><span style="color:#ff79c6">(</span>multiply2<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> compose <span style="color:#ff79c6">=</span> multiply2<span style="color:#ff79c6">.</span><span style="color:#50fa7b">compose</span><span style="color:#ff79c6">(</span>plusOne<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// lift: lift a partial function into a total function that returns an Option result.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Function2<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> divide <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>x<span style="color:#ff79c6">,</span> y<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">/</span> y<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>Function2<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Option<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;&gt;</span> safeDivide <span style="color:#ff79c6">=</span> Function2<span style="color:#ff79c6">.</span><span style="color:#50fa7b">lift</span><span style="color:#ff79c6">(</span>divide<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// partial application: allows you to derive a new function from an existing one by fixing some values.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Function5<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> sum <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">,</span> b<span style="color:#ff79c6">,</span> c<span style="color:#ff79c6">,</span> d<span style="color:#ff79c6">,</span> e<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> a <span style="color:#ff79c6">+</span> b <span style="color:#ff79c6">+</span> c <span style="color:#ff79c6">+</span> d <span style="color:#ff79c6">+</span> e<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>Function2<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> sum6 <span style="color:#ff79c6">=</span> sum<span style="color:#ff79c6">.</span><span style="color:#50fa7b">apply</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// curring: partially apply a function by fixing a value for one of the parameters, resulting in a `Function1` function that returns a `Function1`.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>Function3<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> sum <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">(</span>a<span style="color:#ff79c6">,</span> b<span style="color:#ff79c6">,</span> c<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">-&gt;</span> a <span style="color:#ff79c6">+</span> b <span style="color:#ff79c6">+</span> c<span style="color:#ff79c6">;</span>
+</span></span><span style="display:flex;"><span>Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Function1<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;&gt;</span> add5 <span style="color:#ff79c6">=</span> sum<span style="color:#ff79c6">.</span><span style="color:#50fa7b">curried</span><span style="color:#ff79c6">().</span><span style="color:#50fa7b">apply</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="values">
+  Values
+  <a class="heading-link" href="#values">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>This includes powerful constructs like Option, Try, Either, and Lazy:</p>
+<ul>
+<li>Option handles potential absence of a value better than null references.</li>
+<li>Try is a monadic container for a computation which may result in an exception.</li>
+<li>Either represents a value of two possible types.</li>
+<li>Lazy represents a value computed lazily.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Option<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> some <span style="color:#ff79c6">=</span> Option<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Hello&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>Option<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> none <span style="color:#ff79c6">=</span> Option<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">null</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">static</span> Either<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">,</span> Integer<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">divide</span><span style="color:#ff79c6">(</span>Integer x<span style="color:#ff79c6">,</span> Integer y<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">(</span>y <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> Either<span style="color:#ff79c6">.</span><span style="color:#50fa7b">left</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;Error: divide by zero&#34;</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span> <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> Either<span style="color:#ff79c6">.</span><span style="color:#50fa7b">right</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">/</span> y<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Try<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> byZeroWithRecover <span style="color:#ff79c6">=</span> Try<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(()</span> <span style="color:#ff79c6">-&gt;</span> divide<span style="color:#ff79c6">(</span>8<span style="color:#ff79c6">,</span> 0<span style="color:#ff79c6">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">recover</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> Integer<span style="color:#ff79c6">.</span><span style="color:#50fa7b">MAX_VALUE</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">public</span> <span style="color:#8be9fd;font-style:italic">static</span> Validation<span style="color:#ff79c6">&lt;</span>Seq<span style="color:#ff79c6">&lt;</span>ValidationError<span style="color:#ff79c6">&gt;,</span> Account<span style="color:#ff79c6">&gt;</span> <span style="color:#50fa7b">validateAccount</span><span style="color:#ff79c6">(</span>String name<span style="color:#ff79c6">,</span> Integer age<span style="color:#ff79c6">,</span> Double amount<span style="color:#ff79c6">)</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> Validation<span style="color:#ff79c6">.</span><span style="color:#50fa7b">combine</span><span style="color:#ff79c6">(</span>validateName<span style="color:#ff79c6">(</span>name<span style="color:#ff79c6">),</span> validateAge<span style="color:#ff79c6">(</span>age<span style="color:#ff79c6">),</span> validateAmount<span style="color:#ff79c6">(</span>amount<span style="color:#ff79c6">)).</span><span style="color:#50fa7b">ap</span><span style="color:#ff79c6">(</span>Account<span style="color:#ff79c6">::</span><span style="color:#ff79c6">new</span><span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Number sum <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 4<span style="color:#ff79c6">,</span> 5<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">*</span> 2<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">distinct</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">filter</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">&gt;</span> 5<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">sum</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><h2 id="collections">
+  Collections
+  <a class="heading-link" href="#collections">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>VAVR&rsquo;s collections are immutable, ensuring thread-safety. It provides alternatives to Java&rsquo;s collections, like List, Set, Map, all being immutable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Number sum <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">,</span> 2<span style="color:#ff79c6">,</span> 3<span style="color:#ff79c6">,</span> 4<span style="color:#ff79c6">,</span> 5<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">*</span> 2<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">distinct</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">filter</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">&gt;</span> 5<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">sum</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>assertEquals<span style="color:#ff79c6">(</span>24<span style="color:#ff79c6">,</span> sum<span style="color:#ff79c6">.</span><span style="color:#50fa7b">intValue</span><span style="color:#ff79c6">());</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Stream<span style="color:#ff79c6">&lt;</span>String<span style="color:#ff79c6">&gt;</span> nums <span style="color:#ff79c6">=</span> Stream<span style="color:#ff79c6">.</span><span style="color:#50fa7b">from</span><span style="color:#ff79c6">(</span>1<span style="color:#ff79c6">).</span><span style="color:#50fa7b">map</span><span style="color:#ff79c6">(</span>String<span style="color:#ff79c6">::</span>valueOf<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>assertFalse<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">.</span><span style="color:#50fa7b">hasDefiniteSize</span><span style="color:#ff79c6">());</span>
+</span></span></code></pre></div><h2 id="property-checking-and-pattern-matching">
+  Property Checking and Pattern Matching
+  <a class="heading-link" href="#property-checking-and-pattern-matching">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>VAVR integrates property-based testing, allowing for a range of inputs to be tested against a property. Additionally, it supports pattern matching, akin to Scala, which enhances readability.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Arbitrary<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> nums <span style="color:#ff79c6">=</span> Arbitrary<span style="color:#ff79c6">.</span><span style="color:#50fa7b">ofAll</span><span style="color:#ff79c6">(</span>Gen<span style="color:#ff79c6">.</span><span style="color:#50fa7b">choose</span><span style="color:#ff79c6">(</span>5<span style="color:#ff79c6">,</span> 10<span style="color:#ff79c6">));</span>
+</span></span><span style="display:flex;"><span>Property<span style="color:#ff79c6">.</span><span style="color:#50fa7b">def</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;x &gt;= 5&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">forAll</span><span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">suchThat</span><span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">&gt;=</span> 5<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">check</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">assertIsSatisfied</span><span style="color:#ff79c6">();</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> nums <span style="color:#ff79c6">=</span> List<span style="color:#ff79c6">.</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>2<span style="color:#ff79c6">,</span> 4<span style="color:#ff79c6">,</span> 6<span style="color:#ff79c6">,</span> 8<span style="color:#ff79c6">);</span>
+</span></span><span style="display:flex;"><span>String result <span style="color:#ff79c6">=</span> Match<span style="color:#ff79c6">(</span>nums<span style="color:#ff79c6">).</span><span style="color:#50fa7b">of</span><span style="color:#ff79c6">(</span>
+</span></span><span style="display:flex;"><span>        Case<span style="color:#ff79c6">(</span>$<span style="color:#ff79c6">(</span>isNull<span style="color:#ff79c6">()),</span> <span style="color:#f1fa8c">&#34;Null&#34;</span><span style="color:#ff79c6">),</span>
+</span></span><span style="display:flex;"><span>        Case<span style="color:#ff79c6">(</span>$<span style="color:#ff79c6">(</span>forAll<span style="color:#ff79c6">(</span>x <span style="color:#ff79c6">-&gt;</span> x <span style="color:#ff79c6">%</span> 2 <span style="color:#ff79c6">==</span> 0<span style="color:#ff79c6">)),</span> <span style="color:#f1fa8c">&#34;All even&#34;</span><span style="color:#ff79c6">),</span>
+</span></span><span style="display:flex;"><span>        Case<span style="color:#ff79c6">(</span>$<span style="color:#ff79c6">(),</span> <span style="color:#f1fa8c">&#34;Has Odd&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">);</span>
+</span></span></code></pre></div><h2 id="conclusion">
+  Conclusion
+  <a class="heading-link" href="#conclusion">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>VAVR is a stepping stone towards adopting functional programming in Java. With its array of features, VAVR makes Java programming more concise, expressive, and safe. For those looking to imbue their Java code with a functional flair, VAVR is a library worth exploring.</p>
+<h3 id="references">
+  References
+  <a class="heading-link" href="#references">
+    <i class="fa fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<ul>
+<li>The <a href="https://docs.vavr.io/"  class="external-link" target="_blank" rel="noopener">Vavr User Guide</a> is a great document of VAVR.</li>
+<li>The above examples can be found in <a href="https://github.com/nkcoder/fp-with-vavr"  class="external-link" target="_blank" rel="noopener">Github</a></li>
+</ul>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

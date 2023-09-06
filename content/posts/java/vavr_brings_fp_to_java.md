@@ -1,7 +1,7 @@
 ---
 title: "VAVR: brings functional programming type to Java"
 date: 2023-09-07T07:26:15+10:00
-draft: true
+draft: false
 ---
 
 Java, while powerful, often lacks the functional programming constructs found in languages like Haskell and Scala. Enter [VAVR](hat.openai.com), a library designed to bridge this gap, granting Java developers access to an enriched functional toolkit.

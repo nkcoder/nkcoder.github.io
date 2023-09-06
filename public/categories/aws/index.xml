@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>AWS on My New Hugo Site</title>
+    <title>AWS on A Coder</title>
     <link>https://nkcoder.github.io/categories/aws/</link>
-    <description>Recent content in AWS on My New Hugo Site</description>
+    <description>Recent content in AWS on A Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 07 Aug 2021 17:22:25 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/aws/index.xml" rel="self" type="application/rss+xml" />

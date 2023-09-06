@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Go程序设计 on My New Hugo Site</title>
+    <title>Go程序设计 on A Coder</title>
     <link>https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
-    <description>Recent content in Go程序设计 on My New Hugo Site</description>
+    <description>Recent content in Go程序设计 on A Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 18 Apr 2021 22:36:16 +0800</lastBuildDate><atom:link href="https://nkcoder.github.io/categories/go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  PostgreSQL refresh 01: basic query · A Coder
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Daniel Guo">
+<meta name="description" content="-- select select first_name, last_name, email from customer; -- distinct: both the following two forms work select distinct rating from film; select distinct(rating) from film; -- count select count(distinct first_name ) from actor; -- readable select count(distinct(first_name)) from actor; -- this doesn&#39;t work, parentheses are required -- select count distinct first_name -- from actor; -- where select email from customer where first_name = &#39;Nancy&#39; and last_name = &#39;Thomas&#39;; -- limit select customer_id from payment order by payment_date ASC limit 10; -- between and --- both inclusive --- not between and --- when used for timestamp, it includes the time part select count(*) from payment where amount between 5 and 6; select count(*) from payment where amount not between 5 and 6; select * from payment where payment_date between &#39;2007-05-12&#39; and &#39;2007-05-15&#39; order by payment_date asc; -- in, not in select * from city where city in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); information_schema select * from city where city not in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); -- like, ilike --- like: case sensitive --- ilike: case insensitive --- like: match any characters --- _: match only one character select * from customer where first_name like &#39;M%&#39; and last_name ilike &#39;s%&#39;; select * from customer where first_name like &#39;_her%&#39;; ">
+<meta name="keywords" content="blog,developer,Java,Docker,Redis,Scala,SpringBoot">
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PostgreSQL refresh 01: basic query"/>
+<meta name="twitter:description" content="-- select select first_name, last_name, email from customer; -- distinct: both the following two forms work select distinct rating from film; select distinct(rating) from film; -- count select count(distinct first_name ) from actor; -- readable select count(distinct(first_name)) from actor; -- this doesn&#39;t work, parentheses are required -- select count distinct first_name -- from actor; -- where select email from customer where first_name = &#39;Nancy&#39; and last_name = &#39;Thomas&#39;; -- limit select customer_id from payment order by payment_date ASC limit 10; -- between and --- both inclusive --- not between and --- when used for timestamp, it includes the time part select count(*) from payment where amount between 5 and 6; select count(*) from payment where amount not between 5 and 6; select * from payment where payment_date between &#39;2007-05-12&#39; and &#39;2007-05-15&#39; order by payment_date asc; -- in, not in select * from city where city in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); information_schema select * from city where city not in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); -- like, ilike --- like: case sensitive --- ilike: case insensitive --- like: match any characters --- _: match only one character select * from customer where first_name like &#39;M%&#39; and last_name ilike &#39;s%&#39;; select * from customer where first_name like &#39;_her%&#39;; "/>
+
+<meta property="og:title" content="PostgreSQL refresh 01: basic query" />
+<meta property="og:description" content="-- select select first_name, last_name, email from customer; -- distinct: both the following two forms work select distinct rating from film; select distinct(rating) from film; -- count select count(distinct first_name ) from actor; -- readable select count(distinct(first_name)) from actor; -- this doesn&#39;t work, parentheses are required -- select count distinct first_name -- from actor; -- where select email from customer where first_name = &#39;Nancy&#39; and last_name = &#39;Thomas&#39;; -- limit select customer_id from payment order by payment_date ASC limit 10; -- between and --- both inclusive --- not between and --- when used for timestamp, it includes the time part select count(*) from payment where amount between 5 and 6; select count(*) from payment where amount not between 5 and 6; select * from payment where payment_date between &#39;2007-05-12&#39; and &#39;2007-05-15&#39; order by payment_date asc; -- in, not in select * from city where city in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); information_schema select * from city where city not in (&#39;Hoshiarpur&#39;, &#39;Hino&#39;); -- like, ilike --- like: case sensitive --- ilike: case insensitive --- like: match any characters --- _: match only one character select * from customer where first_name like &#39;M%&#39; and last_name ilike &#39;s%&#39;; select * from customer where first_name like &#39;_her%&#39;; " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://nkcoder.github.io/posts/sql/postgresql-refresh-1-basic/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-11T16:20:48+10:00" />
+<meta property="article:modified_time" content="2023-09-11T16:20:48+10:00" />
+
+
+
+
+<link rel="canonical" href="https://nkcoder.github.io/posts/sql/postgresql-refresh-1-basic/">
+
+
+<link rel="preload" href="https://nkcoder.github.io/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="https://nkcoder.github.io/css/coder.min.135e22c97ff685fe983fc60048e309ced8f00d8d38f536aa67dba8a13a03dfa4.css" integrity="sha256-E14iyX/2hf6YP8YASOMJztjwDY049TaqZ9uooToD36Q=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="https://nkcoder.github.io/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://nkcoder.github.io/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://nkcoder.github.io/images/apple-touch-icon.png">
+
+<link rel="manifest" href="https://nkcoder.github.io/site.webmanifest">
+<link rel="mask-icon" href="https://nkcoder.github.io/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://nkcoder.github.io/">
+      A Coder
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/categories/">Category</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="https://nkcoder.github.io/tags/">Tag</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://nkcoder.github.io/posts/sql/postgresql-refresh-1-basic/">
+              PostgreSQL refresh 01: basic query
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <time datetime="2023-09-11T16:20:48&#43;10:00">
+                September 11, 2023
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              One-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="https://nkcoder.github.io/tags/sql/">sql</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#6272a4">-- select
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> first_name, last_name, email
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> customer;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- distinct: both the following two forms work
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">distinct</span> rating
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> film;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">distinct</span>(rating)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> film;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- count
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">distinct</span> first_name ) 
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> actor;
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- readable
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">distinct</span>(first_name)) 
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> actor;
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- this doesn&#39;t work, parentheses are required
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">-- select count distinct first_name
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">-- from actor;
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- where
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> email
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> customer
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> first_name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Nancy&#39;</span> <span style="color:#ff79c6">and</span> last_name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;Thomas&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- limit
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> customer_id
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> payment
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> payment_date <span style="color:#ff79c6">ASC</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">limit</span> <span style="color:#bd93f9">10</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- between and
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- both inclusive
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- not between and
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- when used for timestamp, it includes the time part
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> payment
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> amount <span style="color:#ff79c6">between</span> <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">and</span> <span style="color:#bd93f9">6</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">count</span>(<span style="color:#ff79c6">*</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> payment
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> amount <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">between</span> <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">and</span> <span style="color:#bd93f9">6</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> payment
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> payment_date <span style="color:#ff79c6">between</span> <span style="color:#f1fa8c">&#39;2007-05-12&#39;</span> <span style="color:#ff79c6">and</span> <span style="color:#f1fa8c">&#39;2007-05-15&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">order</span> <span style="color:#ff79c6">by</span> payment_date <span style="color:#ff79c6">asc</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- in, not in
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> city
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> city <span style="color:#ff79c6">in</span> (<span style="color:#f1fa8c">&#39;Hoshiarpur&#39;</span>, <span style="color:#f1fa8c">&#39;Hino&#39;</span>);
+</span></span><span style="display:flex;"><span>information_schema
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> city
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> city <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> (<span style="color:#f1fa8c">&#39;Hoshiarpur&#39;</span>, <span style="color:#f1fa8c">&#39;Hino&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">-- like, ilike
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- like: case sensitive
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- ilike: case insensitive
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- like: match any characters
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">--- _: match only one character
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> customer
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> first_name <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;M%&#39;</span> <span style="color:#ff79c6">and</span> last_name <span style="color:#ff79c6">ilike</span> <span style="color:#f1fa8c">&#39;s%&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">select</span> <span style="color:#ff79c6">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> customer
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">where</span> first_name <span style="color:#ff79c6">like</span> <span style="color:#f1fa8c">&#39;_her%&#39;</span>;
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        <div id="disqus_thread"></div>
+<script>
+  window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "nkcoder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    
+    document.addEventListener('themeChanged', function (e) { 
+        if (document.readyState == 'complete') {
+          DISQUS.reset({ reload: true, config: disqus_config });
+        }
+    });
+</script>
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2023
+     Daniel Guo 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="https://nkcoder.github.io/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-168735975-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

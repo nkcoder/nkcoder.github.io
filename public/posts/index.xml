@@ -6,7 +6,71 @@
     <description>Recent content in Posts on A Coder</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Sep 2023 07:26:15 +1000</lastBuildDate><atom:link href="https://nkcoder.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 16:24:48 +1000</lastBuildDate><atom:link href="https://nkcoder.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PostgreSQL refresh: summary</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-summar/</link>
+      <pubDate>Mon, 11 Sep 2023 16:24:48 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-summar/</guid>
+      <description>As I&amp;rsquo;m refreshing my SQL knowledge (based on PostgreSQL), here are the queries with comments.
+PostgreSQL refresh 01: basic query PostgreSQL refresh 02: string functions PostgreSQL refresh 03: group by PostgreSQL refresh 04: join PostgreSQL refresh 05: sub query PostgreSQL refresh 06: date and time References Link to heading PostgreSQL 15.4 Documentation </description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 06: date and time</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-6-date-time/</link>
+      <pubDate>Mon, 11 Sep 2023 16:23:29 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-6-date-time/</guid>
+      <description>-- PostgreSQL time data types --- TIME: contains only time --- DATE: contains only date --- TIMESTAMP: contains date and time --- TIMESTAMPTZ: contains date, time and timezone --- related functions and operators: TIMEZONE, NOW, TIMEOFDAY, CURRENT_TIME, CURRENT_DATE --- show the values of all configuration parameters, with descriptions SHOW ALL; --- display the current setting of run-time parameters SHOW TIMEZONE; --- date and time functions SELECT now(), timeofday(), CURRENT_TIME, CURRENT_DATE, CURRENT_TIMESTAMP; ------------------------------------------------------------------------------------------ -- extract information from a time based data type using --- EXTRACT(): retrieves subfields such as year/month/hour from date/time values --- AGE(): subtract argument from current_date --- TO_CHAR(): convert various data types (date/time, numeric) to formatted strings, and convert ---- from formatted strings to specific data types.</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 05: sub-query</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-5-sub-query/</link>
+      <pubDate>Mon, 11 Sep 2023 16:23:01 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-5-sub-query/</guid>
+      <description>-- Sub query --- sub queries are executed first. --- it is unwise to write a subquery that has side effects (such as calling sequence functions) select title, rental_rate from film where rental_rate &amp;gt; (select avg(rental_rate) from film); -- Exists EXISTS (subquery) -- The subquery is evaluated to determine whether it returns any rows. If it returns at least one row, the result of EXISTS is “true”; if the subquery returns no rows, the result of EXISTS is “false”.</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 04: join</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-4-join/</link>
+      <pubDate>Mon, 11 Sep 2023 16:22:28 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-4-join/</guid>
+      <description>-- AS --- it&amp;#39;s an alias of a column or an aggregate --- it&amp;#39;s executed at the very end of a query, so we cannot use the alias inside a WHERE operator select count(*) as num_transactions from payment; select customer_id, sum(amount) as total_spent from payment group by customer_id having sum(amount) &amp;gt; 100; -- cannot use &amp;#39;total_spent&amp;#39; here because it doesn&amp;#39;t exist yet -- INNER JOIN --- results with a set of records that match in both tables --- the order of the tables to INNER JOIN doesn&amp;#39;t matter --- if you use just JOIN without the INNER, PostgreSQL will treat it as an INNER JOIN select payment_id, customer.</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 03: group by</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-3-groupby/</link>
+      <pubDate>Mon, 11 Sep 2023 16:22:08 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-3-groupby/</guid>
+      <description>-- most common aggregate functions --- COUNT(): simply returns the number of rows --- AVG(): returns a floating point, you can use ROUND() to specify precision after the decimal --- MAX(): returns the maximum element --- MIN(): returns the minimum element --- SUM(): returns the sum --- aggregate functions can appear in SELECT, HAVING and ORDER BY clauses, but not WHERE statements select min(replacement_cost), max(replacement_cost), round(avg(replacement_cost), 2), sum(replacement_cost) from film; -- group by: aggregate on one or more columns --- in the SELECT statement, columns must either have an aggregate function or be in the GROUP BY call --- WHERE statements should not refer to the aggregation result, should use HAVING to filter on aggregation result --- can use ORDER BY to sort results based on the aggregate, but make sure to reference the entire aggregate function -- the total amount per customer per staff select customer_id, staff_id, sum(amount) from payment group by customer_id, staff_id order by customer_id, staff_id, sum(amount); select date(payment_date), sum(amount) from payment group by date(payment_date) order by date(payment_date), sum(amount) desc; select staff_id, count(*) from payment group by staff_id order by count(*) desc; select rating, round(avg(replacement_cost), 2) from film group by rating; select customer_id, sum(amount) from payment group by customer_id order by sum(amount) desc limit 5; -- HAVING: filter on the aggregate --- we can use filter on non-aggregate columns in WHERE because they&amp;#39;re valid before GROUP BY --- we can NOT use filter on aggregate columns in WHERE because they&amp;#39;re valid AFTER GROUP BY select customer_id, sum(amount) from payment where customer_id not in (184, 477, 550) group by customer_id having sum(amount) &amp;gt; 100 order by sum(amount) desc; select customer_id, count(*) from payment group by customer_id having count(*) &amp;gt;= 40; select customer_id, sum(amount) from payment where staff_id = 2 group by customer_id having sum(amount) &amp;gt; 110; </description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 02: string functions</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-2-string/</link>
+      <pubDate>Mon, 11 Sep 2023 16:21:48 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-2-string/</guid>
+      <description>--- String Functions and Operators --- doc: https://www.postgresql.org/docs/9.1/functions-string.html --- operators: || --- functions: lower(), upper(), substring(), position(), trim(), btrim(), length(), left(), convert(), ltrim(), right(), rtrim() SELECT first_name || &amp;#39; &amp;#39; || last_name AS customer_name FROM customer; select lower(left(first_name, 1)) || lower(last_name) || &amp;#39;@gmail.com&amp;#39; from customer; select rtrim(email, &amp;#39;.org&amp;#39;), position(&amp;#39;@&amp;#39; in email), substring(email from position(&amp;#39;@&amp;#39; in email)) from customer; -- to_char() and left() select b.starttime, f.name from bookings as b inner join facilities f on f.</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL refresh 01: basic query</title>
+      <link>https://nkcoder.github.io/posts/sql/postgresql-refresh-1-basic/</link>
+      <pubDate>Mon, 11 Sep 2023 16:20:48 +1000</pubDate>
+      
+      <guid>https://nkcoder.github.io/posts/sql/postgresql-refresh-1-basic/</guid>
+      <description>-- select select first_name, last_name, email from customer; -- distinct: both the following two forms work select distinct rating from film; select distinct(rating) from film; -- count select count(distinct first_name ) from actor; -- readable select count(distinct(first_name)) from actor; -- this doesn&amp;#39;t work, parentheses are required -- select count distinct first_name -- from actor; -- where select email from customer where first_name = &amp;#39;Nancy&amp;#39; and last_name = &amp;#39;Thomas&amp;#39;; -- limit select customer_id from payment order by payment_date ASC limit 10; -- between and --- both inclusive --- not between and --- when used for timestamp, it includes the time part select count(*) from payment where amount between 5 and 6; select count(*) from payment where amount not between 5 and 6; select * from payment where payment_date between &amp;#39;2007-05-12&amp;#39; and &amp;#39;2007-05-15&amp;#39; order by payment_date asc; -- in, not in select * from city where city in (&amp;#39;Hoshiarpur&amp;#39;, &amp;#39;Hino&amp;#39;); information_schema select * from city where city not in (&amp;#39;Hoshiarpur&amp;#39;, &amp;#39;Hino&amp;#39;); -- like, ilike --- like: case sensitive --- ilike: case insensitive --- like: match any characters --- _: match only one character select * from customer where first_name like &amp;#39;M%&amp;#39; and last_name ilike &amp;#39;s%&amp;#39;; select * from customer where first_name like &amp;#39;_her%&amp;#39;; </description>
+    </item>
+    
     <item>
       <title>VAVR: brings functional programming type to Java</title>
       <link>https://nkcoder.github.io/posts/java/vavr_brings_fp_to_java/</link>

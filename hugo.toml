@@ -19,7 +19,7 @@ googleAnalytics = "UA-168735975-1"
 
 [params]
     author = "Daniel Guo"
-    info = "I'm a developer"
+    info = "A developer"
     description = "Daniel Guo's tech blog"
     keywords = "blog,developer,Java,Docker,Redis,Scala,SpringBoot"
     avatarurl = "images/avatar.png"
